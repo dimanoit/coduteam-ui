@@ -1,0 +1,18 @@
+@import "primeflex/primeflex";
+
+$p-menubar-padding-lg: 10rem;
+$p-menubar-padding-md: 5rem;
+
+@media (min-width: $lg) {
+  .p-menubar {
+    padding-left: $p-menubar-padding-lg;
+    padding-right: $p-menubar-padding-lg;
+  }
+}
+
+@media (min-width: $md) {
+  .p-menubar {
+    padding-left: $p-menubar-padding-md;
+    padding-right: $p-menubar-padding-md;
+  }
+}

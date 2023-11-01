@@ -1,0 +1,19 @@
+<p-menubar [model]="items">
+  <ng-template pTemplate="start">
+    <img
+      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
+      height="40"
+      class="mr-2"
+    />
+  </ng-template>
+  <ng-template pTemplate="end">
+    <div class="flex gap-2">
+      <p-button label="Log in" [outlined]="true"></p-button>
+      <p-button
+        label="Sing Up"
+        [outlined]="true"
+        severity="secondary"
+      ></p-button>
+    </div>
+  </ng-template>
+</p-menubar>
