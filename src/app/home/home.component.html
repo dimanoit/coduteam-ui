@@ -75,7 +75,16 @@
 
 <ng-template #actionButtons>
   <div class="flex justify-content-start gap-2">
-    <p-button label="Get Started" [outlined]="true" />
-    <p-button label="Learn More" [outlined]="true" severity="secondary" />
+    <p-button
+      label="Get Started"
+      [outlined]="true"
+      (onClick)="navigateToAuth()"
+    />
+    <p-button
+      label="Learn More"
+      [outlined]="true"
+      severity="secondary"
+      (onClick)="navigateToAuth()"
+    />
   </div>
 </ng-template>

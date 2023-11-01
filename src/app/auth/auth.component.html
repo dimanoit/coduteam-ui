@@ -1,0 +1,43 @@
+<div class="auth-container grid">
+  <div class="col">
+    <img class="block w-full" src="/assets/mock.png" />
+  </div>
+
+  <div class="col">
+    <div class="text-5xl font-semibold">Sign in to CoduTeam</div>
+
+    <div class="my-4">Sign up with social account or enter your details</div>
+
+    <div class="flex gap-3 justify-content-between social-button-container">
+      <p-button icon="pi pi-google" [outlined]="true"></p-button>
+      <p-button icon="pi pi-facebook" [outlined]="true"></p-button>
+      <p-button icon="pi pi-apple" [outlined]="true"></p-button>
+    </div>
+
+    <div class="flex flex-column gap-2 my-3">
+      <label htmlFor="email">Email Address</label>
+      <input pInputText placeholder="example@gmail.com" id="email" />
+    </div>
+
+    <div class="flex flex-column gap-2 my-3">
+      <label htmlFor="username">Password</label>
+      <input
+        pInputText
+        type="password"
+        id="username"
+        aria-describedby="password-help"
+      />
+      <div class="text-xs" id="password-help">
+        Password: ≥ 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special
+        character (e.g., @, #, $).
+      </div>
+    </div>
+
+    <p-button label="Sign in" class="sign-in-button w-full"></p-button>
+
+    <div class="flex justify-content-between text-sm mt-5">
+      <div class="underline">Forgot Password</div>
+      <div>Don't have an account? <span class="underline"> Sign up</span></div>
+    </div>
+  </div>
+</div>

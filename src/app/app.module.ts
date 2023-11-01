@@ -10,9 +10,10 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
+import { AuthComponent } from './auth/auth.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent],
+  declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent, AuthComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -6,6 +7,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
+  constructor(private router: Router) {}
+
+  navigateToAuth() {
+    this.router.navigate(['/auth']);
+  }
+
   opportunities: CarouselItem[] = [
     {
       title: 'Project Discovery',
