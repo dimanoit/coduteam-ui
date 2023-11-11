@@ -13,9 +13,11 @@ import { InputTextModule } from 'primeng/inputtext';
 import { AuthComponent } from './auth/auth.component';
 import { SmallFooterComponent } from './small-footer/small-footer.component';
 import { ProjectsComponent } from './projects/projects.component';
-import { ProjectComponent } from './projects/project/project.component';
+import { ProjectCardComponent } from './projects/project-card/project-card.component';
 import { CardModule } from 'primeng/card';
-import { ProjectCategoryComponent } from './projects/project/project-category/project-category.component';
+import { ProjectCategoryComponent } from './projects/project-card/project-category/project-category.component';
+import { ProjectPageComponent } from './projects/project-page/project-page.component';
+import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 
 @NgModule({
   declarations: [
@@ -26,8 +28,10 @@ import { ProjectCategoryComponent } from './projects/project/project-category/pr
     AuthComponent,
     SmallFooterComponent,
     ProjectsComponent,
-    ProjectComponent,
+    ProjectCardComponent,
     ProjectCategoryComponent,
+    ProjectPageComponent,
+    NotFoundPageComponent,
   ],
   imports: [
     BrowserModule,

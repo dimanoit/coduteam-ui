@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Project } from '../project.interface';
 
 @Component({
-  selector: 'app-project',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss'],
+  selector: 'app-project-card',
+  templateUrl: './project-card.component.html',
+  styleUrls: ['./project-card.component.scss'],
 })
-export class ProjectComponent {
+export class ProjectCardComponent {
   @Input() project!: Project;
 
   getImageUrl(): string {

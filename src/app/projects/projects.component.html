@@ -1,8 +1,8 @@
 <ng-container *ngIf="projects && projects.length > 0">
   <div class="flex gap-5 flex-wrap justify-content-center py-5">
-    <app-project
+    <app-project-card
       *ngFor="let project of projects"
       [project]="project"
-    ></app-project>
+    ></app-project-card>
   </div>
 </ng-container>

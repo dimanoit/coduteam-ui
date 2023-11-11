@@ -1,4 +1,4 @@
-import { ProjectCategory } from './project/project-category/project-category.enum';
+import { ProjectCategory } from './project-card/project-category/project-category.enum';
 
 export interface Project {
   id: number;
