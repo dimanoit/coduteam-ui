@@ -5,7 +5,7 @@
     </div>
 
     <div class="flex flex-column col justify-content-between">
-      <div class="text-sm">
+      <div class="text-md">
         Join our platform to connect with other junior developers and
         collaborate on projects that interest you.
       </div>
@@ -14,7 +14,9 @@
     </div>
   </div>
 
-  <img class="w-full mb-7" src="/assets/mock.png" />
+  <div class="p-10 mb-7 flex justify-content-center">
+    <img class="main-image" src="/assets/codu_team_backgound.png" />
+  </div>
 
   <div class="flex flex-column justify-content-start">
     <div class="text-sm mb-3">Discover</div>
@@ -31,7 +33,7 @@
 
     <div class="flex justify-content-between gap-5 mb-5">
       <div *ngFor="let item of opportunities">
-        <img src="/assets/mock.png" class="w-full" />
+        <img [src]="getImageScr(item)" class="w-full" />
         <div class="font-semibold text-3xl mt-4 mb-2">{{ item.title }}</div>
         <div class="text-sm">{{ item.description }}</div>
       </div>
@@ -68,7 +70,7 @@
     </div>
 
     <div class="col">
-      <img class="block w-full h-full" src="/assets/mock.png" />
+      <img class="block w-full h-full" src="/assets/grow_skills.png" />
     </div>
   </div>
 </div>
