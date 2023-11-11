@@ -1,7 +1,12 @@
 <div class="card flex flex-column p-2" *ngIf="project; else loading">
+  <app-project-category
+    class="category-badge"
+    [category]="project.category"
+  ></app-project-category>
+
   <img class="w-full" [src]="getImageUrl()" />
 
-  <div class="text-xl font-bold">
+  <div class="text-xl my-3 font-bold">
     {{ project.title }}
   </div>
 

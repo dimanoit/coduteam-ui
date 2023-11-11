@@ -1,0 +1,18 @@
+export enum ProjectCategory {
+  None = 'None',
+  WebDevelopment = 'Web Development',
+  MobileApp = 'Mobile App',
+  DataScience = 'Data Science',
+  GameDevelopment = 'Game Development',
+  MachineLearning = 'Machine Learning',
+  InternetofThings = 'Internet of Things',
+  Cybersecurity = 'Cybersecurity',
+  Blockchain = 'Blockchain',
+  AugmentedReality = 'Augmented Reality',
+  VirtualReality = 'Virtual Reality',
+  ArtificialIntelligence = 'Artificial Intelligence',
+  CloudComputing = 'Cloud Computing',
+  DevOps = 'DevOps',
+  UIUXDesign = 'UI/UX Design',
+  HardwareDevelopment = 'Hardware Development',
+}

@@ -1,4 +1,5 @@
 import { Project } from './project.interface';
+import { ProjectCategory } from './project/project-category/project-category.enum';
 
 export const mockedData: Project[] = [
   {
@@ -6,7 +7,7 @@ export const mockedData: Project[] = [
     title: 'Python Personal Project',
     description:
       'Down room whether bit fill factor seat chance upon training specific five expect pay.',
-    category: 'Data Analysis',
+    category: ProjectCategory.DataScience,
     participants: [
       {
         userId: 884,
@@ -39,7 +40,7 @@ export const mockedData: Project[] = [
     id: 2,
     title: 'Python Community Project',
     description: 'Nice others interesting once seat life.',
-    category: 'Web Development',
+    category: ProjectCategory.WebDevelopment,
     participants: [
       {
         userId: 974,
@@ -58,7 +59,7 @@ export const mockedData: Project[] = [
     title: 'Unity Personal Project',
     description:
       'Suggest executive race clearly home southern lay very group appear threat.',
-    category: 'Game Development',
+    category: ProjectCategory.GameDevelopment,
     participants: [
       {
         userId: 763,
@@ -82,7 +83,7 @@ export const mockedData: Project[] = [
     title: 'JavaScript Personal Project',
     description:
       'Throughout we say wife big listen experience skill walk population those federal.',
-    category: 'Mobile App',
+    category: ProjectCategory.MobileApp,
     participants: [
       {
         userId: 229,
@@ -100,7 +101,7 @@ export const mockedData: Project[] = [
     id: 5,
     title: 'Unity Community Project',
     description: 'Charge hour yeah like the husband middle type.',
-    category: 'Machine Learning',
+    category: ProjectCategory.MachineLearning,
     participants: [
       {
         userId: 252,
@@ -124,7 +125,7 @@ export const mockedData: Project[] = [
     title: 'C# Educational',
     description:
       'Sit ok machine discussion create grow hear particularly deep style always government.',
-    category: 'Game Development',
+    category: ProjectCategory.GameDevelopment,
     participants: [
       {
         userId: 134,
@@ -152,7 +153,7 @@ export const mockedData: Project[] = [
     id: 7,
     title: 'React Startup Idea',
     description: 'Save film very down easy worker land point must.',
-    category: 'Machine Learning',
+    category: ProjectCategory.MachineLearning,
     participants: [
       {
         userId: 12,
@@ -175,7 +176,7 @@ export const mockedData: Project[] = [
     id: 8,
     title: 'Unity Educational',
     description: 'Nice industry ball every PM however unit lose especially up.',
-    category: 'Game Development',
+    category: ProjectCategory.GameDevelopment,
     participants: [
       {
         userId: 922,
@@ -203,7 +204,7 @@ export const mockedData: Project[] = [
     id: 9,
     title: 'C# Personal Project',
     description: 'Side anyone moment house blood high compare teacher stage.',
-    category: 'Data Analysis',
+    category: ProjectCategory.DataScience,
     participants: [
       {
         userId: 94,
@@ -226,7 +227,7 @@ export const mockedData: Project[] = [
     id: 10,
     title: 'Flutter Personal Project',
     description: 'Data relate measure over bank forget.',
-    category: 'Web Development',
+    category: ProjectCategory.WebDevelopment,
     participants: [
       {
         userId: 231,

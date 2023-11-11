@@ -1,4 +1,5 @@
 .card {
+  position: relative;
   border-radius: var(--border-radius);
   box-shadow: 0 4px 8px var(--primary-color);
   overflow: hidden;
@@ -6,5 +7,12 @@
 
   .project-description {
     height: 80px;
+  }
+
+  .category-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+   
   }
 }

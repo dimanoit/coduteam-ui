@@ -15,6 +15,7 @@ import { SmallFooterComponent } from './small-footer/small-footer.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectComponent } from './projects/project/project.component';
 import { CardModule } from 'primeng/card';
+import { ProjectCategoryComponent } from './projects/project/project-category/project-category.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CardModule } from 'primeng/card';
     SmallFooterComponent,
     ProjectsComponent,
     ProjectComponent,
+    ProjectCategoryComponent,
   ],
   imports: [
     BrowserModule,
