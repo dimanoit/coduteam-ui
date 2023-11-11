@@ -1,6 +1,4 @@
-<ng-container *ngIf="project; else notFound">
-  <app-project-card [project]="project!"></app-project-card>
-</ng-container>
+<ng-container *ngIf="project; else notFound"> Hi im project page </ng-container>
 
 <ng-template #notFound>
   <app-not-found-page></app-not-found-page>
