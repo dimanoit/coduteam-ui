@@ -11,9 +11,22 @@ import { FooterComponent } from './footer/footer.component';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthComponent } from './auth/auth.component';
+import { SmallFooterComponent } from './small-footer/small-footer.component';
+import { ProjectsComponent } from './projects/projects.component';
+import { ProjectComponent } from './projects/project/project.component';
+import { CardModule } from 'primeng/card';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, HomeComponent, FooterComponent, AuthComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    HomeComponent,
+    FooterComponent,
+    AuthComponent,
+    SmallFooterComponent,
+    ProjectsComponent,
+    ProjectComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -21,6 +34,7 @@ import { AuthComponent } from './auth/auth.component';
     ButtonModule,
     DividerModule,
     InputTextModule,
+    CardModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

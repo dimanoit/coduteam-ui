@@ -1,0 +1,24 @@
+<div class="card flex flex-column p-2" *ngIf="project; else loading">
+  <img class="w-full" [src]="getImageUrl()" />
+
+  <div class="text-xl font-bold">
+    {{ project.title }}
+  </div>
+
+  <div class="project-description">{{ project.description }}</div>
+
+  <div class="flex justify-content-between gap-2">
+    <p-button label="View More" icon="pi pi-eye"></p-button>
+    <p-button
+      label="Vacancies"
+      icon="pi pi-users"
+      styleClass="p-button-secondary"
+    ></p-button>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="custom-card">
+    <div class="loader">Loading...</div>
+  </div>
+</ng-template>
