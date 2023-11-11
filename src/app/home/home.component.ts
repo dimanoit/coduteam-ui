@@ -40,13 +40,11 @@ export class HomeComponent {
       title: 'Networking',
       description:
         'Connect with like-minded developers and professionals, expanding your professional network.',
-      imageSrc: '',
     },
     {
       title: 'Experience',
       description:
         'Work on real-world projects, gaining hands-on experience and enhancing your skillset.',
-      imageSrc: '',
     },
   ];
 
@@ -58,5 +56,5 @@ export class HomeComponent {
 interface CarouselItem {
   title: string;
   description: string;
-  imageSrc: string;
+  imageSrc?: string;
 }
