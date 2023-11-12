@@ -1,15 +1,15 @@
 .page-container {
-  min-height: 100vh; /* Full height of the viewport */
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .content-wrap {
-  flex: 1; /* This makes the content area grow and take up any available space */
-  padding-bottom: 60px; /* Height of the footer */
+  flex: 1;
+  padding-bottom: 60px;
 }
 
 app-small-footer {
-  height: 60px; /* Fixed height of your footer */
+  height: 60px;
   width: 100%;
 }

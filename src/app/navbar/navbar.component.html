@@ -1,19 +1,35 @@
 <p-menubar [model]="items">
   <ng-template pTemplate="start">
     <img
-      src="https://primefaces.org/cdn/primeng/images/primeng.svg"
-      height="40"
+      src="/assets/codu-team-icon.png"
+      height="60"
+      routerLink=""
       class="mr-2"
     />
   </ng-template>
   <ng-template pTemplate="end">
     <div class="flex gap-2">
-      <p-button label="Log in" [outlined]="true"></p-button>
-      <p-button
-        label="Sing Up"
-        [outlined]="true"
-        severity="secondary"
-      ></p-button>
+      <ng-container *ngIf="!isLoggedIn">
+        <p-button
+          label="Log in"
+          routerLink="/auth"
+          [outlined]="true"
+        ></p-button>
+        <p-button
+          label="Sing Up"
+          [outlined]="true"
+          severity="secondary"
+          routerLink="/auth"
+        ></p-button>
+      </ng-container>
+
+      <ng-container *ngIf="isLoggedIn">
+        <p-button
+          label="Log out"
+          [outlined]="true"
+          (onClick)="logout()"
+        ></p-button>
+      </ng-container>
     </div>
   </ng-template>
 </p-menubar>

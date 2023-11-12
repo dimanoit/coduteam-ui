@@ -10,7 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
 import { DividerModule } from 'primeng/divider';
 import { InputTextModule } from 'primeng/inputtext';
-import { AuthComponent } from './auth/auth.component';
+import { AuthComponent } from './user/auth/auth.component';
 import { SmallFooterComponent } from './small-footer/small-footer.component';
 import { ProjectsComponent } from './projects/projects.component';
 import { ProjectCardComponent } from './projects/project-card/project-card.component';
@@ -18,6 +18,7 @@ import { CardModule } from 'primeng/card';
 import { ProjectCategoryComponent } from './projects/project-card/project-category/project-category.component';
 import { ProjectPageComponent } from './projects/project-page/project-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { NotFoundPageComponent } from './not-found-page/not-found-page.component
     DividerModule,
     InputTextModule,
     CardModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

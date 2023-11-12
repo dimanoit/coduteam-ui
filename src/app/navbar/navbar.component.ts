@@ -1,5 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { UserService } from '../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,13 +11,25 @@ import { MenuItem } from 'primeng/api';
 })
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
+  isLoggedIn: boolean = false;
+
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Join Projects' },
+      { label: 'Join Projects', routerLink: 'projects' },
       { label: 'Create Project' },
       { label: 'Community' },
       { label: 'About' },
     ];
+
+    this.userService.onUserLogin().subscribe((user) => {
+      this.isLoggedIn = !!user;
+    });
+  }
+
+  logout(): void {
+    this.userService.logout();
+    this.router.navigateByUrl('');
   }
 }
