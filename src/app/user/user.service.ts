@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { User, LoginDto } from './user.interface';
-import { Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private userLoggedInSubject = new Subject<User | null>();
+  private userLoggedInSubject = new BehaviorSubject<User | null>(
+    this.getUserFromLocalStorage()
+  );
+
   private isLoggedInStatus: boolean = false;
 
   mockedTestUser: User = {
@@ -30,6 +33,7 @@ export class UserService {
   login(loginDto: LoginDto): Observable<User | null> {
     if (this.mockedTestUser.email === loginDto.email) {
       this.userLoggedInSubject.next(this.mockedTestUser);
+      localStorage.setItem('user', JSON.stringify(this.mockedTestUser));
       return of(this.mockedTestUser);
     }
 
@@ -46,5 +50,10 @@ export class UserService {
 
   isLoggedIn(): boolean {
     return this.isLoggedInStatus;
+  }
+
+  private getUserFromLocalStorage(): User {
+    const userJson = localStorage.getItem('user');
+    return userJson ? JSON.parse(userJson) : null;
   }
 }

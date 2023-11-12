@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -19,6 +20,9 @@ import { ProjectCategoryComponent } from './projects/project-card/project-catego
 import { ProjectPageComponent } from './projects/project-page/project-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CreateProjectDialogComponent } from './projects/create-project-dialog/create-project-dialog.component';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -33,6 +37,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProjectCategoryComponent,
     ProjectPageComponent,
     NotFoundPageComponent,
+    CreateProjectDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     DividerModule,
     InputTextModule,
     CardModule,
+    DialogModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    DropdownModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

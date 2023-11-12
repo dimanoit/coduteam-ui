@@ -1,0 +1,57 @@
+<div class="card flex justify-content-center">
+  <p-dialog header="Header" [(visible)]="isShown" [style]="{ width: '50vw' }">
+    <ng-template pTemplate="header">
+      <span class="text-xl font-bold">Create project</span>
+    </ng-template>
+    <form [formGroup]="projectForm">
+      <div class="field">
+        <label for="title">Title</label>
+        <input id="title" type="text" pInputText formControlName="title" />
+      </div>
+
+      <div class="field">
+        <label for="description">Description</label>
+        <input
+          id="description"
+          type="text"
+          pInputText
+          formControlName="description"
+        />
+      </div>
+
+      <div class="field">
+        <label for="category">Category</label>
+        <p-dropdown
+          id="category"
+          [options]="categories"
+          formControlName="category"
+        ></p-dropdown>
+      </div>
+
+      <div class="field">
+        <label for="imageSrc">Image URL</label>
+        <input
+          id="imageSrc"
+          type="text"
+          pInputText
+          formControlName="imageSrc"
+        />
+      </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        (click)="onCreateClick()"
+        label="Create"
+        styleClass="p-button-text"
+        [disabled]="!projectForm.valid"
+      ></p-button>
+      <p-button
+        (click)="closeDialog()"
+        label="Cancel"
+        severity="secondary"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

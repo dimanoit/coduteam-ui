@@ -12,14 +12,20 @@ import { Router } from '@angular/router';
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
   isLoggedIn: boolean = false;
+  isShownCreateProjectDialog: boolean = false;
 
   constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.items = [
       { label: 'Join Projects', routerLink: 'projects' },
-      { label: 'Create Project' },
-      { label: 'Community' },
+      {
+        label: 'Create Project',
+        command: () => {
+          this.isShownCreateProjectDialog = true;
+        },
+      },
+      { label: 'Vacancies' },
       { label: 'About' },
     ];
 
