@@ -33,7 +33,7 @@
 
     <div class="flex justify-content-between gap-5 mb-5">
       <div *ngFor="let item of opportunities">
-        <img [src]="getImageScr(item)" class="w-full" />
+        <img [src]="getImageScr(item)" class="w-full" alt="Something" />
         <div class="font-semibold text-3xl mt-4 mb-2">{{ item.title }}</div>
         <div class="text-sm">{{ item.description }}</div>
       </div>
@@ -70,7 +70,7 @@
     </div>
 
     <div class="col">
-      <img class="block w-full h-full" src="../assets/grow_skills.png" />
+      <img class="block w-full h-full" src="../assets/grow_skills.png" alt="Some shit" />
     </div>
   </div>
 </div>

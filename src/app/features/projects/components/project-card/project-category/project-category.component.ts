@@ -5,6 +5,7 @@ import { ProjectCategory } from './project-category.enum';
   selector: 'app-project-category',
   templateUrl: './project-category.component.html',
   styleUrls: ['./project-category.component.scss'],
+  standalone: true
 })
 export class ProjectCategoryComponent {
   @Input() category!: ProjectCategory;

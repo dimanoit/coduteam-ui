@@ -6,13 +6,25 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { ProjectCategory } from '../project-card/project-category/project-category.enum';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import { SelectItem } from 'primeng/api';
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
+import {DropdownModule} from "primeng/dropdown";
+import {DialogModule} from "primeng/dialog";
 
 @Component({
   selector: 'app-create-project-dialog',
   templateUrl: './create-project-dialog.component.html',
   styleUrls: ['./create-project-dialog.component.scss'],
+  imports: [
+    ButtonModule,
+    InputTextModule,
+    ReactiveFormsModule,
+    DropdownModule,
+    DialogModule
+  ],
+  standalone: true
 })
 export class CreateProjectDialogComponent {
   @Input() isShown: boolean = false;

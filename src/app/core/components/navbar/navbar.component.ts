@@ -1,13 +1,26 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { UserService } from '../../../features/user/user.service';
+import { UserService } from '../../../features/user/services/user.service';
 import { Router } from '@angular/router';
+import {MenubarModule} from "primeng/menubar";
+import {ButtonModule} from "primeng/button";
+import {
+  CreateProjectDialogComponent
+} from "../../../features/projects/components/create-project-dialog/create-project-dialog.component";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  imports: [
+    MenubarModule,
+    ButtonModule,
+    CreateProjectDialogComponent,
+    NgIf
+  ],
+  standalone: true
 })
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
@@ -25,7 +38,7 @@ export class NavbarComponent implements OnInit {
           this.isShownCreateProjectDialog = true;
         },
       },
-      { label: 'Vacancies' },
+      { label: 'Vacancies', routerLink: 'vacancies' },
       { label: 'About' },
     ];
 

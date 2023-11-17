@@ -1,14 +1,22 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoginDto, User } from '../user.interface';
-import { UserService } from '../user.service';
+import {FormGroup, FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
+import { LoginDto, User } from '../../models/user.interface';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
+import {ButtonModule} from "primeng/button";
+import {InputTextModule} from "primeng/inputtext";
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
   encapsulation: ViewEncapsulation.None,
+  imports: [
+    ButtonModule,
+    ReactiveFormsModule,
+    InputTextModule
+  ],
+  standalone: true
 })
 export class AuthComponent {
   loginForm: FormGroup;

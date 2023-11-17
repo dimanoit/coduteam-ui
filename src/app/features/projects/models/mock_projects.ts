@@ -1,5 +1,5 @@
 import { Project } from './project.interface';
-import { ProjectCategory } from './project-card/project-category/project-category.enum';
+import { ProjectCategory } from '../components/project-card/project-category/project-category.enum';
 
 export const mockedData: Project[] = [
   {
