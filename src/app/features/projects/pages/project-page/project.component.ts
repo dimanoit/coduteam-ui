@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Project} from '../../models/project.interface';
 import {mockedData} from '../../models/mock_projects';
 import {CommonModule} from "@angular/common";
-import {NotFoundPageComponent} from "../../../../core/components/not-found-page/not-found-page.component";
+import {NotFoundPageComponent} from "../../../../shared/components/not-found-page/not-found-page.component";
 
 @Component({
   selector: 'app-project-page',

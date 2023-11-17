@@ -1,16 +1,17 @@
-import {
-  Component,
-  EventEmitter,
-  Input, OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProjectCategory } from '../project-card/project-category/project-category.enum';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { SelectItem } from 'primeng/api';
-import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
-import {DropdownModule} from "primeng/dropdown";
-import {DialogModule} from "primeng/dialog";
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { DropdownModule } from 'primeng/dropdown';
+import { DialogModule } from 'primeng/dialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -21,11 +22,11 @@ import {DialogModule} from "primeng/dialog";
     InputTextModule,
     ReactiveFormsModule,
     DropdownModule,
-    DialogModule
+    DialogModule,
   ],
-  standalone: true
+  standalone: true,
 })
-export class CreateProjectDialogComponent implements OnInit{
+export class CreateProjectDialogComponent implements OnInit {
   @Input() isShown = false;
   @Output() closedDialog = new EventEmitter<void>();
 

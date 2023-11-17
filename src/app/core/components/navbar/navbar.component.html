@@ -9,7 +9,13 @@
     />
   </ng-template>
   <ng-template pTemplate="end">
-    <div class="flex gap-2">
+    <div class="flex align-items-center gap-3">
+      <i
+        style="font-size: 1.5rem; cursor: pointer"
+        (click)="toggleTheme()"
+        [ngClass]="isLightTheme() ? 'pi pi-moon' : 'pi pi-sun'"
+      ></i>
+
       <ng-container *ngIf="!isLoggedIn">
         <p-button
           label="Log in"
