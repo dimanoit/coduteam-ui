@@ -24,8 +24,8 @@ import {NgIf} from "@angular/common";
 })
 export class NavbarComponent implements OnInit {
   items: MenuItem[] | undefined;
-  isLoggedIn: boolean = false;
-  isShownCreateProjectDialog: boolean = false;
+  isLoggedIn = false;
+  isShownCreateProjectDialog = false;
 
   constructor(private userService: UserService, private router: Router) {}
 

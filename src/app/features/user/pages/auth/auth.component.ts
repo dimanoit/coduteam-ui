@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 import {FormGroup, FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
-import { LoginDto, User } from '../../models/user.interface';
+import { LoginDto } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import {ButtonModule} from "primeng/button";

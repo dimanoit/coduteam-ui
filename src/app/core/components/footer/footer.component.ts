@@ -21,7 +21,7 @@ import {NgForOf} from "@angular/common";
   standalone: true
 })
 export class FooterComponent {
-  value: string = '';
+  value = '';
   linkItems: LinkItem[] = [
     {
       header: 'About Us',

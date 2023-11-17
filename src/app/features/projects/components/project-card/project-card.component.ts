@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Project } from '../../models/project.interface';
 import { Router } from '@angular/router';
 import {ProjectCategoryComponent} from "./project-category/project-category.component";
@@ -26,7 +26,6 @@ export class ProjectCardComponent {
   }
 
   viewProjectDetails(projectId: number) {
-    debugger;
     this.router.navigate(['/projects', projectId]);
   }
 }

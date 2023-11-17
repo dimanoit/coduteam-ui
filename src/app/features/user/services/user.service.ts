@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User, LoginDto } from '../models/user.interface';
-import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +10,7 @@ export class UserService {
     this.getUserFromLocalStorage()
   );
 
-  private isLoggedInStatus: boolean = false;
+  private isLoggedInStatus = false;
 
   mockedTestUser: User = {
     userId: 123,

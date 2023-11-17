@@ -1,9 +1,8 @@
 import {
   Component,
   EventEmitter,
-  Input,
+  Input, OnInit,
   Output,
-  SimpleChanges,
 } from '@angular/core';
 import { ProjectCategory } from '../project-card/project-category/project-category.enum';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -26,9 +25,9 @@ import {DialogModule} from "primeng/dialog";
   ],
   standalone: true
 })
-export class CreateProjectDialogComponent {
-  @Input() isShown: boolean = false;
-  @Output() close = new EventEmitter<void>();
+export class CreateProjectDialogComponent implements OnInit{
+  @Input() isShown = false;
+  @Output() closedDialog = new EventEmitter<void>();
 
   projectForm!: FormGroup;
   categories!: SelectItem[];
@@ -59,6 +58,6 @@ export class CreateProjectDialogComponent {
   }
 
   closeDialog() {
-    this.close.emit();
+    this.closedDialog.emit();
   }
 }
