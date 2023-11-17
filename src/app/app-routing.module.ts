@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes, mapToCanActivate } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AuthComponent } from './user/auth/auth.component';
-import { ProjectsComponent } from './projects/projects.component';
-import { ProjectPageComponent } from './projects/project-page/project-page.component';
-import { AuthGuard } from './user/auth/auth.guard';
+import { HomeComponent } from './features/home/home.component';
+import { AuthComponent } from './features/user/auth/auth.component';
+import { ProjectsComponent } from './features/projects/projects.component';
+import { ProjectPageComponent } from './features/projects/project-page/project-page.component';
+import { AuthGuard } from './features/user/auth/auth.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
