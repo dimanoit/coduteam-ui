@@ -1,7 +1,7 @@
 <p-menubar [model]="items">
   <ng-template pTemplate="start">
     <img
-      src="/src/assets/codu-team-icon.png"
+      src="../assets/codu-team-icon.png"
       height="60"
       routerLink=""
       class="mr-2"
@@ -37,5 +37,5 @@
 
 <app-create-project-dialog
   [isShown]="isShownCreateProjectDialog"
-  (close)="isShownCreateProjectDialog = false"
+  (closedDialog)="isShownCreateProjectDialog = false"
 ></app-create-project-dialog>
