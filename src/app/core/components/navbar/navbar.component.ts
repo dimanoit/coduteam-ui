@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { UserService } from '../user/user.service';
+import { UserService } from '../../../user/user.service';
 import { Router } from '@angular/router';
 
 @Component({
