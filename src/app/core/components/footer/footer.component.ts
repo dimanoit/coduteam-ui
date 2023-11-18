@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import {ButtonModule} from "primeng/button";
-import {DividerModule} from "primeng/divider";
-import {InputTextModule} from "primeng/inputtext";
-import {KeyFilterModule} from "primeng/keyfilter";
-import {ReactiveFormsModule} from "@angular/forms";
-import {NgForOf} from "@angular/common";
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ButtonModule } from 'primeng/button';
+import { DividerModule } from 'primeng/divider';
+import { InputTextModule } from 'primeng/inputtext';
+import { KeyFilterModule } from 'primeng/keyfilter';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-footer',
@@ -15,9 +15,10 @@ import {NgForOf} from "@angular/common";
     InputTextModule,
     KeyFilterModule,
     ReactiveFormsModule,
-    NgForOf
+    NgForOf,
   ],
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FooterComponent {
   value = '';

@@ -1,4 +1,9 @@
-import { Component, forwardRef, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  forwardRef,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
 import {
@@ -14,6 +19,7 @@ import { ProjectCategory } from '../project-card/project-category/project-catego
   selector: 'app-project-category-dropdown',
   standalone: true,
   imports: [CommonModule, DropdownModule, ReactiveFormsModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./project-category-dropdown.component.scss'],
   providers: [
     {

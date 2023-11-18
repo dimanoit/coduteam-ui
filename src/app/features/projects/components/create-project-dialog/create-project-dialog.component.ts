@@ -1,9 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   inject,
   Input,
-  OnInit,
   Output,
 } from '@angular/core';
 import {
@@ -30,6 +30,7 @@ import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/p
     DialogModule,
     ProjectCategoryDropdownComponent,
   ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class CreateProjectDialogComponent {

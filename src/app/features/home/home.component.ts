@@ -1,20 +1,16 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Router } from '@angular/router';
-import {ButtonModule} from "primeng/button";
-import {FooterComponent} from "../../core/components/footer/footer.component";
-import {NgForOf, NgTemplateOutlet} from "@angular/common";
+import { ButtonModule } from 'primeng/button';
+import { FooterComponent } from '../../core/components/footer/footer.component';
+import { NgForOf, NgTemplateOutlet } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  imports: [
-    ButtonModule,
-    FooterComponent,
-    NgTemplateOutlet,
-    NgForOf
-  ],
-  standalone: true
+  imports: [ButtonModule, FooterComponent, NgTemplateOutlet, NgForOf],
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
   constructor(private router: Router) {}
