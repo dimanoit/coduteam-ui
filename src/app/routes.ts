@@ -2,7 +2,7 @@ import { HomeComponent } from './features/home/home.component';
 import { AuthComponent } from './features/user/pages/auth/auth.component';
 import { ProjectComponent } from './features/projects/pages/project-page/project.component';
 import { AuthGuard } from './features/user/guards/auth.guard';
-import {mapToCanActivate, Routes} from "@angular/router";
+import { mapToCanActivate, Routes } from '@angular/router';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -14,11 +14,17 @@ export const routes: Routes = [
   {
     path: 'projects',
     canActivate: mapToCanActivate([AuthGuard]),
-    loadComponent: () => import('./features/projects/pages/projects/projects.component').then(x => x.ProjectsComponent),
+    loadComponent: () =>
+      import('./features/projects/pages/projects/projects.component').then(
+        (x) => x.ProjectsComponent,
+      ),
   },
   {
-    path: 'vacancies',
-    loadComponent: () => import('./features/vacancies/vacancies.component').then(x => x.VacanciesComponent),
+    path: 'positions',
+    loadComponent: () =>
+      import('./features/positions/pages/positions/positions.component').then(
+        (x) => x.PositionsComponent,
+      ),
     canActivate: mapToCanActivate([AuthGuard]),
   },
   {

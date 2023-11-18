@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit {
           this.isShownCreateProjectDialog = true;
         },
       },
-      { label: 'Vacancies', routerLink: 'vacancies' },
+      { label: 'Positions', routerLink: 'positions' },
       { label: 'About' },
     ];
 
