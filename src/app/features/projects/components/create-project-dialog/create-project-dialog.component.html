@@ -20,12 +20,8 @@
       </div>
 
       <div class="field">
-        <label for="category">Category</label>
-        <p-dropdown
-          id="category"
-          [options]="categories"
-          formControlName="category"
-        ></p-dropdown>
+        <label>Category</label>
+        <app-project-category-dropdown formControlName="category" />
       </div>
 
       <div class="field">

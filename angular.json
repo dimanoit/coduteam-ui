@@ -10,7 +10,8 @@
           "style": "scss",
           "changeDetection": "OnPush",
           "skipTests": true,
-          "inlineStyle": true
+          "skipImport": true,
+          "standalone": true
         }
       },
       "root": "",

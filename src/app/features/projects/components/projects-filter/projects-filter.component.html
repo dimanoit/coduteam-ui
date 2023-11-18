@@ -1,0 +1,25 @@
+<div class="p-2 mt-5 bg-primary-reverse border-round">
+  <div class="flex gap-2" [formGroup]="searchForm">
+    <app-project-category-dropdown formControlName="category" />
+
+    <div class="search-block p-input-icon-left p-float-label">
+      <i class="pi pi-search"></i>
+      <input
+        class="w-full"
+        type="text"
+        pInputText
+        formControlName="term"
+        id="projectTerm"
+      />
+      <label htmlFor="projectTerm"
+        >Search by Technology, Language, or Topic</label
+      >
+    </div>
+
+    <p-button
+      [disabled]="!searchForm.valid"
+      (onClick)="search()"
+      label="Search"
+    ></p-button>
+  </div>
+</div>

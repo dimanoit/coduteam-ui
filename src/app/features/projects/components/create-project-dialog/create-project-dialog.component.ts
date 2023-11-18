@@ -1,16 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ProjectCategory } from '../project-card/project-category/project-category.enum';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SelectItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
+import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/project-category-dropdown.component';
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -22,31 +28,21 @@ import { DialogModule } from 'primeng/dialog';
     ReactiveFormsModule,
     DropdownModule,
     DialogModule,
+    ProjectCategoryDropdownComponent,
   ],
   standalone: true,
 })
-export class CreateProjectDialogComponent implements OnInit {
+export class CreateProjectDialogComponent {
+  private formBuilder = inject(FormBuilder);
   @Input() isShown = false;
   @Output() closedDialog = new EventEmitter<void>();
 
-  projectForm!: FormGroup;
-  categories!: SelectItem[];
-
-  constructor(private formBuilder: FormBuilder) {}
-
-  ngOnInit() {
-    this.projectForm = this.formBuilder.group({
-      title: ['', [Validators.required, Validators.maxLength(26)]],
-      description: ['', [Validators.required, Validators.maxLength(250)]],
-      category: [null, Validators.required],
-      imageSrc: [''],
-    });
-
-    this.categories = Object.values(ProjectCategory).map((cat) => ({
-      label: cat,
-      value: cat,
-    }));
-  }
+  projectForm: FormGroup = this.formBuilder.group({
+    title: ['', [Validators.required, Validators.maxLength(26)]],
+    description: ['', [Validators.required, Validators.maxLength(250)]],
+    category: [null, Validators.required],
+    imageSrc: [''],
+  });
 
   onCreateClick() {
     if (this.projectForm.valid) {
