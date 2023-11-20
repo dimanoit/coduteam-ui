@@ -16,6 +16,12 @@
         [ngClass]="isLightTheme() ? 'pi pi-moon' : 'pi pi-sun'"
       ></i>
 
+      <i
+        class="pi pi-user"
+        routerLink="/account"
+        style="font-size: 1.5rem; cursor: pointer"
+      ></i>
+
       <ng-container *ngIf="!isLoggedIn">
         <p-button
           label="Log in"

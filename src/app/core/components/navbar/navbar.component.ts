@@ -50,10 +50,9 @@ export class NavbarComponent implements OnInit {
         },
       },
       { label: 'Positions', routerLink: 'positions' },
-      { label: 'About' },
     ];
 
-    this.userService.onUserLogin().subscribe((user) => {
+    this.userService.getUser$().subscribe((user) => {
       this.isLoggedIn = !!user;
     });
   }

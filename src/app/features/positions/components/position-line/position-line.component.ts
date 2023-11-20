@@ -4,7 +4,7 @@ import { PositionDto } from '../../models/position-dto.interface';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
-  selector: 'app-vacancy-line',
+  selector: 'app-position-line',
   standalone: true,
   imports: [CommonModule, ButtonModule],
   templateUrl: './position-line.component.html',

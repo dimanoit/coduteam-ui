@@ -1,16 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Project} from '../../models/project.interface';
-import {mockedData} from '../../models/mock_projects';
-import {CommonModule} from "@angular/common";
-import {NotFoundPageComponent} from "../../../../shared/components/not-found-page/not-found-page.component";
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Project } from '../../models/project.interface';
+import { mockedData } from '../../../../../mocks/mock_projects';
+import { CommonModule } from '@angular/common';
+import { NotFoundPageComponent } from '../../../../shared/components/not-found-page/not-found-page.component';
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
   standalone: true,
-  imports: [CommonModule, NotFoundPageComponent]
+  imports: [CommonModule, NotFoundPageComponent],
 })
 export class ProjectComponent implements OnInit {
   projectId: number | null = null;
@@ -22,6 +22,6 @@ export class ProjectComponent implements OnInit {
     const projectIdParam = this.route.snapshot.paramMap.get('projectId');
     this.projectId = projectIdParam ? +projectIdParam : null;
 
-    this.project = mockedData.find((p) => p.id === this.projectId) || null;
+    this.project = mockedData.find((p) => p.id === this.projectId) ?? null;
   }
 }

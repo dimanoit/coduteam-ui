@@ -1,7 +1,14 @@
+$xl: 1440px; // Extra large screens (monitors)
+
 .page-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: $xl) {
+    padding-left: 10rem;
+    padding-right: 10rem;
+  }
 }
 
 .content-wrap {

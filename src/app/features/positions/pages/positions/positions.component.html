@@ -1,4 +1,10 @@
-<p>vacancies works!</p>
-<app-vacancy-filter />
+<div class="flex gap-1">
+  <app-position-filter />
 
-<app-vacancy-line *ngFor="let position of positions" [position]="position" />
+  <div>
+    <app-position-line
+      *ngFor="let position of positions"
+      [position]="position"
+    />
+  </div>
+</div>

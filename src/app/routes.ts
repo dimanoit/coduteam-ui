@@ -20,6 +20,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'account',
+    canActivate: mapToCanActivate([AuthGuard]),
+    loadComponent: () =>
+      import('./features/user/pages/user/user.component').then(
+        (x) => x.UserComponent,
+      ),
+  },
+  {
     path: 'positions',
     loadComponent: () =>
       import('./features/positions/pages/positions/positions.component').then(

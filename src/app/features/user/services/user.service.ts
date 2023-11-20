@@ -1,38 +1,27 @@
 import { Injectable } from '@angular/core';
 import { User, LoginDto } from '../models/user.interface';
 import { BehaviorSubject, Observable, of } from 'rxjs';
+import { mockedTestUser } from '../../../../mocks/mock_user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private userLoggedInSubject = new BehaviorSubject<User | null>(
-    this.getUserFromLocalStorage()
+  private userSubject = new BehaviorSubject<User | null>(
+    this.getUserFromLocalStorage(),
   );
 
+  private mockedTestUser = mockedTestUser;
   private isLoggedInStatus = false;
 
-  mockedTestUser: User = {
-    userId: 123,
-    email: 'jane.doe@example.com',
-    firstName: 'Jane',
-    lastName: 'Doe',
-    dateOfBirth: new Date(1985, 6, 15),
-    gender: 'Female',
-    title: 'Senior Developer',
-    role: 'Software Engineering',
-    cv: 'Extensive experience in software development...',
-  };
-
   constructor() {
-    this.userLoggedInSubject.subscribe((user) => {
+    this.userSubject.subscribe((user) => {
       this.isLoggedInStatus = !!user;
     });
   }
-
   login(loginDto: LoginDto): Observable<User | null> {
     if (this.mockedTestUser.email === loginDto.email) {
-      this.userLoggedInSubject.next(this.mockedTestUser);
+      this.userSubject.next(this.mockedTestUser);
       localStorage.setItem('user', JSON.stringify(this.mockedTestUser));
       return of(this.mockedTestUser);
     }
@@ -41,11 +30,11 @@ export class UserService {
   }
 
   logout() {
-    this.userLoggedInSubject.next(null);
+    this.userSubject.next(null);
   }
 
-  onUserLogin(): Observable<User | null> {
-    return this.userLoggedInSubject.asObservable();
+  getUser$(): Observable<User | null> {
+    return this.userSubject.asObservable();
   }
 
   isLoggedIn(): boolean {

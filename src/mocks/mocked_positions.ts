@@ -1,32 +1,36 @@
-import { PositionDto } from '../../models/position-dto.interface';
+import { PositionDto } from '../app/features/positions/models/position-dto.interface';
 
 export const mockedPositions: PositionDto[] = [
   {
     id: 1,
     projectName: 'Systems Analyst Project',
     tittle: 'Cloud Architect',
-    shortDescription: 'This is a short description of a Game Developer role.',
+    shortDescription:
+      'This role as a Game Developer involves intricate knowledge of game design principles, strong programming skills, and the ability to work in a dynamic team environment. You will be expected to contribute to all phases of game development, from concept to deployment, and continuously engage in learning new technologies. Creativity and passion for gaming are essential, as well as the ability to collaborate effectively with artists and designers. This position offers a great opportunity to make a mark in the gaming industry with innovative and engaging gameplay experiences.',
     city: 'Toronto',
   },
   {
     id: 2,
     projectName: 'Data Scientist Project',
     tittle: 'Frontend Developer',
-    shortDescription: 'This is a short description of a Game Developer role.',
+    shortDescription:
+      "In the role of a Game Developer, you will be at the forefront of creating immersive gaming experiences. This position demands a deep understanding of game mechanics, proficiency in various game development tools and engines, and the ability to work collaboratively with a creative team. You'll be involved in brainstorming sessions, prototype development, and ultimately, the creation of compelling and enjoyable games. It's an exciting opportunity to blend technical expertise with creative vision in a fast-paced and dynamic industry.",
     city: 'San Francisco',
   },
   {
     id: 3,
     projectName: 'Graphic Designer Project',
     tittle: 'Cybersecurity Specialist',
-    shortDescription: 'This is a short description of a Software Tester role.',
+    shortDescription:
+      'As a Software Tester, your primary role will be to ensure the quality and reliability of our software products. You will be involved in developing test strategies, executing test cases, and identifying bugs and issues. Your analytical skills will be crucial in diagnosing problems and communicating them to the development team. The position requires a detail-oriented mindset and a commitment to achieving the highest standards of software quality. Your contribution will be key to delivering flawless products to our users."',
     city: 'Toronto',
   },
   {
     id: 4,
     projectName: 'Frontend Developer Project',
     tittle: 'QA Engineer',
-    shortDescription: 'This is a short description of a Systems Analyst role.',
+    shortDescription:
+      'The Systems Analyst position is crucial in our efforts to develop and implement efficient and effective software solutions. You will analyze system requirements, address any potential issues, and work closely with the development team to ensure optimal functionality. This role requires strong analytical skills, a deep understanding of software development processes, and the ability to translate business needs into technical specifications. You will play a pivotal role in enhancing our systems and contributing to the overall success of our projects.',
     city: 'London',
   },
   {
