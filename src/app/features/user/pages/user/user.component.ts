@@ -6,6 +6,7 @@ import { ProjectsComponent } from '../../../projects/pages/projects/projects.com
 import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
   selector: 'app-user',
@@ -16,6 +17,7 @@ import { MessageService } from 'primeng/api';
     ProjectsComponent,
     FileUploadModule,
     ToastModule,
+    PanelModule,
   ],
   providers: [MessageService],
   templateUrl: './user.component.html',

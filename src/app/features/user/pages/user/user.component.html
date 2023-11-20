@@ -1,5 +1,5 @@
-<div class="flex gap-2 pt-5" *ngIf="currentUser$ | async as user">
-  <div>
+<div class="flex gap-3 pt-5" *ngIf="currentUser$ | async as user">
+  <div class="flex flex-column gap-3">
     <div class="flex p-5 border-round shadow-8">
       <p-avatar
         image="https://source.unsplash.com/random/200x200"
@@ -19,7 +19,7 @@
       </div>
     </div>
 
-    <div class="flex justify-content-center mt-5">
+    <div class="flex justify-content-center min-w-max">
       <p-toast></p-toast>
       <p-fileUpload
         name="demo[]"
@@ -39,5 +39,31 @@
         </ng-template>
       </p-fileUpload>
     </div>
+  </div>
+
+  <div class="flex flex-column gap-3">
+    <p-panel header="My Projects" [toggleable]="true">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+      </p>
+    </p-panel>
+
+    <p-panel header="My Applications" [toggleable]="true">
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+      </p>
+    </p-panel>
   </div>
 </div>
