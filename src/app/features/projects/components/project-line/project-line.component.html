@@ -1,23 +1,22 @@
-<div class="shadow-2 flex justify-content-between">
-  <div class="flex">
-    <img [src]="project?.imageScr" alt="Project photo" />
-    <div>
-      <div>{{ project?.title }}</div>
-      <div>{{ project?.category }}</div>
-    </div>
+<div class="shadow-2 flex gap-2 justify-content-between p-3">
+  <img class="w-10rem block" [src]="project?.imageScr" alt="Project photo" />
+
+  <div class="w-13rem flex flex-column justify-content-between">
+    <div class="font-italic">{{ project?.title }}</div>
+    <div class="text-sm">{{ project?.category }}</div>
   </div>
 
-  <div>
+  <div class="w-27rem">
     {{ project?.description }}
   </div>
 
-  <div class="flex flex-column align-content-end">
-    <div>
+  <div class="w-10rem flex flex-column align-items-end justify-content-between">
+    <div class="underline text-sm">
       {{ project?.category }}
     </div>
 
-    <div class="card justify-content-center">
-      <p-avatarGroup styleClass="mb-3">
+    <div class="flex justify-content-end">
+      <p-avatarGroup>
         <p-avatar
           *ngFor="let user of project?.participants"
           [image]="user.imageSrc"

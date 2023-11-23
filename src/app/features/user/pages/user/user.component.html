@@ -44,10 +44,12 @@
 
   <div class="flex flex-column gap-3">
     <p-panel header="My Projects" [toggleable]="true">
-      <app-project-line
-        *ngFor="let project of projects$ | async"
-        [project]="project"
-      ></app-project-line>
+      <div class="flex flex-column gap-3">
+        <app-project-line
+          *ngFor="let project of projects$ | async"
+          [project]="project"
+        ></app-project-line>
+      </div>
     </p-panel>
 
     <p-panel header="My Applications" [toggleable]="true">
