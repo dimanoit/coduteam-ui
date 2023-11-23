@@ -4,7 +4,10 @@ import { ProjectCategory } from '../app/features/projects/components/project-car
 export const mockedData: Project[] = [
   {
     id: 1,
+    ownerId: 123,
     title: 'Python Personal Project',
+    imageScr:
+      'https://s.dou.ua/CACHE/images/img/static/companies/NEW_360x160_logo_Ukraine_/79d9e7b8ef5671daeb650256e256411b.png',
     description:
       'Down room whether bit fill factor seat chance upon training specific five expect pay.',
     category: ProjectCategory.DataScience,
@@ -38,6 +41,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 2,
+    ownerId: 1,
     title: 'Python Community Project',
     description: 'Nice others interesting once seat life.',
     category: ProjectCategory.WebDevelopment,
@@ -56,6 +60,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 3,
+    ownerId: 1,
     title: 'Unity Personal Project',
     description:
       'Suggest executive race clearly home southern lay very group appear threat.',
@@ -80,6 +85,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 4,
+    ownerId: 1,
     title: 'JavaScript Personal Project',
     description:
       'Throughout we say wife big listen experience skill walk population those federal.',
@@ -99,6 +105,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 5,
+    ownerId: 1,
     title: 'Unity Community Project',
     description: 'Charge hour yeah like the husband middle type.',
     category: ProjectCategory.MachineLearning,
@@ -122,6 +129,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 6,
+    ownerId: 1,
     title: 'C# Educational',
     description:
       'Sit ok machine discussion create grow hear particularly deep style always government.',
@@ -151,6 +159,9 @@ export const mockedData: Project[] = [
   },
   {
     id: 7,
+    ownerId: 123,
+    imageScr:
+      'https://s.dou.ua/CACHE/images/img/static/companies/logo_vector-01/c9e79338ccbc36bd7326a06693bfbc2c.png',
     title: 'React Startup Idea',
     description: 'Save film very down easy worker land point must.',
     category: ProjectCategory.MachineLearning,
@@ -174,6 +185,9 @@ export const mockedData: Project[] = [
   },
   {
     id: 8,
+    ownerId: 123,
+    imageScr:
+      'https://s.dou.ua/CACHE/images/img/static/companies/Logo_GL-Hitachi_Black/d1dc877c72c8c53613fa0883a2290e8d.png',
     title: 'Unity Educational',
     description: 'Nice industry ball every PM however unit lose especially up.',
     category: ProjectCategory.GameDevelopment,
@@ -202,6 +216,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 9,
+    ownerId: 1,
     title: 'C# Personal Project',
     description: 'Side anyone moment house blood high compare teacher stage.',
     category: ProjectCategory.DataScience,
@@ -225,6 +240,7 @@ export const mockedData: Project[] = [
   },
   {
     id: 10,
+    ownerId: 1,
     title: 'Flutter Personal Project',
     description: 'Data relate measure over bank forget.',
     category: ProjectCategory.WebDevelopment,

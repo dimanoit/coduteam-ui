@@ -4,6 +4,7 @@ export const mockedPositions: PositionDto[] = [
   {
     id: 1,
     projectName: 'Systems Analyst Project',
+    projectId: 1,
     tittle: 'Cloud Architect',
     shortDescription:
       'This role as a Game Developer involves intricate knowledge of game design principles, strong programming skills, and the ability to work in a dynamic team environment. You will be expected to contribute to all phases of game development, from concept to deployment, and continuously engage in learning new technologies. Creativity and passion for gaming are essential, as well as the ability to collaborate effectively with artists and designers. This position offers a great opportunity to make a mark in the gaming industry with innovative and engaging gameplay experiences.',
@@ -11,6 +12,8 @@ export const mockedPositions: PositionDto[] = [
   },
   {
     id: 2,
+    projectId: 1,
+
     projectName: 'Data Scientist Project',
     tittle: 'Frontend Developer',
     shortDescription:
@@ -19,6 +22,8 @@ export const mockedPositions: PositionDto[] = [
   },
   {
     id: 3,
+    projectId: 1,
+
     projectName: 'Graphic Designer Project',
     tittle: 'Cybersecurity Specialist',
     shortDescription:
@@ -27,6 +32,8 @@ export const mockedPositions: PositionDto[] = [
   },
   {
     id: 4,
+    projectId: 1,
+
     projectName: 'Frontend Developer Project',
     tittle: 'QA Engineer',
     shortDescription:
@@ -35,12 +42,15 @@ export const mockedPositions: PositionDto[] = [
   },
   {
     id: 5,
+    projectId: 1,
+
     projectName: 'Data Scientist Project',
     tittle: 'QA Engineer',
     shortDescription: 'This is a short description of a Data Scientist role.',
     city: 'New York',
   },
   {
+    projectId: 1,
     id: 6,
     projectName: 'DevOps Engineer Project',
     tittle: 'Software Tester',
@@ -49,6 +59,8 @@ export const mockedPositions: PositionDto[] = [
     city: 'Berlin',
   },
   {
+    projectId: 1,
+
     id: 7,
     projectName: 'Backend Developer Project',
     tittle: 'Cloud Architect',
@@ -56,6 +68,8 @@ export const mockedPositions: PositionDto[] = [
     city: 'Amsterdam',
   },
   {
+    projectId: 1,
+
     id: 8,
     projectName: 'Cybersecurity Specialist Project',
     tittle: 'Frontend Developer',
@@ -64,6 +78,8 @@ export const mockedPositions: PositionDto[] = [
     city: 'New York',
   },
   {
+    projectId: 1,
+
     id: 9,
     projectName: 'Mobile App Developer Project',
     tittle: 'Machine Learning Engineer',
@@ -72,6 +88,8 @@ export const mockedPositions: PositionDto[] = [
     city: 'San Francisco',
   },
   {
+    projectId: 1,
+
     id: 10,
     projectName: 'Game Developer Project',
     tittle: 'Data Scientist',
@@ -80,6 +98,8 @@ export const mockedPositions: PositionDto[] = [
     city: 'Bangalore',
   },
   {
+    projectId: 1,
+
     id: 11,
     projectName: 'Mobile App Developer Project',
     tittle: 'Data Scientist',
@@ -87,6 +107,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'San Francisco',
   },
   {
+    projectId: 1,
     id: 12,
     projectName: 'Full Stack Developer Project',
     tittle: 'Cybersecurity Specialist',
@@ -94,6 +115,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Sydney',
   },
   {
+    projectId: 1,
     id: 13,
     projectName: 'Machine Learning Engineer Project',
     tittle: 'QA Engineer',
@@ -101,6 +123,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Berlin',
   },
   {
+    projectId: 1,
     id: 14,
     projectName: 'Data Scientist Project',
     tittle: 'Data Scientist',
@@ -108,6 +131,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Amsterdam',
   },
   {
+    projectId: 1,
     id: 15,
     projectName: 'Mobile App Developer Project',
     tittle: 'Machine Learning Engineer',
@@ -116,6 +140,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'London',
   },
   {
+    projectId: 1,
     id: 16,
     projectName: 'QA Engineer Project',
     tittle: 'Frontend Developer',
@@ -124,6 +149,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Singapore',
   },
   {
+    projectId: 1,
     id: 17,
     projectName: 'Backend Developer Project',
     tittle: 'UI/UX Designer',
@@ -131,6 +157,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Bangalore',
   },
   {
+    projectId: 1,
     id: 18,
     projectName: 'UI/UX Designer Project',
     tittle: 'Graphic Designer',
@@ -138,6 +165,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'London',
   },
   {
+    projectId: 1,
     id: 19,
     projectName: 'Backend Developer Project',
     tittle: 'Data Scientist',
@@ -146,6 +174,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'New York',
   },
   {
+    projectId: 1,
     id: 20,
     projectName: 'Game Developer Project',
     tittle: 'Data Scientist',
@@ -153,6 +182,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'London',
   },
   {
+    projectId: 1,
     id: 21,
     projectName: 'Data Scientist Project',
     tittle: 'Frontend Developer',
@@ -160,6 +190,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'New York',
   },
   {
+    projectId: 1,
     id: 22,
     projectName: 'Game Developer Project',
     tittle: 'Data Scientist',
@@ -167,6 +198,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'London',
   },
   {
+    projectId: 1,
     id: 23,
     projectName: 'Data Scientist Project',
     tittle: 'Software Tester',
@@ -174,6 +206,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Amsterdam',
   },
   {
+    projectId: 1,
     id: 24,
     projectName: 'Cybersecurity Specialist Project',
     tittle: 'Cloud Architect',
@@ -181,6 +214,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'London',
   },
   {
+    projectId: 1,
     id: 25,
     projectName: 'UI/UX Designer Project',
     tittle: 'Frontend Developer',
@@ -189,6 +223,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Singapore',
   },
   {
+    projectId: 1,
     id: 26,
     projectName: 'Full Stack Developer Project',
     tittle: 'Data Scientist',
@@ -197,6 +232,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Singapore',
   },
   {
+    projectId: 1,
     id: 27,
     projectName: 'Data Scientist Project',
     tittle: 'Software Tester',
@@ -204,6 +240,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Bangalore',
   },
   {
+    projectId: 1,
     id: 28,
     projectName: 'Cybersecurity Specialist Project',
     tittle: 'Backend Developer',
@@ -211,6 +248,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'Sydney',
   },
   {
+    projectId: 1,
     id: 29,
     projectName: 'Full Stack Developer Project',
     tittle: 'Software Tester',
@@ -219,6 +257,7 @@ export const mockedPositions: PositionDto[] = [
     city: 'San Francisco',
   },
   {
+    projectId: 1,
     id: 30,
     projectName: 'Systems Analyst Project',
     tittle: 'Cloud Architect',
