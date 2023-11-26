@@ -4,6 +4,8 @@ import { ProjectCardComponent } from '../../components/project-card/project-card
 import { CommonModule } from '@angular/common';
 import { ProjectsFilterComponent } from '../../components/projects-filter/projects-filter.component';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ProjectLineComponent } from '../../components/project-line/project-line.component';
 
 @Component({
   selector: 'app-projects',
@@ -13,11 +15,14 @@ import { PaginatorModule, PaginatorState } from 'primeng/paginator';
     CommonModule,
     ProjectsFilterComponent,
     PaginatorModule,
+    ToggleButtonModule,
+    ProjectLineComponent,
   ],
   standalone: true,
 })
 export class ProjectsComponent {
   projects = mockedData;
+  isCardView: boolean = false;
 
   first: number = 0;
   rows: number = 10;
