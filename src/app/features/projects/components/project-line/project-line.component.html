@@ -17,12 +17,13 @@
 
     <div class="flex justify-content-end">
       <p-avatarGroup>
+        @for (user of project?.participants; track $index) {
         <p-avatar
-          *ngFor="let user of project?.participants"
           [image]="user.imageSrc"
           size="normal"
           shape="circle"
         ></p-avatar>
+        }
       </p-avatarGroup>
     </div>
   </div>

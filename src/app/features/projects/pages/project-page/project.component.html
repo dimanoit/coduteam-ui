@@ -1,5 +1,5 @@
-<ng-container *ngIf="project; else notFound"> Hi im project page </ng-container>
-
-<ng-template #notFound>
-  <app-not-found-page></app-not-found-page>
-</ng-template>
+@if (project) {
+<div>Hi im project page</div>
+} @else {
+<app-not-found-page></app-not-found-page>
+}
