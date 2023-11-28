@@ -28,9 +28,10 @@ import { ProjectCategory } from '../project-card/project-category/project-catego
       multi: true,
     },
   ],
-  template: `<p-dropdown
+  template: ` <p-dropdown
     [options]="categories"
     [formControl]="formControl"
+    placeholder="Category"
     (onChange)="onDropdownChange($event)"
   ></p-dropdown>`,
 })
