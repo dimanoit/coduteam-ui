@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "coduteam-ui:build:production"
+              "buildTarget": "coduteam-ui:build:production"
             },
             "development": {
-              "browserTarget": "coduteam-ui:build:development"
+              "buildTarget": "coduteam-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "coduteam-ui:build"
+            "buildTarget": "coduteam-ui:build"
           }
         },
         "test": {
