@@ -30,12 +30,13 @@
         [maxFileSize]="1000000"
       >
         <ng-template pTemplate="content">
-          <ul *ngIf="uploadedFiles.length; else placeholder">
-            <li *ngFor="let file of uploadedFiles">
-              {{ file.name }} - {{ file.size }} bytes
-            </li>
+          @if (uploadedFiles.length) {
+          <ul>
+            @for (file of uploadedFiles; track $index) {
+            <li>{{ file.name }} - {{ file.size }} bytes</li>
+            }
           </ul>
-          <ng-template #placeholder> Drag and drop your CV here</ng-template>
+          } @else { Drag and drop your CV here }
         </ng-template>
       </p-fileUpload>
     </div>
@@ -44,10 +45,9 @@
   <div class="flex flex-column gap-3">
     <p-panel header="My Projects" [toggleable]="true">
       <div class="flex flex-column gap-3">
-        <app-project-line
-          *ngFor="let project of projects$ | async"
-          [project]="project"
-        ></app-project-line>
+        @for (project of projects$ | async; track $index) {
+        <app-project-line [project]="project"></app-project-line>
+        }
       </div>
     </p-panel>
 

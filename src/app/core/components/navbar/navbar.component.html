@@ -22,27 +22,21 @@
         style="font-size: 1.5rem; cursor: pointer"
       ></i>
 
-      <ng-container *ngIf="!isLoggedIn">
-        <p-button
-          label="Log in"
-          routerLink="/auth"
-          [outlined]="true"
-        ></p-button>
-        <p-button
-          label="Sing Up"
-          [outlined]="true"
-          severity="secondary"
-          routerLink="/auth"
-        ></p-button>
-      </ng-container>
-
-      <ng-container *ngIf="isLoggedIn">
-        <p-button
-          label="Log out"
-          [outlined]="true"
-          (onClick)="logout()"
-        ></p-button>
-      </ng-container>
+      @if (isLoggedIn) {
+      <p-button
+        label="Log out"
+        [outlined]="true"
+        (onClick)="logout()"
+      ></p-button>
+      }@else {
+      <p-button label="Log in" routerLink="/auth" [outlined]="true"></p-button>
+      <p-button
+        label="Sing Up"
+        [outlined]="true"
+        severity="secondary"
+        routerLink="/auth"
+      ></p-button>
+      }
     </div>
   </ng-template>
 </p-menubar>

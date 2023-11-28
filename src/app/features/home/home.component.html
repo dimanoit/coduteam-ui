@@ -15,7 +15,11 @@
   </div>
 
   <div class="p-10 mb-7 flex justify-content-center">
-    <img class="main-image" src="../assets/codu_team_backgound.png" alt="Main page" />
+    <img
+      class="main-image"
+      src="../assets/codu_team_backgound.png"
+      alt="Main page"
+    />
   </div>
 
   <div class="flex flex-column justify-content-start">
@@ -32,11 +36,13 @@
     </div>
 
     <div class="flex justify-content-between gap-5 mb-5">
-      <div *ngFor="let item of opportunities">
+      @for (item of opportunities; track $index) {
+      <div>
         <img [src]="getImageScr(item)" class="w-full" alt="Something" />
         <div class="font-semibold text-3xl mt-4 mb-2">{{ item.title }}</div>
         <div class="text-sm">{{ item.description }}</div>
       </div>
+      }
     </div>
 
     <ng-container [ngTemplateOutlet]="actionButtons"></ng-container>
@@ -58,11 +64,13 @@
         </div>
 
         <div class="flex gap-5 my-7">
-          <div *ngFor="let item of skills">
+          @for (item of skills; track $index) {
+          <div>
             <i class="pi pi-box text-5xl"></i>
             <div class="font-semibold text-3xl mb-2">{{ item.title }}</div>
             <div class="text-sm">{{ item.description }}</div>
           </div>
+          }
         </div>
 
         <ng-container [ngTemplateOutlet]="actionButtons"></ng-container>
@@ -70,7 +78,11 @@
     </div>
 
     <div class="col">
-      <img class="block w-full h-full" src="../assets/grow_skills.png" alt="Some shit" />
+      <img
+        class="block w-full h-full"
+        src="../assets/grow_skills.png"
+        alt="Some shit"
+      />
     </div>
   </div>
 </div>

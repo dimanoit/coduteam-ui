@@ -3,12 +3,16 @@
     <div class="text-xl font-bold">Logo</div>
 
     <div class="flex gap-5">
-      <div class="flex flex-column gap-3" *ngFor="let item of linkItems">
+      @for (item of linkItems; track $index) {
+      <div class="flex flex-column gap-3">
         <div class="text-base font-semibold">{{ item.header }}</div>
-        <div class="text-sm" *ngFor="let link of item.items">
+        @for (link of item.items; track $index) {
+        <div class="text-sm">
           {{ link }}
         </div>
+        }
       </div>
+      }
     </div>
 
     <div class="w-4">
