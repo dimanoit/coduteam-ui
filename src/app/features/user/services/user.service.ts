@@ -1,48 +1,60 @@
-import { Injectable } from '@angular/core';
-import { User, LoginDto } from '../models/user.interface';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { mockedTestUser } from '../../../../mocks/mock_user';
+import { Injectable, signal } from '@angular/core';
+import { User, AuthDto } from '../models/user.interface';
+import { map, Observable, tap } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { AuthToken } from '../models/auth-token.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private userSubject = new BehaviorSubject<User | null>(
-    this.getUserFromLocalStorage(),
-  );
+  constructor(private http: HttpClient) {}
 
-  private mockedTestUser = mockedTestUser;
-  private isLoggedInStatus = false;
+  isUserLoggedIn = signal(this.getIsUserLoggedIn());
 
-  constructor() {
-    this.userSubject.subscribe((user) => {
-      this.isLoggedInStatus = !!user;
-    });
+  login(authDto: AuthDto): Observable<void> {
+    return this.callAuthEndpoint('/login', authDto);
   }
-  login(loginDto: LoginDto): Observable<User | null> {
-    if (this.mockedTestUser.email === loginDto.email) {
-      this.userSubject.next(this.mockedTestUser);
-      localStorage.setItem('user', JSON.stringify(this.mockedTestUser));
-      return of(this.mockedTestUser);
-    }
 
-    return of(null);
+  register(authDto: AuthDto): Observable<void> {
+    return this.callAuthEndpoint('/register', authDto);
   }
 
   logout() {
-    this.userSubject.next(null);
+    this.isUserLoggedIn.set(false);
+    localStorage.clear();
   }
 
-  getUser$(): Observable<User | null> {
-    return this.userSubject.asObservable();
+  getAuthToken() {
+    return localStorage.getItem('token');
   }
 
-  isLoggedIn(): boolean {
-    return this.isLoggedInStatus;
-  }
-
-  private getUserFromLocalStorage(): User {
+  getCurrentUser(): User {
     const userJson = localStorage.getItem('user');
     return userJson ? JSON.parse(userJson) : null;
+  }
+
+  private getIsUserLoggedIn(): boolean {
+    return !!this.getAuthToken();
+  }
+
+  private callAuthEndpoint(
+    endpoint: string,
+    authDto: AuthDto,
+  ): Observable<void> {
+    return this.http
+      .post<AuthToken>(endpoint, authDto)
+      .pipe(map((authToken) => this.setupUserState(authToken)));
+  }
+
+  private setupUserState(authToken: AuthToken) {
+    if (authToken) {
+      this.isUserLoggedIn.set(true);
+      localStorage.setItem('token', JSON.stringify(authToken.accessToken));
+      localStorage.setItem(
+        'refreshToken',
+        JSON.stringify(authToken.refreshToken),
+      );
+    }
   }
 }

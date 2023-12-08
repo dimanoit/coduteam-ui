@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
   private themeService = inject(ThemeService);
 
   items: MenuItem[] | undefined;
-  isLoggedIn = false;
+  isLoggedIn = this.userService.isUserLoggedIn;
   isShownCreateProjectDialog = false;
   isLightTheme = this.themeService.isLightTeam;
 
@@ -51,10 +51,6 @@ export class NavbarComponent implements OnInit {
       },
       { label: 'Positions', routerLink: 'positions' },
     ];
-
-    this.userService.getUser$().subscribe((user) => {
-      this.isLoggedIn = !!user;
-    });
   }
 
   toggleTheme() {

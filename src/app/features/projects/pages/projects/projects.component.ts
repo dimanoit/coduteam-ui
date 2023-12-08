@@ -25,7 +25,7 @@ export class ProjectsComponent {
   isCardView: boolean = false;
 
   first: number = 0;
-  rows: number = 10;
+  rows: number = 9;
 
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? this.first;

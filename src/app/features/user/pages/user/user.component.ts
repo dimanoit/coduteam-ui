@@ -13,9 +13,12 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ProjectService } from '../../../projects/services/project.service';
-import { switchMap, tap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
+import { User } from '../../models/user.interface';
+import { Project } from '../../../projects/models/project.interface';
+import { PositionDto } from '../../../positions/models/position-dto.interface';
 
 @Component({
   selector: 'app-user',
@@ -35,28 +38,31 @@ import { ProjectLineComponent } from '../../../projects/components/project-line/
   styleUrls: ['./user.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
   userService = inject(UserService);
   messageService = inject(MessageService);
   projectService = inject(ProjectService);
   positionService = inject(PositionService);
 
-  currentUser$ = this.userService.getUser$();
-  projects$ = this.currentUser$.pipe(
-    switchMap((user) =>
-      this.projectService.getProjects({ userId: user?.userId }),
-    ),
-  );
-
-  positions$ = this.projects$.pipe(
-    switchMap((projects) =>
-      this.positionService.getPositions({
-        projectsIds: projects.map((p) => p.id),
-      }),
-    ),
-  );
-
+  user: User | null = null;
+  projects$!: Observable<Project[]>;
+  positions$!: Observable<PositionDto[]>;
   uploadedFiles: any[] = [];
+
+  ngOnInit(): void {
+    this.user = this.userService.getCurrentUser();
+    this.projects$ = this.projectService.getProjects({
+      userId: this.user?.userId,
+    });
+
+    this.positions$ = this.projects$.pipe(
+      switchMap((projects) =>
+        this.positionService.getPositions({
+          projectsIds: projects.map((p) => p.id),
+        }),
+      ),
+    );
+  }
 
   onUpload(event: FileUploadEvent) {
     for (let file of event.files) {

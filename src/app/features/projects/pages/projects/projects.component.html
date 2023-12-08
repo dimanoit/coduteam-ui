@@ -8,30 +8,22 @@
   ></p-toggleButton>
 </div>
 
-<ng-container *ngIf="projects && projects.length > 0">
-  <div class="flex gap-5 flex-wrap justify-content-center py-5">
-    <ng-container *ngIf="isCardView; else lineView">
-      <app-project-card
-        *ngFor="let project of projects"
-        [project]="project"
-      ></app-project-card>
-    </ng-container>
+@if (projects && projects.length > 0) {
+<div class="flex gap-5 flex-wrap justify-content-center py-5">
+  @if (isCardView) { @for (project of projects; track $index) {
+  <app-project-card [project]="project"></app-project-card>
+  } }@else { @for (project of projects; track $index) {
+  <app-project-line [project]="project"></app-project-line>
+  } }
+</div>
 
-    <ng-template #lineView>
-      <app-project-line
-        *ngFor="let project of projects"
-        [project]="project"
-      ></app-project-line>
-    </ng-template>
-  </div>
-
-  <div class="card flex justify-content-end">
-    <p-paginator
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="120"
-      [rowsPerPageOptions]="[10, 20, 30]"
-    ></p-paginator>
-  </div>
-</ng-container>
+<div class="card flex justify-content-center">
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="120"
+    [rowsPerPageOptions]="[9, 18, 36]"
+  ></p-paginator>
+</div>
+}

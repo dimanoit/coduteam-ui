@@ -1,60 +1,67 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import {FormGroup, FormBuilder, Validators, ReactiveFormsModule} from '@angular/forms';
-import { LoginDto } from '../../models/user.interface';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { AuthDto } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
-import {ButtonModule} from "primeng/button";
-import {InputTextModule} from "primeng/inputtext";
+import { ActivatedRoute, Router } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { AuthType } from '../../models/auth-type.enum';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  imports: [
-    ButtonModule,
-    ReactiveFormsModule,
-    InputTextModule
-  ],
-  standalone: true
+  imports: [ButtonModule, ReactiveFormsModule, InputTextModule],
+  standalone: true,
 })
-export class AuthComponent {
-  loginForm: FormGroup;
+export class AuthComponent implements OnInit {
+  authForm: FormGroup;
+  authType: AuthType = AuthType.SignIn;
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router
+    private route: ActivatedRoute,
+    private router: Router,
   ) {
-    this.loginForm = this.formBuilder.group({
+    this.authForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
     });
   }
 
-  onSubmit() {
-    if (this.loginForm.valid) {
-      const loginDto: LoginDto = {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password,
-      };
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params) => {
+      const type = params['type'];
+      if (type && Object.values(AuthType).includes(type as AuthType)) {
+        this.authType = type as AuthType;
+      }
+    });
+  }
 
-      this.userService.login(loginDto).subscribe({
-        next: (user) => {
-          if (user) {
-            console.log('Login successful', user);
-            this.router.navigate(['/projects']);
-          } else {
-            alert('Login failed');
-          }
-        },
-        error: (error) => {
-          alert('Error during login:' + error);
-        },
-        complete: () => {
-          console.log('Login request completed');
-        },
-      });
+  onSubmit() {
+    if (!this.authForm.valid) {
+      return;
     }
+
+    const authDto: AuthDto = {
+      email: this.authForm.value.email,
+      password: this.authForm.value.password,
+    };
+
+    let user$ =
+      this.authType === AuthType.SignIn
+        ? this.userService.login(authDto)
+        : this.userService.register(authDto);
+
+    user$.subscribe((user) => {
+      this.router.navigate(['/projects']);
+    });
   }
 }

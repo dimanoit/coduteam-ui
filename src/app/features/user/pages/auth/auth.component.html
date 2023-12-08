@@ -14,7 +14,7 @@
       <p-button icon="pi pi-apple" [outlined]="true"></p-button>
     </div>
 
-    <form [formGroup]="loginForm">
+    <form [formGroup]="authForm">
       <div class="flex flex-column gap-2 my-3">
         <label htmlFor="email">Email Address</label>
         <input
@@ -42,7 +42,7 @@
 
       <p-button
         label="Sign in"
-        [disabled]="!loginForm.valid"
+        [disabled]="!authForm.valid"
         class="sign-in-button w-full"
         (onClick)="onSubmit()"
       ></p-button>

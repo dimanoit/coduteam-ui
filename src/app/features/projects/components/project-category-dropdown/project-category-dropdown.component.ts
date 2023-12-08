@@ -53,7 +53,6 @@ export class ProjectCategoryDropdownComponent
 
   writeValue(obj: any): void {
     if (obj !== undefined) {
-      console.log(obj);
       this.formControl.setValue(obj);
     }
   }

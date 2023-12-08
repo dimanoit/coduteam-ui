@@ -11,7 +11,7 @@ export interface User {
   cv: string;
 }
 
-export interface LoginDto {
+export interface AuthDto {
   email: string;
   password: string;
 }
