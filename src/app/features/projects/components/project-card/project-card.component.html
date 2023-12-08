@@ -1,4 +1,6 @@
-<div class="card flex flex-column p-2" *ngIf="project; else loading">
+@if (project) {
+
+<div class="card flex flex-column p-2">
   <app-project-category
     class="category-badge"
     [category]="project.category"
@@ -25,9 +27,8 @@
     ></p-button>
   </div>
 </div>
-
-<ng-template #loading>
-  <div class="custom-card">
-    <div class="loader">Loading...</div>
-  </div>
-</ng-template>
+} @else {
+<div class="custom-card">
+  <div class="loader">Loading...</div>
+</div>
+}

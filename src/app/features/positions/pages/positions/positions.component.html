@@ -2,9 +2,8 @@
   <app-position-filter />
 
   <div>
-    <app-position-line
-      *ngFor="let position of positions"
-      [position]="position"
-    />
+    @for (position of positions; track $index) {
+    <app-position-line [position]="position"></app-position-line>
+    }
   </div>
 </div>
