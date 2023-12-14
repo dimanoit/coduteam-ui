@@ -41,7 +41,5 @@ export class ProjectsFilterComponent implements OnInit {
     });
   }
 
-  search() {
-    console.log(this.searchForm.value);
-  }
+  search() {}
 }

@@ -22,20 +22,26 @@
         style="font-size: 1.5rem; cursor: pointer"
       ></i>
 
-      @if (isLoggedIn) {
-      <p-button
-        label="Log out"
-        [outlined]="true"
-        (onClick)="logout()"
-      ></p-button>
-      }@else {
-      <p-button label="Log in" routerLink="/auth" [outlined]="true"></p-button>
-      <p-button
-        label="Sing Up"
-        [outlined]="true"
-        severity="secondary"
-        routerLink="/auth"
-      ></p-button>
+      @if (isLoggedIn()) {
+        <p-button
+          label="Log out"
+          [outlined]="true"
+          (onClick)="logout()"
+        ></p-button>
+      } @else {
+        <p-button
+          label="Log in"
+          [routerLink]="['/auth']"
+          [queryParams]="{ type: 'SignIn' }"
+          [outlined]="true"
+        ></p-button>
+        <p-button
+          label="Sign Up"
+          [routerLink]="['/auth']"
+          [queryParams]="{ type: 'SignUp' }"
+          [outlined]="true"
+          severity="secondary"
+        ></p-button>
       }
     </div>
   </ng-template>

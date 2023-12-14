@@ -238,33 +238,4 @@ export const mockedData: Project[] = [
       },
     ],
   },
-  {
-    id: 10,
-    ownerId: 1,
-    title: 'Flutter Personal Project',
-    description: 'Data relate measure over bank forget.',
-    category: ProjectCategory.WebDevelopment,
-    participants: [
-      {
-        userId: 231,
-        imageSrc: 'https://placekitten.com/22/990',
-        userName: 'lunamark',
-      },
-      {
-        userId: 27,
-        imageSrc: 'https://dummyimage.com/138x722',
-        userName: 'klinetracy',
-      },
-      {
-        userId: 657,
-        imageSrc: 'https://dummyimage.com/610x708',
-        userName: 'salinaspaul',
-      },
-      {
-        userId: 404,
-        imageSrc: 'https://placekitten.com/590/532',
-        userName: 'jillguzman',
-      },
-    ],
-  },
 ];
