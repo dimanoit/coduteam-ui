@@ -11,18 +11,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { AuthType } from '../../models/auth-type.enum';
+import { DividerModule } from 'primeng/divider';
+import { PasswordModule } from 'primeng/password';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  imports: [ButtonModule, ReactiveFormsModule, InputTextModule],
+  imports: [
+    ButtonModule,
+    ReactiveFormsModule,
+    InputTextModule,
+    DividerModule,
+    PasswordModule,
+  ],
   standalone: true,
 })
 export class AuthComponent implements OnInit {
   authForm: FormGroup;
   authType: AuthType = AuthType.SignIn;
+  authTypeEnum = AuthType;
+  isLoading = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,6 +56,7 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit() {
+    this.isLoading = true;
     if (!this.authForm.valid) {
       return;
     }
