@@ -28,10 +28,15 @@ export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ) {
-  const authToken = inject(UserService).getAuthToken();
+  let authToken = inject(UserService).getAuthToken();
 
   if (authToken) {
-    req.headers.append('X-Authentication-Token', authToken);
+    authToken = authToken.replace(/"/g, '');
+    req = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    });
   }
 
   return next(req);

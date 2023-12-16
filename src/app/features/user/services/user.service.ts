@@ -1,5 +1,9 @@
 import { Injectable, signal } from '@angular/core';
-import { User, AuthDto } from '../models/user.interface';
+import {
+  User,
+  AuthDto,
+  AccountRegistrationDto,
+} from '../models/user.interface';
 import { map, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthToken } from '../models/auth-token.interface';
@@ -13,11 +17,19 @@ export class UserService {
   isUserLoggedIn = signal(this.getIsUserLoggedIn());
 
   login(authDto: AuthDto): Observable<void> {
-    return this.callAuthEndpoint('/login', authDto);
+    return this.http
+      .post<AuthToken>('/login', authDto)
+      .pipe(map((authToken) => this.setupUserState(authToken)));
   }
 
   register(authDto: AuthDto): Observable<void> {
-    return this.callAuthEndpoint('/register', authDto);
+    return this.http.post<void>('/register', authDto);
+  }
+
+  finishRegistration(
+    finishRegistrationDto: AccountRegistrationDto,
+  ): Observable<void> {
+    return this.http.post<void>('/api/account', finishRegistrationDto);
   }
 
   logout() {
@@ -36,15 +48,6 @@ export class UserService {
 
   private getIsUserLoggedIn(): boolean {
     return !!this.getAuthToken();
-  }
-
-  private callAuthEndpoint(
-    endpoint: string,
-    authDto: AuthDto,
-  ): Observable<void> {
-    return this.http
-      .post<AuthToken>(endpoint, authDto)
-      .pipe(map((authToken) => this.setupUserState(authToken)));
   }
 
   private setupUserState(authToken: AuthToken) {
