@@ -3,12 +3,13 @@ import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { SmallFooterComponent } from './core/components/small-footer/small-footer.component';
 import { ThemeService } from './shared/services/theme.service';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  imports: [NavbarComponent, RouterOutlet, SmallFooterComponent],
+  imports: [NavbarComponent, RouterOutlet, SmallFooterComponent, ToastModule],
   providers: [ThemeService],
   standalone: true,
 })
