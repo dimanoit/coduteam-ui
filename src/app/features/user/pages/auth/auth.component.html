@@ -1,6 +1,6 @@
 <div class="auth-container grid">
   <div class="col">
-    <img class="block w-full" src="/src/assets/auth.png" alt="Auth picture" />
+    <img class="block w-full" src="../assets/auth.png" alt="Auth picture" />
   </div>
 
   <div class="col">
@@ -26,24 +26,35 @@
       </div>
 
       <div class="flex flex-column gap-2 my-3">
-        <label htmlFor="username">Password</label>
-        <input
-          pInputText
-          type="password"
-          id="username"
+        <p-password
+          [toggleMask]="true"
+          placeholder="******"
           formControlName="password"
-          aria-describedby="password-help"
-        />
-        <div class="text-xs" id="password-help">
-          Password: ≥ 8 chars, 1 uppercase, 1 lowercase, 1 digit, 1 special
-          character (e.g., #, $).
-        </div>
+          [feedback]="authType === authTypeEnum.SignUp"
+        >
+          @if (authType === authTypeEnum.SignUp) {
+            <ng-template pTemplate="header">
+              <h6>Pick a password</h6>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <p-divider></p-divider>
+              <p class="mt-2">Suggestions</p>
+              <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                <li>At least one lowercase</li>
+                <li>At least one uppercase</li>
+                <li>At least one numeric</li>
+                <li>Minimum 8 characters</li>
+              </ul>
+            </ng-template>
+          }
+        </p-password>
       </div>
 
       <p-button
-        label="Sign in"
+        [label]="authType === authTypeEnum.SignIn ? 'Sign in' : 'Sign up'"
         [disabled]="!authForm.valid"
         class="sign-in-button w-full"
+        [loading]="isLoading"
         (onClick)="onSubmit()"
       ></p-button>
     </form>
