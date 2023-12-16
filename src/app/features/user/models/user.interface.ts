@@ -15,3 +15,16 @@ export interface AuthDto {
   email: string;
   password: string;
 }
+
+export interface AccountRegistrationDto {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: Date;
+  gender?: Gender | null;
+}
+
+export enum Gender {
+  Male = 'Male',
+  Female = 'Female',
+  NonBinary = 'NonBinary',
+}

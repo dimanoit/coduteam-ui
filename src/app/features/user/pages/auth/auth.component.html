@@ -1,67 +1,130 @@
-<div class="auth-container grid">
+<div class="grid pt-3">
   <div class="col">
     <img class="block w-full" src="../assets/auth.png" alt="Auth picture" />
   </div>
 
   <div class="col">
-    <div class="text-5xl font-semibold">Sign in to CoduTeam</div>
+    @if (isActivation) {
+      <div class="flex flex-column align-items-center gap-3">
+        <div class="text-3xl font-semibold">
+          Please finish account registration
+        </div>
 
-    <div class="my-4">Sign up with social account or enter your details</div>
-
-    <div class="flex gap-3 justify-content-between social-button-container">
-      <p-button icon="pi pi-google" [outlined]="true"></p-button>
-      <p-button icon="pi pi-facebook" [outlined]="true"></p-button>
-      <p-button icon="pi pi-apple" [outlined]="true"></p-button>
-    </div>
-
-    <form [formGroup]="authForm">
-      <div class="flex flex-column gap-2 my-3">
-        <label htmlFor="email">Email Address</label>
-        <input
-          pInputText
-          placeholder="example@gmail.com"
-          formControlName="email"
-          id="email"
-        />
-      </div>
-
-      <div class="flex flex-column gap-2 my-3">
-        <p-password
-          [toggleMask]="true"
-          placeholder="******"
-          formControlName="password"
-          [feedback]="authType === authTypeEnum.SignUp"
+        <form
+          class="flex flex-column gap-2"
+          [formGroup]="finishRegistrationForm"
         >
-          @if (authType === authTypeEnum.SignUp) {
-            <ng-template pTemplate="header">
-              <h6>Pick a password</h6>
-            </ng-template>
-            <ng-template pTemplate="footer">
-              <p-divider></p-divider>
-              <p class="mt-2">Suggestions</p>
-              <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
-                <li>At least one lowercase</li>
-                <li>At least one uppercase</li>
-                <li>At least one numeric</li>
-                <li>Minimum 8 characters</li>
-              </ul>
-            </ng-template>
-          }
-        </p-password>
+          <div class="flex gap-2">
+            <input
+              pInputText
+              placeholder="Firstname"
+              id="firstName"
+              formControlName="firstName"
+            />
+            <input
+              placeholder="Lastname"
+              pInputText
+              id="lastName"
+              formControlName="lastName"
+            />
+          </div>
+
+          <div class="flex gap-2">
+            <p-calendar
+              formControlName="date"
+              inputId="birth_date"
+              placeholder="Birth Date"
+            ></p-calendar>
+
+            <p-dropdown
+              formControlName="gender"
+              [options]="genders"
+              optionLabel="name"
+              placeholder="Gender"
+            ></p-dropdown>
+          </div>
+
+          <p-button
+            label="Finish"
+            [disabled]="!finishRegistrationForm.valid"
+            class="sign-in-button w-full"
+            [loading]="isLoading"
+            (onClick)="onRegistrationFinish()"
+          ></p-button>
+        </form>
+      </div>
+    } @else {
+      <div class="text-5xl font-semibold">
+        <span>
+          {{ authType === authTypeEnum.SignIn ? "Sign In" : "Sign Up" }}
+        </span>
+        to CoduTeam
       </div>
 
-      <p-button
-        [label]="authType === authTypeEnum.SignIn ? 'Sign in' : 'Sign up'"
-        [disabled]="!authForm.valid"
-        class="sign-in-button w-full"
-        [loading]="isLoading"
-        (onClick)="onSubmit()"
-      ></p-button>
-    </form>
+      <div class="my-4">
+        <span>
+          {{ authType === authTypeEnum.SignIn ? "Sign In" : "Sign Up" }}
+        </span>
+        with social account or enter your details
+      </div>
 
-    <div class="flex justify-content-between text-sm mt-5">
-      <div class="underline">Forgot Password</div>
-      <div>Don't have an account? <span class="underline"> Sign up</span></div>
-    </div>
+      <div class="flex gap-3 justify-content-between social-button-container">
+        <p-button icon="pi pi-google" [outlined]="true"></p-button>
+        <p-button icon="pi pi-facebook" [outlined]="true"></p-button>
+        <p-button icon="pi pi-apple" [outlined]="true"></p-button>
+      </div>
+
+      <form [formGroup]="authForm">
+        <div class="flex flex-column gap-2 my-3">
+          <label htmlFor="email">Email Address</label>
+          <input
+            pInputText
+            placeholder="example@gmail.com"
+            formControlName="email"
+            id="email"
+          />
+        </div>
+
+        <div class="flex flex-column gap-2 my-3">
+          <p-password
+            [toggleMask]="true"
+            placeholder="******"
+            formControlName="password"
+            [feedback]="authType === authTypeEnum.SignUp"
+          >
+            @if (authType === authTypeEnum.SignUp) {
+              <ng-template pTemplate="header">
+                <h6>Pick a password</h6>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                <p-divider></p-divider>
+                <p class="mt-2">Suggestions</p>
+                <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                  <li>At least one lowercase</li>
+                  <li>At least one uppercase</li>
+                  <li>At least one numeric</li>
+                  <li>Minimum 8 characters</li>
+                </ul>
+              </ng-template>
+            }
+          </p-password>
+        </div>
+
+        <p-button
+          [label]="authType === authTypeEnum.SignIn ? 'Sign in' : 'Sign up'"
+          [disabled]="!authForm.valid"
+          class="sign-in-button w-full"
+          [loading]="isLoading"
+          (onClick)="onSubmit()"
+        ></p-button>
+      </form>
+
+      <div class="flex justify-content-between text-sm mt-5">
+        <div class="underline">Forgot Password</div>
+        <div>
+          Don't have an account? <span class="underline"> Sign up</span>
+        </div>
+      </div>
+    }
   </div>
 </div>
