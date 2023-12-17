@@ -46,7 +46,7 @@ export class AuthComponent implements OnInit {
   authType: AuthType = AuthType.SignIn;
   authTypeEnum = AuthType;
   isLoading = false;
-  isActivation = true;
+  isActivation = false;
 
   constructor(
     private formBuilder: FormBuilder,

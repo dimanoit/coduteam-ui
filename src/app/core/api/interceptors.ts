@@ -58,16 +58,18 @@ export function errorHandlingInterceptor(
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
-      let errorMessage = 'An unknown error occurred!';
-      if (error.message) {
-        errorMessage = error.message;
-      }
+      if (error.status === 500) {
+        let errorMessage = 'An unknown error occurred!';
+        if (error.message) {
+          errorMessage = error.message;
+        }
 
-      messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: errorMessage,
-      });
+        messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: errorMessage,
+        });
+      }
 
       return throwError(() => error);
     }),

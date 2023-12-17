@@ -1,5 +1,9 @@
 <div class="shadow-2 flex gap-2 justify-content-between p-3">
-  <img class="w-9rem block" [src]="project?.imageScr" alt="Project photo" />
+  <img
+    class="w-9rem block"
+    [src]="project?.projectImgUrl"
+    alt="Project photo"
+  />
 
   <div class="w-13rem flex flex-column justify-content-between">
     <div class="font-italic">{{ project?.title }}</div>
@@ -18,11 +22,11 @@
     <div class="flex justify-content-end">
       <p-avatarGroup>
         @for (user of project?.participants; track $index) {
-        <p-avatar
-          [image]="user.imageSrc"
-          size="normal"
-          shape="circle"
-        ></p-avatar>
+          <p-avatar
+            [image]="user.imageSrc"
+            size="normal"
+            shape="circle"
+          ></p-avatar>
         }
       </p-avatarGroup>
     </div>

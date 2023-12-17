@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Project } from '../../models/project.interface';
-import { mockedData } from '../../../../../mocks/mock_projects';
 import { CommonModule } from '@angular/common';
 import { NotFoundPageComponent } from '../../../../shared/components/not-found-page/not-found-page.component';
+import { ProjectService } from '../../services/project.service';
 
 @Component({
   selector: 'app-project-page',
@@ -13,15 +13,24 @@ import { NotFoundPageComponent } from '../../../../shared/components/not-found-p
   imports: [CommonModule, NotFoundPageComponent],
 })
 export class ProjectComponent implements OnInit {
-  projectId: number | null = null;
-  project: Project | null = null;
+  project!: Project;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private projectService: ProjectService,
+  ) {}
 
   ngOnInit() {
     const projectIdParam = this.route.snapshot.paramMap.get('projectId');
-    this.projectId = projectIdParam ? +projectIdParam : null;
 
-    this.project = mockedData.find((p) => p.id === this.projectId) ?? null;
+    if (!projectIdParam) {
+      return;
+    }
+
+    this.projectService
+      .getProjects({
+        projectId: +projectIdParam,
+      })
+      .subscribe((p) => (this.project = p[0]));
   }
 }

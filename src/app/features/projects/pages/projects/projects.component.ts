@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
-import { mockedData } from '../../../../../mocks/mock_projects';
+import { Component, OnInit } from '@angular/core';
 import { ProjectCardComponent } from '../../components/project-card/project-card.component';
 import { CommonModule } from '@angular/common';
 import { ProjectsFilterComponent } from '../../components/projects-filter/projects-filter.component';
 import { PaginatorModule, PaginatorState } from 'primeng/paginator';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProjectLineComponent } from '../../components/project-line/project-line.component';
+import { ProjectService } from '../../services/project.service';
+import { Project } from '../../models/project.interface';
 
 @Component({
   selector: 'app-projects',
@@ -18,14 +19,21 @@ import { ProjectLineComponent } from '../../components/project-line/project-line
     ToggleButtonModule,
     ProjectLineComponent,
   ],
+  providers: [ProjectService],
   standalone: true,
 })
-export class ProjectsComponent {
-  projects = mockedData;
+export class ProjectsComponent implements OnInit {
+  projects: Project[] = [];
   isCardView: boolean = false;
 
   first: number = 0;
   rows: number = 9;
+
+  constructor(private projectService: ProjectService) {}
+
+  ngOnInit(): void {
+    this.projectService.getProjects().subscribe((p) => (this.projects = p));
+  }
 
   onPageChange(event: PaginatorState) {
     this.first = event.first ?? this.first;

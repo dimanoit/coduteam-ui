@@ -2,7 +2,7 @@ import { ProjectCategory } from '../components/project-card/project-category/pro
 
 export interface Project {
   id: number;
-  imageScr?: string;
+  projectImgUrl?: string;
   title: string;
   description: string;
   category: ProjectCategory;
