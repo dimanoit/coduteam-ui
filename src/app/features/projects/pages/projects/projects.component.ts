@@ -7,11 +7,13 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProjectLineComponent } from '../../components/project-line/project-line.component';
 import { ProjectService } from '../../services/project.service';
 import { Project } from '../../models/project.interface';
-import { Observable } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
+import { SkeletonModule } from 'primeng/skeleton';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
+  styleUrl: './projects.component.scss',
   imports: [
     ProjectCardComponent,
     CommonModule,
@@ -19,6 +21,7 @@ import { Observable } from 'rxjs';
     PaginatorModule,
     ToggleButtonModule,
     ProjectLineComponent,
+    SkeletonModule,
   ],
   providers: [ProjectService],
   standalone: true,
@@ -29,12 +32,14 @@ export class ProjectsComponent implements OnInit {
 
   first: number = 0;
   rows: number = 9;
+  isLoading: boolean = true;
 
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.projects$ = this.projectService.getProjects();
-    //this.projectService.getProjects().subscribe((p) => (this.projects = p));
+    this.projects$ = this.projectService
+      .getProjects()
+      .pipe(tap(() => (this.isLoading = false)));
   }
 
   onPageChange(event: PaginatorState) {

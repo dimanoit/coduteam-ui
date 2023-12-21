@@ -20,7 +20,8 @@ export class AuthService {
 
   logout() {
     this.isUserLoggedIn.set(false);
-    localStorage.clear();
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
   }
 
   getAuthToken() {

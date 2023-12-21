@@ -74,7 +74,7 @@
         <p-button icon="pi pi-apple" [outlined]="true"></p-button>
       </div>
 
-      <form [formGroup]="authForm">
+      <form [formGroup]="authForm" (keyup.enter)="onSubmit()">
         <div class="flex flex-column gap-2 my-3">
           <label htmlFor="email">Email Address</label>
           <input

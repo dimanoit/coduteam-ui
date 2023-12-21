@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
         }),
       ),
     );
-    
+
     this.user$ = this.userService.getCurrentUser();
   }
 }

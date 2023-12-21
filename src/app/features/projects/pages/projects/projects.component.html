@@ -1,4 +1,4 @@
-<div class="flex mt-5 w-full align-items-center justify-content-evenly">
+<div class="flex mt-2 w-full align-items-center justify-content-evenly">
   <app-projects-filter />
 
   <p-toggleButton
@@ -8,26 +8,34 @@
   ></p-toggleButton>
 </div>
 
-@if (projects$ | async; as projects) {
-  <div class="flex gap-5 flex-wrap justify-content-center py-5">
-    @if (isCardView) {
-      @for (project of projects; track $index) {
-        <app-project-card [project]="project"></app-project-card>
-      }
-    } @else {
-      @for (project of projects; track $index) {
-        <app-project-line [project]="project"></app-project-line>
-      }
-    }
-  </div>
+<div class="projects-container">
+  @if (isLoading) {
+    <div class="flex justify-content-center py-5">
+      <p-skeleton width="54rem" height="6rem"></p-skeleton>
+    </div>
+  }
 
-  <div class="card flex justify-content-center">
-    <p-paginator
-      (onPageChange)="onPageChange($event)"
-      [first]="first"
-      [rows]="rows"
-      [totalRecords]="120"
-      [rowsPerPageOptions]="[9, 18, 36]"
-    ></p-paginator>
-  </div>
-}
+  @if (projects$ | async; as projects) {
+    <div class="flex gap-5 flex-wrap justify-content-center py-5">
+      @if (isCardView) {
+        @for (project of projects; track $index) {
+          <app-project-card [project]="project"></app-project-card>
+        }
+      } @else {
+        @for (project of projects; track $index) {
+          <app-project-line [project]="project"></app-project-line>
+        }
+      }
+    </div>
+  }
+</div>
+
+<div class="card flex justify-content-center">
+  <p-paginator
+    (onPageChange)="onPageChange($event)"
+    [first]="first"
+    [rows]="rows"
+    [totalRecords]="120"
+    [rowsPerPageOptions]="[9, 18, 36]"
+  ></p-paginator>
+</div>

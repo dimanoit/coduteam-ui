@@ -37,6 +37,7 @@ import { AuthService } from '../../services/auth.service';
     CalendarModule,
     DropdownModule,
   ],
+  providers: [UserService],
   standalone: true,
 })
 export class AuthComponent implements OnInit {
