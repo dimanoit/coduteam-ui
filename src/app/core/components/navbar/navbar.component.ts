@@ -13,6 +13,7 @@ import { ButtonModule } from 'primeng/button';
 import { CreateProjectDialogComponent } from '../../../features/projects/components/create-project-dialog/create-project-dialog.component';
 import { NgClass, NgIf } from '@angular/common';
 import { ThemeService } from '../../../shared/services/theme.service';
+import { AuthService } from '../../../features/user/services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -31,7 +32,7 @@ import { ThemeService } from '../../../shared/services/theme.service';
   ],
 })
 export class NavbarComponent implements OnInit {
-  private userService = inject(UserService);
+  private userService = inject(AuthService);
   private router = inject(Router);
   private themeService = inject(ThemeService);
 
@@ -46,7 +47,9 @@ export class NavbarComponent implements OnInit {
       {
         label: 'Create Project',
         command: () => {
-          this.isShownCreateProjectDialog = true;
+          if (this.userService.isUserLoggedIn()) {
+            this.isShownCreateProjectDialog = true;
+          }
         },
       },
       { label: 'Positions', routerLink: 'positions' },

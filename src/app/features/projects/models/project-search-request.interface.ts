@@ -3,4 +3,5 @@ export interface ProjectSearchRequest {
   projectId?: number;
   take?: number;
   skip?: number;
+  onlyRelatedToCurrentUser?: boolean;
 }

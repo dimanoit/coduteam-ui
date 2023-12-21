@@ -1,4 +1,4 @@
-@if (user) {
+@if (user$ | async; as user) {
   <div class="flex gap-3 pt-5">
     <div class="flex flex-column gap-3">
       <div class="flex p-5 surface-card border-1 border-round surface-border">

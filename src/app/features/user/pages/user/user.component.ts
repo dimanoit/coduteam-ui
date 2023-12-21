@@ -39,20 +39,21 @@ import { PositionDto } from '../../../positions/models/position-dto.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnInit {
-  userService = inject(UserService);
+  constructor(private userService: UserService) {}
+
   messageService = inject(MessageService);
   projectService = inject(ProjectService);
   positionService = inject(PositionService);
 
-  user: User | null = null;
+  user$!: Observable<User>;
   projects$!: Observable<Project[]>;
   positions$!: Observable<PositionDto[]>;
   uploadedFiles: any[] = [];
 
   ngOnInit(): void {
-    this.user = this.userService.getCurrentUser();
+    this.user$ = this.userService.getCurrentUser();
     this.projects$ = this.projectService.getProjects({
-      userId: this.user?.userId,
+      onlyRelatedToCurrentUser: true,
     });
 
     this.positions$ = this.projects$.pipe(

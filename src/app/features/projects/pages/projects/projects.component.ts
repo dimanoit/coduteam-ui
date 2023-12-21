@@ -7,6 +7,7 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProjectLineComponent } from '../../components/project-line/project-line.component';
 import { ProjectService } from '../../services/project.service';
 import { Project } from '../../models/project.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-projects',
@@ -23,7 +24,7 @@ import { Project } from '../../models/project.interface';
   standalone: true,
 })
 export class ProjectsComponent implements OnInit {
-  projects: Project[] = [];
+  projects$!: Observable<Project[]>;
   isCardView: boolean = false;
 
   first: number = 0;
@@ -32,7 +33,8 @@ export class ProjectsComponent implements OnInit {
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
-    this.projectService.getProjects().subscribe((p) => (this.projects = p));
+    this.projects$ = this.projectService.getProjects();
+    //this.projectService.getProjects().subscribe((p) => (this.projects = p));
   }
 
   onPageChange(event: PaginatorState) {

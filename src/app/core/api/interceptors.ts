@@ -10,6 +10,7 @@ import { UserService } from '../../features/user/services/user.service';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MessageService } from 'primeng/api';
+import { AuthService } from '../../features/user/services/auth.service';
 
 export function loggingInterceptor(
   req: HttpRequest<unknown>,
@@ -28,7 +29,7 @@ export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ) {
-  let authToken = inject(UserService).getAuthToken();
+  let authToken = inject(AuthService).getAuthToken();
 
   if (authToken) {
     authToken = authToken.replace(/"/g, '');

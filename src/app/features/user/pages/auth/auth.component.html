@@ -56,14 +56,14 @@
     } @else {
       <div class="text-5xl font-semibold">
         <span>
-          {{ authType === authTypeEnum.SignIn ? "Sign In" : "Sign Up" }}
+          {{ this.isSignUp ? "Sign Up" : "Sign In" }}
         </span>
         to CoduTeam
       </div>
 
       <div class="my-4">
         <span>
-          {{ authType === authTypeEnum.SignIn ? "Sign In" : "Sign Up" }}
+          {{ this.isSignUp ? "Sign Up" : "Sign In" }}
         </span>
         with social account or enter your details
       </div>
@@ -90,9 +90,9 @@
             [toggleMask]="true"
             placeholder="******"
             formControlName="password"
-            [feedback]="authType === authTypeEnum.SignUp"
+            [feedback]="this.isSignUp"
           >
-            @if (authType === authTypeEnum.SignUp) {
+            @if (this.isSignUp) {
               <ng-template pTemplate="header">
                 <h6>Pick a password</h6>
               </ng-template>
@@ -111,7 +111,7 @@
         </div>
 
         <p-button
-          [label]="authType === authTypeEnum.SignIn ? 'Sign in' : 'Sign up'"
+          [label]="this.isSignUp ? 'Sign up' : 'Sign in'"
           [disabled]="!authForm.valid"
           class="sign-in-button w-full"
           [loading]="isLoading"
@@ -120,9 +120,15 @@
       </form>
 
       <div class="flex justify-content-between text-sm mt-5">
-        <div class="underline">Forgot Password</div>
+        <div class="underline cursor-pointer">Forgot Password</div>
         <div>
-          Don't have an account? <span class="underline"> Sign up</span>
+          Don't have an account?
+          <span
+            [textContent]="this.isSignUp ? 'Sign in' : 'Sign up'"
+            class="underline cursor-pointer"
+            (click)="this.isSignUp = !this.isSignUp"
+          >
+          </span>
         </div>
       </div>
     }

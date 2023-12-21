@@ -26,4 +26,4 @@ bootstrapApplication(AppComponent, {
       ]),
     ),
   ],
-});
+}).then();

@@ -15,12 +15,13 @@ import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
-import { AuthType } from '../../models/auth-type.enum';
 import { DividerModule } from 'primeng/divider';
 import { PasswordModule } from 'primeng/password';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { concatMap } from 'rxjs';
+import { passwordValidator } from '../../validators/password.validator';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -43,14 +44,14 @@ export class AuthComponent implements OnInit {
   finishRegistrationForm: FormGroup;
   genders: GenderCode[] | undefined;
 
-  authType: AuthType = AuthType.SignIn;
-  authTypeEnum = AuthType;
+  isSignUp = false;
   isLoading = false;
   isActivation = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -69,15 +70,18 @@ export class AuthComponent implements OnInit {
 
     this.authForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
+      password: [
+        '',
+        [Validators.required, Validators.minLength(8), passwordValidator],
+      ],
     });
   }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
       const type = params['type'];
-      if (type && Object.values(AuthType).includes(type as AuthType)) {
-        this.authType = type as AuthType;
+      if (+type === 1) {
+        this.isSignUp = true;
       }
     });
   }
@@ -93,12 +97,11 @@ export class AuthComponent implements OnInit {
       password: this.authForm.value.password,
     };
 
-    let authObs$ =
-      this.authType === AuthType.SignIn
-        ? this.userService.login(authDto)
-        : this.userService
-            .register(authDto)
-            .pipe(concatMap(() => this.userService.login(authDto)));
+    let authObs$ = this.isSignUp
+      ? this.userService
+          .register(authDto)
+          .pipe(concatMap(() => this.authService.login(authDto)))
+      : this.authService.login(authDto);
 
     authObs$.subscribe({
       next: () => this.onSuccess(),
@@ -126,13 +129,14 @@ export class AuthComponent implements OnInit {
 
   private cleanOnError() {
     this.authForm.reset();
+
     this.isLoading = false;
   }
 
   private onSuccess() {
     this.isLoading = false;
 
-    if (this.authType === AuthType.SignUp) {
+    if (this.isSignUp) {
       this.isActivation = true;
       return;
     }

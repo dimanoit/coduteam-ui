@@ -8,22 +8,26 @@
   ></p-toggleButton>
 </div>
 
-@if (projects && projects.length > 0) {
-<div class="flex gap-5 flex-wrap justify-content-center py-5">
-  @if (isCardView) { @for (project of projects; track $index) {
-  <app-project-card [project]="project"></app-project-card>
-  } }@else { @for (project of projects; track $index) {
-  <app-project-line [project]="project"></app-project-line>
-  } }
-</div>
+@if (projects$ | async; as projects) {
+  <div class="flex gap-5 flex-wrap justify-content-center py-5">
+    @if (isCardView) {
+      @for (project of projects; track $index) {
+        <app-project-card [project]="project"></app-project-card>
+      }
+    } @else {
+      @for (project of projects; track $index) {
+        <app-project-line [project]="project"></app-project-line>
+      }
+    }
+  </div>
 
-<div class="card flex justify-content-center">
-  <p-paginator
-    (onPageChange)="onPageChange($event)"
-    [first]="first"
-    [rows]="rows"
-    [totalRecords]="120"
-    [rowsPerPageOptions]="[9, 18, 36]"
-  ></p-paginator>
-</div>
+  <div class="card flex justify-content-center">
+    <p-paginator
+      (onPageChange)="onPageChange($event)"
+      [first]="first"
+      [rows]="rows"
+      [totalRecords]="120"
+      [rowsPerPageOptions]="[9, 18, 36]"
+    ></p-paginator>
+  </div>
 }
