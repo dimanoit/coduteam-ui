@@ -1,14 +1,8 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  inject,
-  OnInit,
-} from '@angular/core';
-import { CommonModule, NgFor } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { AvatarModule } from 'primeng/avatar';
 import { ProjectsComponent } from '../../../projects/pages/projects/projects.component';
-import { FileUploadEvent, FileUploadModule } from 'primeng/fileupload';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
@@ -22,36 +16,31 @@ import { PositionDto } from '../../../positions/models/position-dto.interface';
 
 @Component({
   selector: 'app-user',
-  standalone: true,
   imports: [
-    CommonModule,
     AvatarModule,
     ProjectsComponent,
-    FileUploadModule,
+    CommonModule,
     ToastModule,
     PanelModule,
     ProjectLineComponent,
-    NgFor,
   ],
   providers: [MessageService, ProjectService, UserService, PositionService],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
 })
 export class UserComponent implements OnInit {
-  constructor(private userService: UserService) {}
-
-  messageService = inject(MessageService);
-  projectService = inject(ProjectService);
-  positionService = inject(PositionService);
+  constructor(
+    private userService: UserService,
+    private projectService: ProjectService,
+    private positionService: PositionService,
+  ) {}
 
   user$!: Observable<User>;
   projects$!: Observable<Project[]>;
   positions$!: Observable<PositionDto[]>;
-  uploadedFiles: any[] = [];
 
   ngOnInit(): void {
-    this.user$ = this.userService.getCurrentUser();
     this.projects$ = this.projectService.getProjects({
       onlyRelatedToCurrentUser: true,
     });
@@ -63,17 +52,7 @@ export class UserComponent implements OnInit {
         }),
       ),
     );
-  }
-
-  onUpload(event: FileUploadEvent) {
-    for (let file of event.files) {
-      this.uploadedFiles.push(file);
-    }
-
-    this.messageService.add({
-      severity: 'info',
-      summary: 'File Uploaded',
-      detail: '',
-    });
+    
+    this.user$ = this.userService.getCurrentUser();
   }
 }

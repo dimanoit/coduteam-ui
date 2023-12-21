@@ -11,8 +11,8 @@
 
         <div class="ml-2">
           <div class="font-semibold font-italic">
-            <span>{{ user.firstName }} </span>
-            <span>{{ user.lastName }}</span>
+            <span>{{ user?.firstName }} </span>
+            <span>{{ user?.lastName }}</span>
           </div>
           <div class="text-sm">
             {{ user.title }}
@@ -22,26 +22,6 @@
 
       <div class="flex justify-content-center min-w-max">
         <p-toast></p-toast>
-        <p-fileUpload
-          name="demo[]"
-          url="https://www.primefaces.org/cdn/api/upload.php"
-          (onUpload)="onUpload($event)"
-          [multiple]="false"
-          accept=".pdf"
-          [maxFileSize]="1000000"
-        >
-          <ng-template pTemplate="content">
-            @if (uploadedFiles.length) {
-              <ul>
-                @for (file of uploadedFiles; track $index) {
-                  <li>{{ file.name }} - {{ file.size }} bytes</li>
-                }
-              </ul>
-            } @else {
-              Drag and drop your CV here
-            }
-          </ng-template>
-        </p-fileUpload>
       </div>
     </div>
 
