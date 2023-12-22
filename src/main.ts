@@ -4,13 +4,13 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app/routes';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import {
-  authInterceptor,
   baseUrlInterceptor,
   errorHandlingInterceptor,
   loggingInterceptor,
 } from './app/core/api/interceptors';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
 
 bootstrapApplication(AppComponent, {
   providers: [

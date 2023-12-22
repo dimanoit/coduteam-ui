@@ -3,43 +3,46 @@ import { AuthToken } from '../models/auth-token.interface';
 import { AuthDto } from '../models/user.interface';
 import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { TokenManagementService } from './token-management.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isUserLoggedIn = signal(this.getIsUserLoggedIn());
+  isUserLoggedIn = signal(!!this.tokenManagementService.getAuthToken());
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private tokenManagementService: TokenManagementService,
+  ) {}
+
+  logout() {
+    this.isUserLoggedIn.set(false);
+    this.tokenManagementService.removeTokens();
+  }
 
   login(authDto: AuthDto): Observable<void> {
     return this.http
       .post<AuthToken>('/login', authDto)
-      .pipe(map((authToken) => this.setupUserState(authToken)));
+      .pipe(map((authToken) => this.storeTokenOnAuth(authToken)));
   }
 
-  logout() {
-    this.isUserLoggedIn.set(false);
-    localStorage.removeItem('token');
-    localStorage.removeItem('refreshToken');
+  refreshToken(): Observable<void> {
+    const body = {
+      refreshToken: localStorage.getItem('refreshToken'),
+    };
+
+    return this.http
+      .post<AuthToken>('/refresh', body)
+      .pipe(map((token) => this.storeTokenOnAuth(token)));
   }
 
-  getAuthToken() {
-    return localStorage.getItem('token');
-  }
-
-  private getIsUserLoggedIn(): boolean {
-    return !!this.getAuthToken();
-  }
-
-  private setupUserState(authToken: AuthToken) {
-    if (authToken) {
-      this.isUserLoggedIn.set(true);
-      localStorage.setItem('token', JSON.stringify(authToken.accessToken));
-      localStorage.setItem(
-        'refreshToken',
-        JSON.stringify(authToken.refreshToken),
-      );
+  private storeTokenOnAuth(authToken: AuthToken) {
+    if (!authToken) {
+      return;
     }
+
+    this.isUserLoggedIn.set(true);
+    this.tokenManagementService.addTokens(authToken);
   }
 }

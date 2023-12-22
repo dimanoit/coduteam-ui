@@ -9,6 +9,7 @@ export class ProjectService {
   constructor(private http: HttpClient) {}
 
   getProjects(params?: ProjectSearchRequest): Observable<Project[]> {
+    params = params ?? { skip: 0, take: 9 };
     return this.http.post<Project[]>('/api/projects/search', params);
   }
 }

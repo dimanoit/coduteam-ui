@@ -6,11 +6,9 @@ import {
   HttpRequest,
 } from '@angular/common/http';
 import { catchError, Observable, tap, throwError } from 'rxjs';
-import { UserService } from '../../features/user/services/user.service';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MessageService } from 'primeng/api';
-import { AuthService } from '../../features/user/services/auth.service';
 
 export function loggingInterceptor(
   req: HttpRequest<unknown>,
@@ -23,24 +21,6 @@ export function loggingInterceptor(
       }
     }),
   );
-}
-
-export function authInterceptor(
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn,
-) {
-  let authToken = inject(AuthService).getAuthToken();
-
-  if (authToken) {
-    authToken = authToken.replace(/"/g, '');
-    req = req.clone({
-      setHeaders: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    });
-  }
-
-  return next(req);
 }
 
 export function baseUrlInterceptor(
