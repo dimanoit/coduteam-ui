@@ -18,10 +18,10 @@ export class UserService {
   finishRegistration(
     finishRegistrationDto: AccountRegistrationDto,
   ): Observable<void> {
-    return this.http.post<void>('/api/users/activation', finishRegistrationDto);
+    return this.http.post<void>('/users/activation', finishRegistrationDto);
   }
 
   getCurrentUser(): Observable<User> {
-    return this.http.get<User>('/api/users');
+    return this.http.get<User>('/users');
   }
 }
