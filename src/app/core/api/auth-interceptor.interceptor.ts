@@ -14,15 +14,19 @@ export function authInterceptor(
 ) {
   const authService = inject(AuthService);
   const tokenManagementService = inject(TokenManagementService);
+
   req = cloneWithToken(req, tokenManagementService.getAuthToken());
 
   return next(req).pipe(
     catchError((error) => {
-      if (error instanceof HttpErrorResponse && error.status === 401) {
+      if (
+        tokenManagementService.isTokenExpired() ||
+        (error instanceof HttpErrorResponse && error.status === 401)
+      ) {
         return handle401Error(req, next, authService, tokenManagementService);
       }
 
-      return throwError(error);
+      return throwError(() => error);
     }),
   );
 }
@@ -33,6 +37,10 @@ function handle401Error(
   authService: AuthService,
   tokenManagementService: TokenManagementService,
 ) {
+  if (!tokenManagementService.getRefreshToken()) {
+    return next(request);
+  }
+
   return authService.refreshToken().pipe(
     switchMap(() => {
       const requestWithToken = cloneWithToken(

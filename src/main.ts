@@ -8,7 +8,11 @@ import {
   errorHandlingInterceptor,
   loggingInterceptor,
 } from './app/core/api/interceptors';
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withFetch,
+  withInterceptors,
+} from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
 
@@ -18,6 +22,7 @@ bootstrapApplication(AppComponent, {
     MessageService,
     provideAnimations(),
     provideHttpClient(
+      withFetch(),
       withInterceptors([
         loggingInterceptor,
         baseUrlInterceptor,

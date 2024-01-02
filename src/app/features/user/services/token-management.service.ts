@@ -11,15 +11,38 @@ export class TokenManagementService {
   }
 
   addTokens(authToken: AuthToken) {
-    localStorage.setItem('token', JSON.stringify(authToken.accessToken));
+    localStorage.setItem('token', authToken.accessToken);
+    localStorage.setItem('refreshToken', authToken.refreshToken);
     localStorage.setItem(
-      'refreshToken',
-      JSON.stringify(authToken.refreshToken),
+      'expirationTime',
+      this.getExpirationDate(authToken.expiresIn),
     );
   }
 
   getAuthToken() {
     const token = localStorage.getItem('token');
-    return token === null ? '' : token.replace(/"/g, '');
+    return token ?? '';
+  }
+
+  getRefreshToken() {
+    return localStorage.getItem('refreshToken');
+  }
+
+  isTokenExpired() {
+    const expirationTimeString = localStorage.getItem('expirationTime');
+
+    if (!expirationTimeString) {
+      return true;
+    }
+
+    const expirationTime = new Date(expirationTimeString);
+    return expirationTime <= new Date();
+  }
+
+  private getExpirationDate(expiresInSeconds: number) {
+    const expirationTimestamp = Date.now() + expiresInSeconds * 1000;
+    const expirationDate = new Date(expirationTimestamp);
+
+    return expirationDate.toISOString();
   }
 }

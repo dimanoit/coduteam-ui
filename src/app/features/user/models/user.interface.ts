@@ -20,7 +20,7 @@ export interface AccountRegistrationDto {
   firstName: string;
   lastName: string;
   dateOfBirth: Date;
-  gender?: Gender | null;
+  gender: Gender;
 }
 
 export enum Gender {

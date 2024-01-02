@@ -23,7 +23,7 @@ export class AuthService {
 
   login(authDto: AuthDto): Observable<void> {
     return this.http
-      .post<AuthToken>('/login', authDto)
+      .post<AuthToken>('/auth/login', authDto)
       .pipe(map((authToken) => this.storeTokenOnAuth(authToken)));
   }
 
@@ -33,7 +33,7 @@ export class AuthService {
     };
 
     return this.http
-      .post<AuthToken>('/refresh', body)
+      .post<AuthToken>('/auth/refresh', body)
       .pipe(map((token) => this.storeTokenOnAuth(token)));
   }
 
