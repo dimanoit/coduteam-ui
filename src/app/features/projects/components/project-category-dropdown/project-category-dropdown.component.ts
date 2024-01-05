@@ -45,9 +45,9 @@ export class ProjectCategoryDropdownComponent
   private onTouched: any = () => {};
 
   ngOnInit(): void {
-    this.categories = Object.values(ProjectCategory).map((category) => ({
-      label: category,
-      value: category,
+    this.categories = Object.keys(ProjectCategory).map((categoryKey) => ({
+      label: ProjectCategory[categoryKey as keyof typeof ProjectCategory],
+      value: categoryKey,
     }));
   }
 

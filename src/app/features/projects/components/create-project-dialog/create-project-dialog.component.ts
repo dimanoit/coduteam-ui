@@ -17,6 +17,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/project-category-dropdown.component';
+import { ProjectService } from '../../services/project.service';
+import { CreateProjectRequest } from '../../models/create-project.interface';
+import { catchError, EMPTY, finalize, tap } from 'rxjs';
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -30,11 +33,14 @@ import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/p
     DialogModule,
     ProjectCategoryDropdownComponent,
   ],
+  providers: [ProjectService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class CreateProjectDialogComponent {
   private formBuilder = inject(FormBuilder);
+  private projectService = inject(ProjectService);
+
   @Input() isShown = false;
   @Output() closedDialog = new EventEmitter<void>();
 
@@ -42,13 +48,25 @@ export class CreateProjectDialogComponent {
     title: ['', [Validators.required, Validators.maxLength(26)]],
     description: ['', [Validators.required, Validators.maxLength(250)]],
     category: [null, Validators.required],
-    imageSrc: [''],
+    country: [null],
+    projectImgUrl: [''],
   });
 
   onCreateClick() {
     if (this.projectForm.valid) {
-      alert('TODO: implement please backend');
-      this.closeDialog();
+      const request = this.projectForm.value as CreateProjectRequest;
+
+      debugger;
+      this.projectService
+        .createProject(request)
+        .pipe(
+          catchError(() => {
+            alert('Error happened');
+            return EMPTY;
+          }),
+          finalize(() => this.closeDialog()),
+        )
+        .subscribe();
     } else {
       alert('Form is invalid');
     }
