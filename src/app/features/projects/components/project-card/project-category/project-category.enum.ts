@@ -5,7 +5,7 @@ export enum ProjectCategory {
   DataScience = 'Data Science',
   GameDevelopment = 'Game Development',
   MachineLearning = 'Machine Learning',
-  InternetofThings = 'Internet of Things',
+  InternetOfThings = 'Internet of Things',
   Cybersecurity = 'Cybersecurity',
   Blockchain = 'Blockchain',
   AugmentedReality = 'Augmented Reality',
