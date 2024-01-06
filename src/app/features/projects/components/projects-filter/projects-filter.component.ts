@@ -15,6 +15,9 @@ import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/p
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
+import { ProjectService } from '../../services/project.service';
+import { ProjectSearchRequest } from '../../models/project-search-request.interface';
+import { debounceTime, filter, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-projects-filter',
@@ -32,14 +35,27 @@ import { InputTextModule } from 'primeng/inputtext';
 })
 export class ProjectsFilterComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
+  private projectService = inject(ProjectService);
+
   searchForm!: FormGroup;
 
   ngOnInit(): void {
     this.searchForm = this.formBuilder.group({
       category: [ProjectCategory.None, Validators.required],
-      term: ['', [Validators.required, Validators.maxLength(26)]],
+      term: ['', [Validators.maxLength(26)]],
     });
+    
+    this.searchForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        filter(() => this.searchForm.valid),
+        switchMap(() => this.search()),
+      )
+      .subscribe();
   }
 
-  search() {}
+  search() {
+    const request = this.searchForm.value as ProjectSearchRequest;
+    return this.projectService.loadProjects(request);
+  }
 }

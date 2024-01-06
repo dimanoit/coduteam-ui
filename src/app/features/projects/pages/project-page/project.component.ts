@@ -4,6 +4,7 @@ import { Project } from '../../models/project.interface';
 import { CommonModule } from '@angular/common';
 import { NotFoundPageComponent } from '../../../../shared/components/not-found-page/not-found-page.component';
 import { ProjectService } from '../../services/project.service';
+import { projectState } from '../../state/project.state';
 
 @Component({
   selector: 'app-project-page',
@@ -13,8 +14,6 @@ import { ProjectService } from '../../services/project.service';
   imports: [CommonModule, NotFoundPageComponent],
 })
 export class ProjectComponent implements OnInit {
-  project!: Project;
-
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
@@ -28,9 +27,11 @@ export class ProjectComponent implements OnInit {
     }
 
     this.projectService
-      .getProjects({
+      .loadProjects({
         projectId: +projectIdParam,
       })
-      .subscribe((p) => (this.project = p[0]));
+      .subscribe();
   }
+
+  protected readonly projectState = projectState;
 }

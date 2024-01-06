@@ -1,5 +1,5 @@
-@if (project) {
-<div>Hi im project page</div>
+@if (projectState.projects()) {
+  <div>Hi im project page</div>
 } @else {
-<app-not-found-page></app-not-found-page>
+  <app-not-found-page></app-not-found-page>
 }

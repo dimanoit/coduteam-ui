@@ -28,7 +28,7 @@
     <div class="flex flex-column gap-3">
       <p-panel header="My Projects" [toggleable]="true">
         <div class="flex flex-column gap-3">
-          @for (project of projects$ | async; track $index) {
+          @for (project of projectState.projects(); track $index) {
             <app-project-line [project]="project"></app-project-line>
           }
         </div>

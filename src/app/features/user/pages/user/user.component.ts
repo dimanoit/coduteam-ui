@@ -13,6 +13,7 @@ import { ProjectLineComponent } from '../../../projects/components/project-line/
 import { User } from '../../models/user.interface';
 import { Project } from '../../../projects/models/project.interface';
 import { PositionDto } from '../../../positions/models/position-dto.interface';
+import { projectState } from '../../../projects/state/project.state';
 
 @Component({
   selector: 'app-user',
@@ -30,28 +31,21 @@ import { PositionDto } from '../../../positions/models/position-dto.interface';
   standalone: true,
 })
 export class UserComponent implements OnInit {
+  protected readonly projectState = projectState;
+
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
-    private positionService: PositionService,
   ) {}
 
   user$!: Observable<User>;
-  projects$!: Observable<Project[]>;
-  positions$!: Observable<PositionDto[]>;
 
   ngOnInit(): void {
-    this.projects$ = this.projectService.getProjects({
-      onlyRelatedToCurrentUser: true,
-    });
-
-    this.positions$ = this.projects$.pipe(
-      switchMap((projects) =>
-        this.positionService.getPositions({
-          projectsIds: projects.map((p) => p.id),
-        }),
-      ),
-    );
+    this.projectService
+      .loadProjects({
+        onlyRelatedToCurrentUser: true,
+      })
+      .subscribe();
 
     this.user$ = this.userService.getCurrentUser();
   }

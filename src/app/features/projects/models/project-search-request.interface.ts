@@ -3,7 +3,8 @@ import { ProjectCategory } from '../components/project-card/project-category/pro
 export interface ProjectSearchRequest {
   userId?: number;
   projectId?: number;
-  category?: ProjectCategory | null;
+  category?: ProjectCategory;
+  term?: string;
   take?: number;
   skip?: number;
   onlyRelatedToCurrentUser?: boolean;
