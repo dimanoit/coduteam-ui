@@ -9,7 +9,6 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
   standalone: true,
   imports: [CommonModule, AvatarModule, AvatarGroupModule, NgFor],
   templateUrl: './project-line.component.html',
-  styleUrls: ['./project-line.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectLineComponent {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, computed, OnInit } from '@angular/core';
 import { ProjectCardComponent } from '../../components/project-card/project-card.component';
 import { CommonModule } from '@angular/common';
 import { ProjectsFilterComponent } from '../../components/projects-filter/projects-filter.component';
@@ -27,14 +27,32 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProjectsComponent implements OnInit {
   isCardView: boolean = false;
-  protected readonly projectState = projectState;
+  lastIdx = computed(() => projectState.projects().length);
+  lastIdxSent = 0;
 
-  first: number = 0;
-  rows: number = 9;
+  protected readonly projectState = projectState;
 
   constructor(private projectService: ProjectService) {}
 
   ngOnInit(): void {
     this.projectService.loadProjects().subscribe();
+  }
+
+  onScroll(event: Event): void {
+    const element = event.target as HTMLElement;
+
+    console.log(this.lastIdxSent);
+    console.log(this.lastIdx());
+
+    if (
+      element.scrollHeight - element.scrollTop === element.clientHeight &&
+      this.lastIdxSent !== this.lastIdx()
+    ) {
+      this.projectService
+        .loadProjects({ skip: this.lastIdx(), take: 5 }, true)
+        .subscribe();
+
+      this.lastIdxSent = this.lastIdx();
+    }
   }
 }

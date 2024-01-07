@@ -1,9 +1,9 @@
 $xl: 1440px; // Extra large screens (monitors)
 
 .page-container {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh - 2;
 
   padding-left: 5rem;
   padding-right: 5rem;
@@ -16,10 +16,11 @@ $xl: 1440px; // Extra large screens (monitors)
 
 .content-wrap {
   flex: 1;
-  padding-bottom: 30px;
 }
 
 app-small-footer {
+  margin-top: auto;
   height: 60px;
   width: 100%;
 }
+

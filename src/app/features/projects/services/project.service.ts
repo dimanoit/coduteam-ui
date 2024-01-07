@@ -14,8 +14,8 @@ export class ProjectService {
 
   constructor(private http: HttpClient) {}
 
-  loadProjects(params?: ProjectSearchRequest): Observable<void> {
-    params = params ?? { skip: 0, take: 9 };
+  loadProjects(params?: ProjectSearchRequest, join = false): Observable<void> {
+    params = params ?? { skip: 0, take: 5 };
     const httpParams = toHttpParams(params);
 
     this.setIsLoading(true);
@@ -24,7 +24,7 @@ export class ProjectService {
         params: httpParams,
       })
       .pipe(
-        tap((projects) => this.setProjects(projects)),
+        tap((projects) => this.setProjects(projects, join)),
         finalize(() => this.setIsLoading(false)),
         map(() => void 0),
       );
@@ -36,8 +36,12 @@ export class ProjectService {
       .pipe(switchMap(() => this.loadProjects()));
   }
 
-  private setProjects(projects: Project[]) {
-    patchState(projectState, () => ({ projects }));
+  private setProjects(projects: Project[], join: boolean) {
+    const projectsUpdated = join
+      ? [...projectState.projects(), ...projects]
+      : projects;
+
+    patchState(projectState, () => ({ projects: projectsUpdated }));
   }
 
   private setIsLoading(isLoading: boolean) {
