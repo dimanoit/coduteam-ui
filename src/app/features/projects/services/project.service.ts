@@ -37,4 +37,11 @@ export class ProjectService {
       .post<void>(this.resourcePath, request)
       .pipe(switchMap(() => this.loadProjects()));
   }
+
+  remove(id: number) {
+    this.projectState.setIsLoading(true);
+    return this.http
+      .delete<void>(`${this.resourcePath}/${id}`)
+      .pipe(switchMap(() => this.loadProjects()));
+  }
 }

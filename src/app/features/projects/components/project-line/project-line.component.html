@@ -33,4 +33,13 @@
       </p-avatarGroup>
     </div>
   </div>
+
+  @if (isRemovable) {
+    <i
+      class="pi pi-trash cursor-pointer"
+      [class.pi-spin]="projectState.isLoading()"
+      style="font-size: 2rem"
+      (click)="removeProject()"
+    ></i>
+  }
 </div>

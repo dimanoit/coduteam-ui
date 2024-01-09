@@ -12,6 +12,7 @@ import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
 import { User } from '../../models/user.interface';
 import { ProjectState } from '../../../projects/state/project.state';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @Component({
   selector: 'app-user',
@@ -22,6 +23,7 @@ import { ProjectState } from '../../../projects/state/project.state';
     ToastModule,
     PanelModule,
     ProjectLineComponent,
+    ScrollPanelModule,
   ],
   providers: [
     MessageService,
