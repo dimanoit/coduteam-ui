@@ -1,4 +1,4 @@
-@if (projectState.projects()) {
+@if (!projectState.isLoading() && projectState.projects()[0]) {
   <div>Hi im project page</div>
 } @else {
   <app-not-found-page></app-not-found-page>

@@ -10,6 +10,7 @@ import { ProjectState } from '../../state/project.state';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
   standalone: true,
+  providers: [ProjectService],
   imports: [CommonModule, NotFoundPageComponent],
 })
 export class ProjectComponent implements OnInit {

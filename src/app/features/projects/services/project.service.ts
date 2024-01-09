@@ -6,6 +6,7 @@ import { ProjectSearchRequest } from '../models/project-search-request.interface
 import { toHttpParams } from '../../../core/utils/http-params.util';
 import { CreateProjectRequest } from '../models/create-project.interface';
 import { ProjectState } from '../state/project.state';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProjectService {
@@ -13,6 +14,7 @@ export class ProjectService {
 
   constructor(
     private http: HttpClient,
+    private router: Router,
     private projectState: ProjectState,
   ) {}
 
@@ -43,5 +45,9 @@ export class ProjectService {
     return this.http
       .delete<void>(`${this.resourcePath}/${id}`)
       .pipe(switchMap(() => this.loadProjects()));
+  }
+
+  viewProjectDetails(projectId: number) {
+    this.router.navigate(['/projects', projectId]);
   }
 }

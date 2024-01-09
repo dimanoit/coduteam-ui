@@ -8,7 +8,12 @@
   />
 
   <div class="w-13rem flex flex-column justify-content-between">
-    <div class="font-italic">{{ project?.title }}</div>
+    <div
+      class="font-italic underline cursor-pointer"
+      (click)="projectService.viewProjectDetails(project?.id!)"
+    >
+      {{ project?.title }}
+    </div>
     <div class="text-sm">{{ project?.category }}</div>
   </div>
 

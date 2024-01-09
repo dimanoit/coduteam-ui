@@ -10,11 +10,12 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ProjectService } from '../../services/project.service';
 import { ProjectState } from '../../state/project.state';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-project-line',
   standalone: true,
-  imports: [CommonModule, AvatarModule, AvatarGroupModule, NgFor],
+  imports: [CommonModule, AvatarModule, AvatarGroupModule, NgFor, ButtonModule],
   templateUrl: './project-line.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -22,7 +23,7 @@ export class ProjectLineComponent {
   @Input() project?: Project;
   @Input() isRemovable: boolean = false;
 
-  private projectService = inject(ProjectService);
+  protected projectService = inject(ProjectService);
   protected projectState = inject(ProjectState);
 
   removeProject() {
