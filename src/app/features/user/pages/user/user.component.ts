@@ -7,13 +7,11 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ProjectService } from '../../../projects/services/project.service';
-import { Observable, switchMap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
 import { User } from '../../models/user.interface';
-import { Project } from '../../../projects/models/project.interface';
-import { PositionDto } from '../../../positions/models/position-dto.interface';
-import { projectState } from '../../../projects/state/project.state';
+import { ProjectState } from '../../../projects/state/project.state';
 
 @Component({
   selector: 'app-user',
@@ -25,17 +23,22 @@ import { projectState } from '../../../projects/state/project.state';
     PanelModule,
     ProjectLineComponent,
   ],
-  providers: [MessageService, ProjectService, UserService, PositionService],
+  providers: [
+    MessageService,
+    ProjectService,
+    UserService,
+    PositionService,
+    ProjectState,
+  ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
   standalone: true,
 })
 export class UserComponent implements OnInit {
-  protected readonly projectState = projectState;
-
   constructor(
     private userService: UserService,
     private projectService: ProjectService,
+    protected projectState: ProjectState,
   ) {}
 
   user$!: Observable<User>;

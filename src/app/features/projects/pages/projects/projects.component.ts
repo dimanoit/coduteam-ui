@@ -6,8 +6,8 @@ import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ProjectLineComponent } from '../../components/project-line/project-line.component';
 import { ProjectService } from '../../services/project.service';
 import { SkeletonModule } from 'primeng/skeleton';
-import { projectState } from '../../state/project.state';
 import { FormsModule } from '@angular/forms';
+import { ProjectState } from '../../state/project.state';
 
 @Component({
   selector: 'app-projects',
@@ -27,12 +27,13 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProjectsComponent implements OnInit {
   isCardView: boolean = false;
-  lastIdx = computed(() => projectState.projects().length);
+  lastIdx = computed(() => this.projectState.projects().length);
   lastIdxSent = 0;
 
-  protected readonly projectState = projectState;
-
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    protected projectState: ProjectState,
+  ) {}
 
   ngOnInit(): void {
     this.projectService.loadProjects().subscribe();
@@ -40,9 +41,6 @@ export class ProjectsComponent implements OnInit {
 
   onScroll(event: Event): void {
     const element = event.target as HTMLElement;
-
-    console.log(this.lastIdxSent);
-    console.log(this.lastIdx());
 
     if (
       element.scrollHeight - element.scrollTop === element.clientHeight &&
