@@ -1,4 +1,5 @@
 import { ProjectCategory } from '../components/project-card/project-category/project-category.enum';
+import { Gender } from '../../user/models/user.interface';
 
 export interface Project {
   id: number;
@@ -19,4 +20,5 @@ export interface ProjectParticipant {
   lastName: string;
   projectTitle: string;
   technologies: string[];
+  gender?: Gender;
 }

@@ -48,6 +48,7 @@ export class ProjectService {
   }
 
   viewProjectDetails(projectId: number) {
+    this.projectState.setSelectedProject(projectId);
     this.router.navigate(['/projects', projectId]);
   }
 }

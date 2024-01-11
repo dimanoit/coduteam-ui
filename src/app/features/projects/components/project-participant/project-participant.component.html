@@ -1,5 +1,5 @@
 @if (participant) {
-  <div class="flex">
+  <div class="p-2 flex border-round border-1 border-primary">
     <p-avatar
       [image]="participant.imageSrc"
       styleClass="mr-2"
@@ -13,19 +13,19 @@
         <span>{{ participant.lastName }}</span>
       </div>
 
-      <div>
-        {{ participant.userName }}
+      <div class="text-sm">
+        {{ participant.gender }}
       </div>
     </div>
 
     <div class="ml-auto flex flex-column justify-content-around">
-      <div>
+      <div class="font-italic">
         {{ participant.projectTitle }}
       </div>
 
       <div>
         @for (technology of participant.technologies; track $index) {
-          <span>{{ technology }}</span>
+          <span class="text-sm">{{ technology }}</span>
           @if ($index !== participant.technologies.length - 1) {
             <span>,</span>
           }

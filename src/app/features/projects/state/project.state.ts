@@ -25,11 +25,16 @@ export class ProjectState {
       ? [...this.state.projects(), ...projects]
       : projects;
 
-    patchState(this.state, () => ({ selectedProject: projectsUpdated[0] }));
     patchState(this.state, () => ({ projects: projectsUpdated }));
   }
 
   setIsLoading(isLoading: boolean) {
     patchState(this.state, () => ({ isLoading }));
+  }
+
+  setSelectedProject(projectId: number) {
+    const project = this.state.projects().filter((p) => p.id === projectId)[0];
+    console.log(project);
+    patchState(this.state, () => ({ selectedProject: project }));
   }
 }
