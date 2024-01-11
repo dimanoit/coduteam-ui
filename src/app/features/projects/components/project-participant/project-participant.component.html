@@ -1,0 +1,36 @@
+@if (participant) {
+  <div class="flex">
+    <p-avatar
+      [image]="participant.imageSrc"
+      styleClass="mr-2"
+      size="xlarge"
+      shape="circle"
+    ></p-avatar>
+
+    <div class="ml-2 flex flex-column justify-content-around">
+      <div class="font-semibold font-italic">
+        <span>{{ participant.firstName }} </span>
+        <span>{{ participant.lastName }}</span>
+      </div>
+
+      <div>
+        {{ participant.userName }}
+      </div>
+    </div>
+
+    <div class="ml-auto flex flex-column justify-content-around">
+      <div>
+        {{ participant.projectTitle }}
+      </div>
+
+      <div>
+        @for (technology of participant.technologies; track $index) {
+          <span>{{ technology }}</span>
+          @if ($index !== participant.technologies.length - 1) {
+            <span>,</span>
+          }
+        }
+      </div>
+    </div>
+  </div>
+}

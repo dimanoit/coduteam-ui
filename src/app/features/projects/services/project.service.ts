@@ -5,27 +5,31 @@ import { Project } from '../models/project.interface';
 import { ProjectSearchRequest } from '../models/project-search-request.interface';
 import { toHttpParams } from '../../../core/utils/http-params.util';
 import { CreateProjectRequest } from '../models/create-project.interface';
-import { projectState } from '../state/project.state';
-import { patchState } from '@ngrx/signals';
+import { ProjectState } from '../state/project.state';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProjectService {
   private readonly resourcePath = '/projects';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private projectState: ProjectState,
+  ) {}
 
   loadProjects(params?: ProjectSearchRequest, join = false): Observable<void> {
     params = params ?? { skip: 0, take: 5 };
     const httpParams = toHttpParams(params);
 
-    this.setIsLoading(true);
+    this.projectState.setIsLoading(true);
     return this.http
       .get<Project[]>(this.resourcePath, {
         params: httpParams,
       })
       .pipe(
-        tap((projects) => this.setProjects(projects, join)),
-        finalize(() => this.setIsLoading(false)),
+        tap((projects) => this.projectState.setProjects(projects, join)),
+        finalize(() => this.projectState.setIsLoading(false)),
         map(() => void 0),
       );
   }
@@ -36,15 +40,14 @@ export class ProjectService {
       .pipe(switchMap(() => this.loadProjects()));
   }
 
-  private setProjects(projects: Project[], join: boolean) {
-    const projectsUpdated = join
-      ? [...projectState.projects(), ...projects]
-      : projects;
-
-    patchState(projectState, () => ({ projects: projectsUpdated }));
+  remove(id: number) {
+    this.projectState.setIsLoading(true);
+    return this.http
+      .delete<void>(`${this.resourcePath}/${id}`)
+      .pipe(switchMap(() => this.loadProjects()));
   }
 
-  private setIsLoading(isLoading: boolean) {
-    patchState(projectState, () => ({ isLoading }));
+  viewProjectDetails(projectId: number) {
+    this.router.navigate(['/projects', projectId]);
   }
 }
