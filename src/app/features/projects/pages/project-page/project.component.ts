@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotFoundPageComponent } from '../../../../shared/components/not-found-page/not-found-page.component';
 import { ProjectService } from '../../services/project.service';
