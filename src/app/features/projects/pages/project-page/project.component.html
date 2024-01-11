@@ -1,5 +1,35 @@
-@if (!projectState.isLoading() && projectState.projects()[0]) {
-  <div>Hi im project page</div>
+@if (projectState.isLoading()) {
+  <!-- TODO replace with skeleton components -->
+  <p-progressBar
+    mode="indeterminate"
+    [style]="{ height: '6px' }"
+  ></p-progressBar>
+} @else if (projectState.selectedProject()) {
+  <div class="p-3 flex flex-column gap-3">
+    <app-project-line [project]="projectState.selectedProject()!" />
+
+    <div class="grid">
+      <div class="col-4 flex flex-column row-gap-3">
+        <p-card header="Participants">
+          <p-scrollPanel [style]="{ width: '100%', height: '28rem' }">
+            @for (
+              participant of projectState.selectedProject()?.participants;
+              track $index
+            ) {
+              <app-project-participant [participant]="participant" />
+            }
+          </p-scrollPanel>
+        </p-card>
+      </div>
+      <p-card class="col-8" header="Positions">
+        <p-scrollPanel [style]="{ width: '100%', height: '28rem' }">
+          @for (poistion of mockedPositions; track $index) {
+            <app-position-line [position]="poistion" />
+          }
+        </p-scrollPanel>
+      </p-card>
+    </div>
+  </div>
 } @else {
-  <app-not-found-page></app-not-found-page>
+  <div>Current project not found!</div>
 }

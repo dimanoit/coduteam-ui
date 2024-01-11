@@ -15,4 +15,8 @@ export interface ProjectParticipant {
   userId: number;
   imageSrc: string;
   userName: string;
+  firstName: string;
+  lastName: string;
+  projectTitle: string;
+  technologies: string[];
 }
