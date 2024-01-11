@@ -29,26 +29,8 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
     ScrollPanelModule,
   ],
 })
-export class ProjectComponent implements OnInit {
-  constructor(
-    private route: ActivatedRoute,
-    private projectService: ProjectService,
-    protected projectState: ProjectState,
-  ) {}
+export class ProjectComponent {
+  constructor(protected projectState: ProjectState) {}
 
   protected mockedPositions = mockedPositions;
-
-  ngOnInit() {
-    const projectIdParam = this.route.snapshot.paramMap.get('projectId');
-
-    if (!projectIdParam) {
-      return;
-    }
-
-    this.projectService
-      .loadProjects({
-        projectId: +projectIdParam,
-      })
-      .subscribe();
-  }
 }
