@@ -32,9 +32,7 @@ export class ProjectState {
     patchState(this.state, () => ({ isLoading }));
   }
 
-  setSelectedProject(projectId: number) {
-    const project = this.state.projects().filter((p) => p.id === projectId)[0];
-    console.log(project);
+  setSelectedProject(project: Project) {
     patchState(this.state, () => ({ selectedProject: project }));
   }
 }

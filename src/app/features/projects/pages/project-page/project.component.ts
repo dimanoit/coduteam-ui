@@ -8,15 +8,18 @@ import { ProjectLineComponent } from '../../components/project-line/project-line
 import { CardModule } from 'primeng/card';
 import { ProjectParticipantComponent } from '../../components/project-participant/project-participant.component';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
-import { mockedPositions } from 'src/mocks/mocked_positions';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
+import { ActivatedRoute, Params } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
+import { PositionState } from '../../../positions/position.state';
+import { PositionService } from '../../../positions/services/position.service';
 
 @Component({
   selector: 'app-project-page',
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
   standalone: true,
-  providers: [ProjectService],
+  providers: [ProjectService, PositionState, PositionService],
   imports: [
     CommonModule,
     NotFoundPageComponent,
@@ -29,7 +32,27 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
   ],
 })
 export class ProjectComponent {
-  constructor(protected projectState: ProjectState) {}
+  constructor(
+    protected projectState: ProjectState,
+    private projectService: ProjectService,
+    protected positionState: PositionState,
+    private positionService: PositionService,
+    private route: ActivatedRoute,
+  ) {}
 
-  protected mockedPositions = mockedPositions;
+  ngOnInit() {
+    this.route.params
+      .pipe(
+        map((params: Params) => params['projectId']),
+        filter((value) => value),
+        switchMap((projectId: number) => {
+          this.positionService
+            .loadPositions({ projectsIds: [projectId] })
+            .subscribe();
+          
+          return this.projectService.loadSelectedProject(projectId);
+        }),
+      )
+      .subscribe();
+  }
 }

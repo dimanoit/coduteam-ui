@@ -1,10 +1,9 @@
-import { PositionStatus } from './position-status.enum';
+import { ProjectDto } from '../../projects/models/project-dto.interface';
 
 export interface PositionDto {
   id: number;
-  projectName: string;
-  projectId: number;
-  tittle: string;
+  title: string;
+  description: string;
   shortDescription: string;
-  city: string;
+  project: ProjectDto;
 }

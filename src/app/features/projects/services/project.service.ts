@@ -34,21 +34,29 @@ export class ProjectService {
       );
   }
 
+  loadSelectedProject(id: number): Observable<void> {
+    this.projectState.setIsLoading(true);
+    return this.http.get<Project>(`${this.resourcePath}/${id}`).pipe(
+      tap((project) => this.projectState.setSelectedProject(project)),
+      finalize(() => this.projectState.setIsLoading(false)),
+      map(() => void 0),
+    );
+  }
+
   createProject(request: CreateProjectRequest): Observable<void> {
     return this.http
       .post<void>(this.resourcePath, request)
       .pipe(switchMap(() => this.loadProjects()));
   }
 
-  remove(id: number) {
+  remove(id: number): Observable<void> {
     this.projectState.setIsLoading(true);
     return this.http
       .delete<void>(`${this.resourcePath}/${id}`)
       .pipe(switchMap(() => this.loadProjects()));
   }
 
-  viewProjectDetails(projectId: number) {
-    this.projectState.setSelectedProject(projectId);
+  viewProjectDetails(projectId: number): void {
     this.router.navigate(['/projects', projectId]);
   }
 }
