@@ -1,8 +1,6 @@
-import { Project } from '../projects/models/project.interface';
 import { PositionDto } from './models/position-dto.interface';
 import { Injectable } from '@angular/core';
 import { patchState, signalState } from '@ngrx/signals';
-import { ProjectStateModel } from '../projects/state/project.state';
 
 export interface PositionStateModel {
   positions: PositionDto[];

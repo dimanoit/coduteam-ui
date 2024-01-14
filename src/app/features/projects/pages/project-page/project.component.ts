@@ -10,7 +10,6 @@ import { PositionLineComponent } from '../../../positions/components/position-li
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
-import { PositionState } from '../../../positions/position.state';
 import { PositionService } from '../../../positions/services/position.service';
 import { State } from '../../../../state';
 
