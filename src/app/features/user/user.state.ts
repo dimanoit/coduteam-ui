@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { signalState } from '@ngrx/signals';
+import { patchState, signalState } from '@ngrx/signals';
 
 export interface UserStateModel {
   isActivation: boolean;
@@ -15,4 +15,8 @@ export class UserState {
 
   isLoading = this.state.isLoading;
   isActivation = this.state.isLoading;
+
+  setIsLoading(isLoading: boolean) {
+    patchState(this.state, () => ({ isLoading }));
+  }
 }

@@ -1,9 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { AuthToken } from '../models/auth-token.interface';
 import { AuthDto } from '../models/user.interface';
-import { map, Observable } from 'rxjs';
+import { finalize, map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TokenManagementService } from './token-management.service';
+import { State } from '../../../state';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
+    private state: State,
     private tokenManagementService: TokenManagementService,
   ) {}
 
@@ -22,9 +24,11 @@ export class AuthService {
   }
 
   login(authDto: AuthDto): Observable<void> {
-    return this.http
-      .post<AuthToken>('/auth/login', authDto)
-      .pipe(map((authToken) => this.storeTokenOnAuth(authToken)));
+    this.state.user.setIsLoading(true);
+    return this.http.post<AuthToken>('/auth/login', authDto).pipe(
+      map((authToken) => this.storeTokenOnAuth(authToken)),
+      finalize(() => this.state.user.setIsLoading(false)),
+    );
   }
 
   refreshToken(): Observable<void> {

@@ -16,7 +16,7 @@ export class AuthGuard {
     const isLoggedIn = this.authService.isUserLoggedIn();
 
     if (!isLoggedIn) {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/login']);
       return false;
     }
 

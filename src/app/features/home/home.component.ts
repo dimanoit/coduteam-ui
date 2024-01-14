@@ -16,7 +16,7 @@ export class HomeComponent {
   constructor(private router: Router) {}
 
   navigateToAuth() {
-    this.router.navigate(['/auth']);
+    this.router.navigate(['/login']);
   }
 
   opportunities: CarouselItem[] = [

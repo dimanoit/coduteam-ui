@@ -1,16 +1,11 @@
 import { Component, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import {
   FormBuilder,
-  FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import {
-  AccountRegistrationDto,
-  AuthDto,
-  Gender,
-} from '../../models/user.interface';
+import { AccountRegistrationDto, AuthDto } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
