@@ -8,6 +8,8 @@ import { ProjectService } from '../../services/project.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FormsModule } from '@angular/forms';
 import { ProjectState } from '../../state/project.state';
+import { State } from '../../../../state';
+import { PositionState } from '../../../positions/position.state';
 
 @Component({
   selector: 'app-projects',
@@ -22,17 +24,17 @@ import { ProjectState } from '../../state/project.state';
     SkeletonModule,
     FormsModule,
   ],
-  providers: [ProjectService],
+  providers: [ProjectService, State, PositionState],
   standalone: true,
 })
 export class ProjectsComponent implements OnInit {
   isCardView: boolean = false;
-  lastIdx = computed(() => this.projectState.projects().length);
+  lastIdx = computed(() => this.state.project.data().length);
   lastIdxSent = 0;
 
   constructor(
     private projectService: ProjectService,
-    protected projectState: ProjectState,
+    protected state: State,
   ) {}
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import { PositionLineComponent } from '../../components/position-line/position-l
 import { NgForOf } from '@angular/common';
 import { PositionState } from '../../position.state';
 import { PositionService } from '../../services/position.service';
+import { State } from '../../../../state';
 
 @Component({
   selector: 'app-positions',
@@ -21,13 +22,13 @@ import { PositionService } from '../../services/position.service';
     PositionLineComponent,
     NgForOf,
   ],
-  providers: [PositionService, PositionState],
+  providers: [PositionService, PositionState, State],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class PositionsComponent implements OnInit {
   positionService = inject(PositionService);
-  positionState = inject(PositionState);
+  state = inject(State);
 
   ngOnInit(): void {
     this.positionService.loadPositions().subscribe();

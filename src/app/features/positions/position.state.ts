@@ -19,7 +19,7 @@ export class PositionState {
   });
 
   isLoading = this.state.isLoading;
-  positions = this.state.positions;
+  data = this.state.positions;
 
   setIsLoading(isLoading: boolean) {
     patchState(this.state, () => ({ isLoading }));

@@ -1,6 +1,6 @@
-import { patchState, signalState } from '@ngrx/signals';
-import { Project } from '../models/project.interface';
-import { Injectable } from '@angular/core';
+import {patchState, signalState} from '@ngrx/signals';
+import {Project} from '../models/project.interface';
+import {Injectable} from '@angular/core';
 
 export interface ProjectStateModel {
   projects: Project[];
@@ -16,8 +16,8 @@ export class ProjectState {
     isLoading: false,
   });
 
-  projects = this.state.projects;
-  selectedProject = this.state.selectedProject;
+  data = this.state.projects;
+  selected = this.state.selectedProject;
   isLoading = this.state.isLoading;
 
   setProjects(projects: Project[], join: boolean) {
@@ -25,14 +25,14 @@ export class ProjectState {
       ? [...this.state.projects(), ...projects]
       : projects;
 
-    patchState(this.state, () => ({ projects: projectsUpdated }));
+    patchState(this.state, () => ({projects: projectsUpdated}));
   }
 
   setIsLoading(isLoading: boolean) {
-    patchState(this.state, () => ({ isLoading }));
+    patchState(this.state, () => ({isLoading}));
   }
 
   setSelectedProject(project: Project) {
-    patchState(this.state, () => ({ selectedProject: project }));
+    patchState(this.state, () => ({selectedProject: project}));
   }
 }
