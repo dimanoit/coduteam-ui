@@ -7,9 +7,7 @@ import { ProjectLineComponent } from '../../components/project-line/project-line
 import { ProjectService } from '../../services/project.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FormsModule } from '@angular/forms';
-import { ProjectState } from '../../state/project.state';
 import { State } from '../../../../state';
-import { PositionState } from '../../../positions/position.state';
 
 @Component({
   selector: 'app-projects',
@@ -24,7 +22,7 @@ import { PositionState } from '../../../positions/position.state';
     SkeletonModule,
     FormsModule,
   ],
-  providers: [ProjectService, State, PositionState],
+  providers: [ProjectService, State],
   standalone: true,
 })
 export class ProjectsComponent implements OnInit {

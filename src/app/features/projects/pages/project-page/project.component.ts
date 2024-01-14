@@ -19,7 +19,7 @@ import { State } from '../../../../state';
   templateUrl: './project.component.html',
   styleUrls: ['./project.component.scss'],
   standalone: true,
-  providers: [ProjectService, PositionState, PositionService, State],
+  providers: [ProjectService, PositionService, State],
   imports: [
     CommonModule,
     NotFoundPageComponent,

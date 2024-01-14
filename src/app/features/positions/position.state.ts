@@ -10,7 +10,7 @@ export interface PositionStateModel {
   isLoading: boolean;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class PositionState {
   private state = signalState<PositionStateModel>({
     positions: [],

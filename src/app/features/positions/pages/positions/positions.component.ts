@@ -8,7 +8,6 @@ import { PositionComponent } from '../position/position.component';
 import { PositionFilterComponent } from '../../components/position-filter/position-filter.component';
 import { PositionLineComponent } from '../../components/position-line/position-line.component';
 import { NgForOf } from '@angular/common';
-import { PositionState } from '../../position.state';
 import { PositionService } from '../../services/position.service';
 import { State } from '../../../../state';
 
@@ -22,7 +21,7 @@ import { State } from '../../../../state';
     PositionLineComponent,
     NgForOf,
   ],
-  providers: [PositionService, PositionState, State],
+  providers: [PositionService, State],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
