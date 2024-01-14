@@ -28,18 +28,16 @@ export class ProjectService {
         params: httpParams,
       })
       .pipe(
-        tap((projects) => this.projectState.setProjects(projects, join)),
+        map((projects) => this.projectState.setProjects(projects, join)),
         finalize(() => this.projectState.setIsLoading(false)),
-        map(() => void 0),
       );
   }
 
   loadSelectedProject(id: number): Observable<void> {
     this.projectState.setIsLoading(true);
     return this.http.get<Project>(`${this.resourcePath}/${id}`).pipe(
-      tap((project) => this.projectState.setSelectedProject(project)),
+      map((project) => this.projectState.setSelectedProject(project)),
       finalize(() => this.projectState.setIsLoading(false)),
-      map(() => void 0),
     );
   }
 

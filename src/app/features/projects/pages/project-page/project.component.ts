@@ -46,10 +46,8 @@ export class ProjectComponent {
         map((params: Params) => params['projectId']),
         filter((value) => value),
         switchMap((projectId: number) => {
-          this.positionService
-            .loadPositions({ projectsIds: [projectId] })
-            .subscribe();
-          
+          this.positionService.loadPositions({ projectId }).subscribe();
+
           return this.projectService.loadSelectedProject(projectId);
         }),
       )

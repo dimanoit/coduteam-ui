@@ -1,5 +1,5 @@
 export interface PositionSearchRequest {
-  projectsIds?: number[];
+  projectId?: number;
   positionId?: number;
   take?: number;
   skip?: number;
