@@ -5,7 +5,7 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   template: `
     <div class="flex justify-content-between mx-5">
       <div class="flex text-xs gap-3">
-        <div>© 2023 PROJECT_NAME. All rights reserved.</div>
+        <div>© 2023 Codu Team. All rights reserved.</div>
         <div class="underline">Privacy Policy</div>
         <div class="underline">Terms of Service</div>
         <div class="underline">Cookies Settings</div>
