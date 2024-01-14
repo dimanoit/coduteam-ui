@@ -1,5 +1,4 @@
 import { HomeComponent } from './features/home/home.component';
-import { AuthComponent } from './features/user/pages/auth/auth.component';
 import { ProjectComponent } from './features/projects/pages/project-page/project.component';
 import { AuthGuard } from './features/user/guards/auth.guard';
 import { mapToCanActivate, Routes } from '@angular/router';
