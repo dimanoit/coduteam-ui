@@ -12,7 +12,7 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   register(authDto: AuthDto): Observable<void> {
-    return this.http.post<void>('/register', authDto);
+    return this.http.post<void>('/auth/register', authDto);
   }
 
   finishRegistration(
