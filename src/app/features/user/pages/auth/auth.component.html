@@ -4,66 +4,22 @@
   </div>
 
   <div class="col">
-    @if (isActivation) {
-      <div class="flex flex-column align-items-center gap-3">
-        <div class="text-3xl font-semibold">
-          Please finish account registration
-        </div>
-
-        <form
-          class="flex flex-column gap-2"
-          [formGroup]="finishRegistrationForm"
-        >
-          <div class="flex gap-2">
-            <input
-              pInputText
-              placeholder="Firstname"
-              id="firstName"
-              formControlName="firstName"
-            />
-            <input
-              placeholder="Lastname"
-              pInputText
-              id="lastName"
-              formControlName="lastName"
-            />
-          </div>
-
-          <div class="flex gap-2">
-            <p-calendar
-              formControlName="date"
-              inputId="birth_date"
-              placeholder="Birth Date"
-            ></p-calendar>
-
-            <p-dropdown
-              formControlName="gender"
-              [options]="genders"
-              optionLabel="name"
-              placeholder="Gender"
-            ></p-dropdown>
-          </div>
-
-          <p-button
-            label="Finish"
-            [disabled]="!finishRegistrationForm.valid"
-            class="sign-in-button w-full"
-            [loading]="isLoading"
-            (onClick)="onRegistrationFinish()"
-          ></p-button>
-        </form>
-      </div>
+    @if (isActivation()) {
+      <app-activation
+        [isLoading]="state.user.isActivation"
+        (onUserActivation)="activateUser($event)"
+      ></app-activation>
     } @else {
       <div class="text-5xl font-semibold">
         <span>
-          {{ this.isSignUp ? "Sign Up" : "Sign In" }}
+          {{ this.isSignUp() ? "Sign Up" : "Sign In" }}
         </span>
         to CoduTeam
       </div>
 
       <div class="my-4">
         <span>
-          {{ this.isSignUp ? "Sign Up" : "Sign In" }}
+          {{ this.isSignUp() ? "Sign Up" : "Sign In" }}
         </span>
         with social account or enter your details
       </div>
@@ -90,9 +46,9 @@
             [toggleMask]="true"
             placeholder="******"
             formControlName="password"
-            [feedback]="this.isSignUp"
+            [feedback]="this.isSignUp()"
           >
-            @if (this.isSignUp) {
+            @if (this.isSignUp()) {
               <ng-template pTemplate="header">
                 <h6>Pick a password</h6>
               </ng-template>
@@ -111,10 +67,10 @@
         </div>
 
         <p-button
-          [label]="this.isSignUp ? 'Sign up' : 'Sign in'"
+          [label]="this.isSignUp() ? 'Sign up' : 'Sign in'"
           [disabled]="!authForm.valid"
           class="sign-in-button w-full"
-          [loading]="isLoading"
+          [loading]="isLoading()"
           (onClick)="onSubmit()"
         ></p-button>
       </form>
@@ -124,9 +80,9 @@
         <div>
           Don't have an account?
           <span
-            [textContent]="this.isSignUp ? 'Sign in' : 'Sign up'"
+            [textContent]="this.isSignUp() ? 'Sign in' : 'Sign up'"
             class="underline cursor-pointer"
-            (click)="this.isSignUp = !this.isSignUp"
+            (click)="switchAuth()"
           >
           </span>
         </div>

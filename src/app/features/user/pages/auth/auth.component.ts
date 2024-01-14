@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, signal, ViewEncapsulation } from '@angular/core';
 import {
   FormBuilder,
   FormControl,
@@ -22,6 +22,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { concatMap } from 'rxjs';
 import { passwordValidator } from '../../validators/password.validator';
 import { AuthService } from '../../services/auth.service';
+import { ActivationComponent } from '../../components/activation/activation.component';
+import { State } from '../../../../state';
 
 @Component({
   selector: 'app-auth',
@@ -36,18 +38,17 @@ import { AuthService } from '../../services/auth.service';
     PasswordModule,
     CalendarModule,
     DropdownModule,
+    ActivationComponent,
   ],
   providers: [UserService],
   standalone: true,
 })
 export class AuthComponent implements OnInit {
   authForm: FormGroup;
-  finishRegistrationForm: FormGroup;
-  genders: GenderCode[] | undefined;
 
-  isSignUp = false;
-  isLoading = false;
-  isActivation = false;
+  isSignUp = signal(false);
+  isLoading = signal(false);
+  isActivation = signal(false);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,20 +56,8 @@ export class AuthComponent implements OnInit {
     private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
+    protected state: State,
   ) {
-    this.genders = [
-      { name: 'Male', code: Gender.Male },
-      { name: 'Female', code: Gender.Female },
-      { name: 'Non binary', code: Gender.NonBinary },
-    ];
-
-    this.finishRegistrationForm = this.formBuilder.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      date: new FormControl<Date | null>(null),
-      gender: new FormControl<GenderCode | null>(null),
-    });
-
     this.authForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: [
@@ -82,7 +71,7 @@ export class AuthComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       const type = params['type'];
       if (+type === 1) {
-        this.isSignUp = true;
+        this.isSignUp.set(true);
       }
     });
   }
@@ -92,13 +81,13 @@ export class AuthComponent implements OnInit {
       return;
     }
 
-    this.isLoading = true;
+    this.isLoading.set(true);
     const authDto: AuthDto = {
       email: this.authForm.value.email,
       password: this.authForm.value.password,
     };
 
-    let authObs$ = this.isSignUp
+    let authObs$ = this.isSignUp()
       ? this.userService
           .register(authDto)
           .pipe(concatMap(() => this.authService.login(authDto)))
@@ -110,43 +99,30 @@ export class AuthComponent implements OnInit {
     });
   }
 
-  onRegistrationFinish() {
-    if (!this.finishRegistrationForm.valid) {
-      return;
-    }
-
-    this.isLoading = true;
-    const finishRegistrationDto: AccountRegistrationDto = {
-      firstName: this.finishRegistrationForm.value.firstName,
-      lastName: this.finishRegistrationForm.value.lastName,
-      dateOfBirth: this.finishRegistrationForm.value.date,
-      gender: this.finishRegistrationForm.value.gender.code,
-    };
-
-    this.userService
-      .finishRegistration(finishRegistrationDto)
-      .subscribe(() => this.router.navigate(['/projects']));
+  switchAuth() {
+    this.isSignUp.set(!this.isSignUp());
   }
 
   private cleanOnError() {
     this.authForm.reset();
 
-    this.isLoading = false;
+    this.isLoading.set(false);
   }
 
   private onSuccess() {
-    this.isLoading = false;
+    this.isLoading.set(false);
 
-    if (this.isSignUp) {
-      this.isActivation = true;
+    if (this.isSignUp()) {
+      this.isActivation.set(true);
       return;
     }
 
     this.router.navigate(['/projects']);
   }
-}
 
-interface GenderCode {
-  name: string;
-  code: string;
+  activateUser(data: AccountRegistrationDto) {
+    this.userService
+      .finishRegistration(data)
+      .subscribe(() => this.router.navigate(['/projects']));
+  }
 }
