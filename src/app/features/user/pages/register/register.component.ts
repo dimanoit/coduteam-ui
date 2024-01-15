@@ -3,6 +3,8 @@ import {
   Component,
   inject,
   OnInit,
+  signal,
+  WritableSignal,
 } from '@angular/core';
 import { ActivationComponent } from '../../components/activation/activation.component';
 import { ButtonModule } from 'primeng/button';
@@ -21,8 +23,11 @@ import { AccountRegistrationDto, AuthDto } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../validators/password.validator';
-import { concatMap } from 'rxjs';
+import { catchError, concatMap, EMPTY } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { Message } from 'primeng/api';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-register',
@@ -35,6 +40,7 @@ import { AuthService } from '../../services/auth.service';
     FormsModule,
     InputTextModule,
     PasswordModule,
+    MessagesModule,
   ],
   providers: [UserService],
   templateUrl: './register.component.html',
@@ -43,6 +49,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class RegisterComponent implements OnInit {
   authForm!: FormGroup;
+  registerErrorMessages: WritableSignal<Message[]> = signal([]);
 
   protected state = inject(State);
   private userService = inject(UserService);
@@ -82,7 +89,27 @@ export class RegisterComponent implements OnInit {
 
     this.userService
       .register(authDto)
-      .pipe(concatMap(() => this.authService.login(authDto)))
+      .pipe(
+        concatMap(() => this.authService.login(authDto)),
+        catchError((error: HttpErrorResponse) => {
+          this.setRegisterErrors(error);
+          return EMPTY;
+        }),
+      )
       .subscribe();
+  }
+
+  private setRegisterErrors(error: HttpErrorResponse) {
+    if (error.status === 400) {
+      const messages: Message[] = Object.entries(error?.error.errors || {})
+        .map(([key, value]) => ({
+          severity: 'error',
+          detail: (value as string[]).join(' '),
+        }))
+        .flat();
+
+      console.log(messages);
+      this.registerErrorMessages.set(messages);
+    }
   }
 }

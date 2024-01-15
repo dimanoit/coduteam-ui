@@ -19,4 +19,8 @@ export class UserState {
   setIsLoading(isLoading: boolean) {
     patchState(this.state, () => ({ isLoading }));
   }
+
+  setIsActivation(isActivation: boolean) {
+    patchState(this.state, () => ({ isActivation }));
+  }
 }

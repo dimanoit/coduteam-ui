@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  signal,
+  WritableSignal,
+} from '@angular/core';
 import { ActivationComponent } from '../../components/activation/activation.component';
 import { ButtonModule } from 'primeng/button';
 import { DividerModule } from 'primeng/divider';
@@ -11,14 +16,16 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SharedModule } from 'primeng/api';
+import { Message, SharedModule } from 'primeng/api';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { State } from '../../../../state';
 import { passwordValidator } from '../../validators/password.validator';
 import { AuthDto } from '../../models/user.interface';
-import { finalize, tap } from 'rxjs';
+import { catchError, EMPTY, finalize, tap } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
+import { MessagesModule } from 'primeng/messages';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +39,7 @@ import { finalize, tap } from 'rxjs';
     PasswordModule,
     ReactiveFormsModule,
     SharedModule,
+    MessagesModule,
   ],
   providers: [UserService],
   templateUrl: './login.component.html',
@@ -41,12 +49,11 @@ import { finalize, tap } from 'rxjs';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = this.state.user.isLoading;
+  loginErrorMessages: WritableSignal<Message[]> = signal([]);
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: UserService,
     private authService: AuthService,
-    private route: ActivatedRoute,
     protected state: State,
     private router: Router,
   ) {
@@ -74,11 +81,26 @@ export class LoginComponent {
       .pipe(
         tap(() => this.router.navigate(['/projects'])),
         finalize(() => this.loginForm.reset()),
+        catchError((error: HttpErrorResponse) => {
+          this.setLoginErrors(error);
+          return EMPTY;
+        }),
       )
       .subscribe();
   }
 
   navigateToRegistration() {
     this.router.navigate(['/register']);
+  }
+
+  private setLoginErrors(error: HttpErrorResponse) {
+    if (error.status === 401) {
+      this.loginErrorMessages.set([
+        {
+          detail: 'Login or password incorrect',
+          severity: 'error',
+        },
+      ]);
+    }
   }
 }

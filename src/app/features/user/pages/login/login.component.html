@@ -41,6 +41,13 @@
         [loading]="isLoading()"
         (onClick)="onSubmit()"
       ></p-button>
+
+      @if (loginErrorMessages()) {
+        <p-messages
+          [value]="loginErrorMessages()"
+          [closable]="true"
+        ></p-messages>
+      }
     </form>
 
     <div class="flex justify-content-between text-sm mt-5">

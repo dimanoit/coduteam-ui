@@ -62,6 +62,13 @@
         >
           Register
         </p-button>
+
+        @if (registerErrorMessages()) {
+          <p-messages
+            [value]="registerErrorMessages()"
+            [closable]="true"
+          ></p-messages>
+        }
       </form>
 
       <div class="flex justify-content-between text-sm mt-5">
