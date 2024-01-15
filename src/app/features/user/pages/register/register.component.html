@@ -6,7 +6,6 @@
   <div class="col">
     @if (state.user.isActivation()) {
       <app-activation
-        [isLoading]="state.user.isActivation"
         (onUserActivation)="activateUser($event)"
       ></app-activation>
     } @else {

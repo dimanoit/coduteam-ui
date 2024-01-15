@@ -3,9 +3,9 @@ import {
   Component,
   EventEmitter,
   inject,
-  Input,
   OnInit,
   Output,
+  signal,
   Signal,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
@@ -43,7 +43,7 @@ export class ActivationComponent implements OnInit {
   genders: GenderCode[] | undefined;
 
   @Output() onUserActivation = new EventEmitter<AccountRegistrationDto>();
-  @Input() isLoading!: Signal<boolean>;
+  isLoading = signal(false);
 
   ngOnInit(): void {
     this.genders = [
@@ -64,7 +64,8 @@ export class ActivationComponent implements OnInit {
     if (!this.finishRegistrationForm.valid) {
       return;
     }
-
+    
+    this.isLoading.set(true);
     const finishRegistrationDto: AccountRegistrationDto = {
       firstName: this.finishRegistrationForm.value.firstName,
       lastName: this.finishRegistrationForm.value.lastName,

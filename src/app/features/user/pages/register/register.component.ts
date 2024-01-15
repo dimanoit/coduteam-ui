@@ -2,8 +2,10 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  OnChanges,
   OnInit,
   signal,
+  SimpleChanges,
   WritableSignal,
 } from '@angular/core';
 import { ActivationComponent } from '../../components/activation/activation.component';
@@ -93,6 +95,7 @@ export class RegisterComponent implements OnInit {
         concatMap(() => this.authService.login(authDto)),
         catchError((error: HttpErrorResponse) => {
           this.setRegisterErrors(error);
+          console.log(error);
           return EMPTY;
         }),
       )
@@ -108,7 +111,6 @@ export class RegisterComponent implements OnInit {
         }))
         .flat();
 
-      console.log(messages);
       this.registerErrorMessages.set(messages);
     }
   }

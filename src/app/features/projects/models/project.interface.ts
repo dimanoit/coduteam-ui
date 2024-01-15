@@ -7,7 +7,7 @@ export interface Project {
   title: string;
   description: string;
   category: ProjectCategory;
-  country: object;
+  country: string;
   participants: ProjectParticipant[];
   ownerId: number;
 }
