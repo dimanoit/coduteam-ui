@@ -12,9 +12,8 @@
     } @else {
       <div class="text-5xl font-semibold">Register to CoduTeam</div>
 
-      <div class="my-4">Register with social account or enter your details</div>
-
-      <div class="flex gap-3 justify-content-between social-button-container">
+      <div class="flex align-items-center justify-content-evenly">
+        <div>Register with social account or enter your details</div>
         <p-button icon="pi pi-google" [outlined]="true"></p-button>
         <p-button icon="pi pi-facebook" [outlined]="true"></p-button>
         <p-button icon="pi pi-apple" [outlined]="true"></p-button>
@@ -33,6 +32,7 @@
 
         <div class="flex flex-column gap-2 my-3">
           <p-password
+            class="p-fluid"
             [toggleMask]="true"
             placeholder="******"
             formControlName="password"
@@ -56,7 +56,7 @@
 
         <p-button
           [disabled]="!authForm.valid"
-          class="sign-in-button w-full"
+          class="sign-in-button p-fluid"
           [loading]="state.user.isLoading()"
           (onClick)="onSubmit()"
         >
