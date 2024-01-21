@@ -1,0 +1,36 @@
+<form class="flex justify-content-between gap-2" [formGroup]="dateBirthForm">
+  <div class="w-6rem">
+    <p-inputNumber
+      class="p-fluid"
+      [useGrouping]="false"
+      formControlName="day"
+      placeholder="Day"
+      [min]="1"
+      [max]="31"
+    />
+  </div>
+  <div class="w-13rem">
+    <p-dropdown
+      class="p-fluid"
+      formControlName="month"
+      [options]="monthes"
+      placeholder="Month"
+      optionLabel="name"
+    />
+  </div>
+
+  <div class="w-6rem">
+    <p-inputNumber
+      placeholder="Year"
+      class="p-fluid"
+      [useGrouping]="false"
+      formControlName="year"
+      [min]="1900"
+      [max]="2010"
+    />
+  </div>
+</form>
+
+@if (dateBirthForm.invalid && isFormSubmitted) {
+  <small class="p-error">Please enter a valid date.</small>
+}

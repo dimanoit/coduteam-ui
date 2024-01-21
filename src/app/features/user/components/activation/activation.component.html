@@ -1,5 +1,6 @@
 <div class="flex flex-column align-items-center gap-3">
-  <div class="text-3xl font-semibold">Please finish account registration</div>
+  <div class="text-2xl text-color">Activate your account</div>
+  <div class="text-base">Enter names, date of birth and gender</div>
 
   <form class="flex flex-column gap-2" [formGroup]="finishRegistrationForm">
     <div class="flex gap-2">
@@ -9,6 +10,7 @@
         id="firstName"
         formControlName="firstName"
       />
+
       <input
         placeholder="Lastname"
         pInputText
@@ -17,13 +19,11 @@
       />
     </div>
 
-    <div class="flex gap-2">
-      <p-calendar
-        formControlName="date"
-        inputId="birth_date"
-        placeholder="Birth Date"
-      ></p-calendar>
+    <div class="w-full">
+      <app-date-input (onDateInput)="onDateInput($event)"></app-date-input>
+    </div>
 
+    <div class="p-fluid">
       <p-dropdown
         formControlName="gender"
         [options]="genders"
@@ -33,10 +33,9 @@
     </div>
 
     <p-button
+      class="p-fluid"
       label="Finish"
-      [disabled]="!finishRegistrationForm.valid"
-      class="sign-in-button w-full"
-      [loading]="isLoading()"
+      [disabled]="finishRegistrationForm.invalid"
       (onClick)="onRegistrationFinish()"
     ></p-button>
   </form>

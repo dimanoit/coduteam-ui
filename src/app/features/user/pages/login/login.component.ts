@@ -16,7 +16,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Message, SharedModule } from 'primeng/api';
+import { SharedModule } from 'primeng/api';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -49,7 +49,7 @@ import { MessagesModule } from 'primeng/messages';
 export class LoginComponent {
   loginForm: FormGroup;
   isLoading = this.state.user.isLoading;
-  loginErrorMessages: WritableSignal<Message[]> = signal([]);
+  loginErrorMessages: WritableSignal<string[]> = signal([]);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,7 +79,9 @@ export class LoginComponent {
     this.authService
       .login(authDto)
       .pipe(
-        tap(() => this.router.navigate(['/projects'])),
+        tap(() => {
+          this.router.navigate(['/projects']);
+        }),
         finalize(() => this.loginForm.reset()),
         catchError((error: HttpErrorResponse) => {
           this.setLoginErrors(error);
@@ -95,12 +97,7 @@ export class LoginComponent {
 
   private setLoginErrors(error: HttpErrorResponse) {
     if (error.status === 401) {
-      this.loginErrorMessages.set([
-        {
-          detail: 'Login or password incorrect',
-          severity: 'error',
-        },
-      ]);
+      this.loginErrorMessages.set(['Login or password incorrect']);
     }
   }
 }

@@ -43,10 +43,7 @@
       ></p-button>
 
       @if (loginErrorMessages()) {
-        <p-messages
-          [value]="loginErrorMessages()"
-          [closable]="true"
-        ></p-messages>
+        <small class="p-error">{{ loginErrorMessages() }}</small>
       }
     </form>
 

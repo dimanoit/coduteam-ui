@@ -6,7 +6,6 @@ import {
   OnInit,
   Output,
   signal,
-  Signal,
 } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
@@ -21,6 +20,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AccountRegistrationDto, Gender } from '../../models/user.interface';
+import { DateInputComponent } from '../date-input/date-input.component';
 
 @Component({
   selector: 'app-activation',
@@ -32,6 +32,7 @@ import { AccountRegistrationDto, Gender } from '../../models/user.interface';
     InputTextModule,
     PaginatorModule,
     ReactiveFormsModule,
+    DateInputComponent,
   ],
   templateUrl: './activation.component.html',
   styleUrl: './activation.component.scss',
@@ -55,7 +56,7 @@ export class ActivationComponent implements OnInit {
     this.finishRegistrationForm = this.formBuilder.group({
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
-      date: new FormControl<Date | null>(null),
+      date: ['', Validators.required],
       gender: new FormControl<GenderCode | null>(null),
     });
   }
@@ -64,7 +65,7 @@ export class ActivationComponent implements OnInit {
     if (!this.finishRegistrationForm.valid) {
       return;
     }
-    
+
     this.isLoading.set(true);
     const finishRegistrationDto: AccountRegistrationDto = {
       firstName: this.finishRegistrationForm.value.firstName,
@@ -74,6 +75,12 @@ export class ActivationComponent implements OnInit {
     };
 
     this.onUserActivation.emit(finishRegistrationDto);
+  }
+
+  onDateInput(date: Date) {
+    this.finishRegistrationForm.patchValue({
+      date: date,
+    });
   }
 }
 
