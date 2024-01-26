@@ -4,21 +4,28 @@ import {
   AuthDto,
   AccountRegistrationDto,
 } from '../models/user.interface';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { State } from '../../../state';
 
 @Injectable()
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private state: State,
+  ) {}
 
   register(authDto: AuthDto): Observable<void> {
+    this.state.user.setIsActivation(true);
     return this.http.post<void>('/auth/register', authDto);
   }
 
   finishRegistration(
     finishRegistrationDto: AccountRegistrationDto,
   ): Observable<void> {
-    return this.http.post<void>('/users/activation', finishRegistrationDto);
+    return this.http
+      .post<void>('/users/activation', finishRegistrationDto)
+      .pipe(tap(() => this.state.user.setIsActivation(false)));
   }
 
   getCurrentUser(): Observable<User> {

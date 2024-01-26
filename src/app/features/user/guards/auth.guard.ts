@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class AuthGuard {
     const isLoggedIn = this.authService.isUserLoggedIn();
 
     if (!isLoggedIn) {
-      this.router.navigate(['/auth']);
+      this.router.navigate(['/login']);
       return false;
     }
 

@@ -1,0 +1,63 @@
+<div class="grid pt-3">
+  <div class="col">
+    <img class="block w-full" src="../assets/auth.png" alt="Auth picture" />
+  </div>
+
+  <div class="col">
+    <div class="text-5xl font-semibold">Login to CoduTeam</div>
+
+    <div class="flex align-items-center justify-content-evenly">
+      <div>Login with social account or enter your details</div>
+      <p-button icon="pi pi-google" [outlined]="true"></p-button>
+      <p-button icon="pi pi-facebook" [outlined]="true"></p-button>
+      <p-button icon="pi pi-apple" [outlined]="true"></p-button>
+    </div>
+
+    <form [formGroup]="loginForm" (keyup.enter)="onSubmit()">
+      <div class="flex flex-column gap-2 my-3">
+        <label htmlFor="email">Email Address</label>
+        <input
+          pInputText
+          placeholder="example@gmail.com"
+          formControlName="email"
+          id="email"
+        />
+      </div>
+
+      <div class="flex flex-column gap-2 my-3">
+        <p-password
+          class="p-fluid"
+          [toggleMask]="true"
+          placeholder="******"
+          formControlName="password"
+        >
+        </p-password>
+      </div>
+
+      <p-button
+        label="Login"
+        [disabled]="!loginForm.valid"
+        class="sign-in-button p-fluid"
+        [loading]="isLoading()"
+        (onClick)="onSubmit()"
+      ></p-button>
+
+      @if (loginErrorMessages()) {
+        <small class="p-error">{{ loginErrorMessages() }}</small>
+      }
+    </form>
+
+    <div class="flex justify-content-between text-sm mt-5">
+      <div class="underline cursor-pointer">Forgot Password</div>
+      <div>
+        Don't have an account?
+        <span
+          class="underline cursor-pointer"
+          (click)="navigateToRegistration()"
+        >
+          Register
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
