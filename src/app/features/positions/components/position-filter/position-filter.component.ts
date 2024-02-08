@@ -33,7 +33,7 @@ import { SelectItem } from 'primeng/api';
     DropdownModule,
   ],
 })
-export class PositionFilterComponent {
+export class PositionFilterComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private positionService = inject(PositionService);
 
