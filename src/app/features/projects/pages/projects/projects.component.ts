@@ -8,6 +8,7 @@ import { ProjectService } from '../../services/project.service';
 import { SkeletonModule } from 'primeng/skeleton';
 import { FormsModule } from '@angular/forms';
 import { State } from '../../../../state';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'app-projects',
@@ -21,6 +22,7 @@ import { State } from '../../../../state';
     ProjectLineComponent,
     SkeletonModule,
     FormsModule,
+    ProgressBarModule,
   ],
   providers: [ProjectService, State],
   standalone: true,

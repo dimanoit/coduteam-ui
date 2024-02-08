@@ -10,6 +10,9 @@ import { PositionLineComponent } from '../../components/position-line/position-l
 import { NgForOf } from '@angular/common';
 import { PositionService } from '../../services/position.service';
 import { State } from '../../../../state';
+import { PositionApplyService } from '../../services/position-apply.service';
+import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @Component({
   selector: 'app-positions',
@@ -20,16 +23,27 @@ import { State } from '../../../../state';
     PositionFilterComponent,
     PositionLineComponent,
     NgForOf,
+    ProgressBarModule,
   ],
-  providers: [PositionService, State],
+  providers: [PositionService, PositionApplyService, State],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class PositionsComponent implements OnInit {
   positionService = inject(PositionService);
+  positionApplyService = inject(PositionApplyService);
+
   state = inject(State);
 
   ngOnInit(): void {
     this.positionService.loadPositions().subscribe();
+  }
+
+  handleOnPositionApply(positionId: number): void {
+    const request: ApplyOnPositionRequest = {
+      positionId: positionId,
+    };
+
+    this.positionApplyService.applyOnPosition(request).subscribe();
   }
 }

@@ -17,7 +17,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProjectService } from '../../services/project.service';
 import { ProjectSearchRequest } from '../../models/project-search-request.interface';
-import { debounceTime, filter, of, switchMap } from 'rxjs';
+import { debounceTime, filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-projects-filter',
@@ -44,7 +44,7 @@ export class ProjectsFilterComponent implements OnInit {
       category: [ProjectCategory.None, Validators.required],
       term: ['', [Validators.maxLength(26)]],
     });
-    
+
     this.searchForm.valueChanges
       .pipe(
         debounceTime(300),
@@ -56,6 +56,7 @@ export class ProjectsFilterComponent implements OnInit {
 
   search() {
     const request = this.searchForm.value as ProjectSearchRequest;
+    console.log(request);
     return this.projectService.loadProjects(request);
   }
 }
