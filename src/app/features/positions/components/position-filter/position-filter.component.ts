@@ -1,8 +1,27 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { ProjectCategoryDropdownComponent } from '../../../projects/components/project-category-dropdown/project-category-dropdown.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
-import { FormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { PositionCategory } from '../../models/position-category.enum';
+import { ProjectService } from '../../../projects/services/project.service';
+import { ProjectCategory } from '../../../projects/components/project-card/project-category/project-category.enum';
+import { debounceTime, filter, switchMap } from 'rxjs';
+import { ProjectSearchRequest } from '../../../projects/models/project-search-request.interface';
+import { PositionApplyStatus } from '../../models/position-apply-status';
+import { PositionService } from '../../services/position.service';
+import { PositionSearchRequest } from '../../models/position-search-request.interface';
+import { SelectItem } from 'primeng/api';
 
 @Component({
   selector: 'app-position-filter',
@@ -13,26 +32,42 @@ import { FormsModule } from '@angular/forms';
   imports: [
     ProjectCategoryDropdownComponent,
     InputTextModule,
+    ReactiveFormsModule,
     DropdownModule,
-    FormsModule,
   ],
 })
-export class PositionFilterComponent implements OnInit {
-  specialities: Speciality[] | undefined;
-  selectedSpeciality: Speciality | undefined;
+export class PositionFilterComponent {
+  private formBuilder = inject(FormBuilder);
+  private positionService = inject(PositionService);
 
-  ngOnInit() {
-    this.specialities = [
-      { name: '.Net', code: '.Net' },
-      { name: 'Golang', code: 'Golang' },
-      { name: 'Java', code: 'Java' },
-      { name: 'Javascript', code: 'Javascript' },
-      { name: 'Typescript', code: 'Typescript' },
-    ];
+  searchForm!: FormGroup;
+
+  ngOnInit(): void {
+    this.searchForm = this.formBuilder.group({
+      projectCategory: [ProjectCategory.None],
+      term: ['', [Validators.maxLength(26)]],
+      positionCategory: [''],
+      applicationStatus: [''],
+    });
+
+    this.searchForm.valueChanges
+      .pipe(
+        debounceTime(300),
+        filter(() => this.searchForm.valid),
+        switchMap(() => this.search()),
+      )
+      .subscribe();
   }
-}
 
-interface Speciality {
-  name: string;
-  code: string;
+  search() {
+    const request = this.searchForm.value as PositionSearchRequest;
+    return this.positionService.loadPositions(request);
+  }
+
+  specialities: SelectItem[] = Object.keys(PositionCategory).map(
+    (categoryKey): SelectItem => ({
+      label: PositionCategory[categoryKey as keyof typeof PositionCategory],
+      value: categoryKey,
+    }),
+  );
 }

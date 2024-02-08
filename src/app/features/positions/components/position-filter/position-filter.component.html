@@ -1,16 +1,20 @@
-<div>
-  <app-project-category-dropdown />
+<div class="flex gap-2" [formGroup]="searchForm">
+  <app-project-category-dropdown formControlName="projectCategory" />
 
   <span class="p-input-icon-left">
     <i class="pi pi-search"></i>
-    <input placeholder="Search by term" type="text" pInputText />
+    <input
+      formControlName="term"
+      placeholder="Search by term"
+      type="text"
+      pInputText
+    />
   </span>
 
   <p-dropdown
+    formControlName="positionCategory"
     [options]="specialities"
-    [(ngModel)]="selectedSpeciality"
     placeholder="Speciality"
     [editable]="true"
-    optionLabel="name"
   ></p-dropdown>
 </div>

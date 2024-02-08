@@ -1,9 +1,19 @@
 <div>
   <app-position-filter />
 
+  @if (state.position.isLoading()) {
+    <p-progressBar
+      mode="indeterminate"
+      [style]="{ height: '6px' }"
+    ></p-progressBar>
+  }
+
   <div>
     @for (position of state.position.data(); track $index) {
-      <app-position-line [position]="position"></app-position-line>
+      <app-position-line
+        (onPositionApply)="handleOnPositionApply($event)"
+        [position]="position"
+      ></app-position-line>
     }
   </div>
 </div>

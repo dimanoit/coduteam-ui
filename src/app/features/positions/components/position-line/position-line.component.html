@@ -12,6 +12,11 @@
 
   <div class="flex justify-content-between mt-1">
     <div class="text-sm">{{ position.shortDescription }}</div>
-    <p-button label="Apply"></p-button>
+
+    @if (position.currentUserPositionApplyStatus) {
+      <div>{{ position.currentUserPositionApplyStatus }}</div>
+    } @else {
+      <p-button (click)="applyOnPosition()" label="Apply"></p-button>
+    }
   </div>
 </div>

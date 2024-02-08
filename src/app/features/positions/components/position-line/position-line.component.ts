@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PositionDto } from '../../models/position-dto.interface';
 import { ButtonModule } from 'primeng/button';
@@ -13,4 +19,10 @@ import { ButtonModule } from 'primeng/button';
 })
 export class PositionLineComponent {
   @Input() position!: PositionDto;
+
+  @Output() onPositionApply = new EventEmitter<number>();
+
+  applyOnPosition() {
+    this.onPositionApply.emit(this.position.id);
+  }
 }

@@ -44,7 +44,7 @@ export class ProjectsFilterComponent implements OnInit {
       category: [ProjectCategory.None, Validators.required],
       term: ['', [Validators.maxLength(26)]],
     });
-    
+
     this.searchForm.valueChanges
       .pipe(
         debounceTime(300),
@@ -56,6 +56,7 @@ export class ProjectsFilterComponent implements OnInit {
 
   search() {
     const request = this.searchForm.value as ProjectSearchRequest;
+    console.log(request);
     return this.projectService.loadProjects(request);
   }
 }

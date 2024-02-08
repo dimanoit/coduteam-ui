@@ -8,6 +8,13 @@
   ></p-toggleButton>
 </div>
 
+@if (state.project.isLoading()) {
+  <p-progressBar
+    mode="indeterminate"
+    [style]="{ height: '6px' }"
+  ></p-progressBar>
+}
+
 <div class="projects-container" (scroll)="onScroll($event)">
   @if (state.project.data()) {
     <div class="flex gap-5 flex-wrap justify-content-center py-5">
@@ -20,12 +27,6 @@
           <app-project-line [project]="project"></app-project-line>
         }
       }
-    </div>
-  }
-
-  @if (state.project.isLoading()) {
-    <div class="flex justify-content-center">
-      <p-skeleton width="54rem" height="6rem"></p-skeleton>
     </div>
   }
 </div>
