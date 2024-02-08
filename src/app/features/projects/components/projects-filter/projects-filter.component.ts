@@ -17,7 +17,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProjectService } from '../../services/project.service';
 import { ProjectSearchRequest } from '../../models/project-search-request.interface';
-import { debounceTime, filter, of, switchMap } from 'rxjs';
+import { debounceTime, filter, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-projects-filter',

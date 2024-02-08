@@ -12,9 +12,7 @@ import { PositionService } from '../../services/position.service';
 import { State } from '../../../../state';
 import { PositionApplyService } from '../../services/position-apply.service';
 import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
-import { tap } from 'rxjs';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { ProgressSpinnerModule } from 'primeng/progressspinner';
 
 @Component({
   selector: 'app-positions',

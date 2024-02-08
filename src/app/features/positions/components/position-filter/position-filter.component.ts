@@ -14,11 +14,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { PositionCategory } from '../../models/position-category.enum';
-import { ProjectService } from '../../../projects/services/project.service';
 import { ProjectCategory } from '../../../projects/components/project-card/project-category/project-category.enum';
 import { debounceTime, filter, switchMap } from 'rxjs';
-import { ProjectSearchRequest } from '../../../projects/models/project-search-request.interface';
-import { PositionApplyStatus } from '../../models/position-apply-status';
 import { PositionService } from '../../services/position.service';
 import { PositionSearchRequest } from '../../models/position-search-request.interface';
 import { SelectItem } from 'primeng/api';
