@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { finalize, map, Observable, switchMap, tap } from 'rxjs';
+import { map, Observable, switchMap, tap } from 'rxjs';
 import { Project } from '../models/project.interface';
 import { ProjectSearchRequest } from '../models/project-search-request.interface';
 import { toHttpParams } from '../../../core/utils/http-params.util';
 import { CreateProjectRequest } from '../models/create-project.interface';
-import { ProjectState } from '../state/project.state';
 import { Router } from '@angular/router';
 import { State } from '../../../state';
 
