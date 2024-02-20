@@ -6,7 +6,6 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { UserService } from '../../../features/user/services/user.service';
 import { Router } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { ButtonModule } from 'primeng/button';
