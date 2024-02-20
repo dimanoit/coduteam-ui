@@ -6,12 +6,23 @@
     onIcon="pi pi-th-large"
     offIcon="pi pi-bars"
   ></p-toggleButton>
+
+  <p-button
+    class="ml-2"
+    (click)="isShownCreateProjectDialog.set(true)"
+    label="Create project"
+  />
+  <app-create-project-dialog
+    [isShown]="isShownCreateProjectDialog()"
+    (closedDialog)="isShownCreateProjectDialog.set(false)"
+    (createProject)="createProject($event)"
+  ></app-create-project-dialog>
 </div>
 
 <div class="projects-container" (scroll)="onScroll($event)">
   @if (state.project.data()) {
     <div class="flex gap-5 flex-wrap justify-content-center py-5">
-      @if (isCardView) {
+      @if (isCardView()) {
         @for (project of state.project.data(); track $index) {
           <app-project-card [project]="project"></app-project-card>
         }

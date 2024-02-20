@@ -38,7 +38,6 @@ export class NavbarComponent implements OnInit {
 
   items: MenuItem[] | undefined;
   isLoggedIn = this.userService.isUserLoggedIn;
-  isShownCreateProjectDialog = false;
   isLightTheme = this.themeService.isLightTeam;
 
   ngOnInit(): void {
@@ -58,12 +57,3 @@ export class NavbarComponent implements OnInit {
     await this.router.navigateByUrl('');
   }
 }
-
-// {
-//   label: 'Create Project',
-//     command: () => {
-//   if (this.userService.isUserLoggedIn()) {
-//     this.isShownCreateProjectDialog = true;
-//   }
-// },
-// },

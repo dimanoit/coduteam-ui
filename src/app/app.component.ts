@@ -27,12 +27,6 @@ export class AppComponent implements OnInit {
 
   title = 'my-first-project';
 
-  constructor() {
-    effect(() => {
-      console.log(this.state.isLoading());
-    });
-  }
-
   ngOnInit(): void {
     this.themeService.loadTheme();
   }

@@ -1,4 +1,11 @@
-import { Component, computed, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ProjectCardComponent } from '../../components/project-card/project-card.component';
 import { CommonModule } from '@angular/common';
 import { ProjectsFilterComponent } from '../../components/projects-filter/projects-filter.component';
@@ -10,8 +17,11 @@ import { FormsModule } from '@angular/forms';
 import { State } from '../../../../state';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { finalize, Subject, switchMap, tap } from 'rxjs';
+import { Subject, switchMap } from 'rxjs';
 import { ProjectSearchRequest } from '../../models/project-search-request.interface';
+import { CreateProjectDialogComponent } from '../../components/create-project-dialog/create-project-dialog.component';
+import { ButtonModule } from 'primeng/button';
+import { CreateProjectRequest } from '../../models/create-project.interface';
 
 @Component({
   selector: 'app-projects',
@@ -26,21 +36,23 @@ import { ProjectSearchRequest } from '../../models/project-search-request.interf
     SkeletonModule,
     FormsModule,
     ProgressBarModule,
+    CreateProjectDialogComponent,
+    ButtonModule,
   ],
   providers: [ProjectService],
   standalone: true,
 })
 export class ProjectsComponent implements OnInit {
-  isCardView: boolean = false;
+  isCardView = signal(false);
+  isShownCreateProjectDialog = signal(false);
+
   lastIdx = computed(() => this.state.project.data().length);
   lastIdxSent = 0;
-  destroyRef = inject(DestroyRef);
-  private cancelPrevious = new Subject<void>();
 
-  constructor(
-    private projectService: ProjectService,
-    protected state: State,
-  ) {}
+  private cancelPrevious = new Subject<void>();
+  private destroyRef = inject(DestroyRef);
+  private projectService = inject(ProjectService);
+  protected state = inject(State);
 
   ngOnInit(): void {
     this.loadProjects();
@@ -62,6 +74,13 @@ export class ProjectsComponent implements OnInit {
   searchProject($event: ProjectSearchRequest) {
     this.cancelPrevious.next();
     this.loadProjects($event);
+  }
+
+  createProject($event: CreateProjectRequest) {
+    this.projectService
+      .createProject($event)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 
   private loadProjects(
