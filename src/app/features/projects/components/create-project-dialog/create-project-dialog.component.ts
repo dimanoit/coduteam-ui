@@ -18,6 +18,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { DialogModule } from 'primeng/dialog';
 import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/project-category-dropdown.component';
 import { CreateProjectRequest } from '../../models/create-project.interface';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 @Component({
   selector: 'app-create-project-dialog',
@@ -30,6 +31,7 @@ import { CreateProjectRequest } from '../../models/create-project.interface';
     DropdownModule,
     DialogModule,
     ProjectCategoryDropdownComponent,
+    InputTextareaModule,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
@@ -42,8 +44,8 @@ export class CreateProjectDialogComponent {
   @Output() createProject = new EventEmitter<CreateProjectRequest>();
 
   projectForm: FormGroup = this.formBuilder.group({
-    title: ['', [Validators.required, Validators.maxLength(26)]],
-    description: ['', [Validators.required, Validators.maxLength(250)]],
+    title: ['', [Validators.required, Validators.maxLength(100)]],
+    description: ['', [Validators.required, Validators.maxLength(1000)]],
     category: [null, Validators.required],
     country: [null],
     projectImgUrl: [''],

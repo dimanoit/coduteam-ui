@@ -8,7 +8,7 @@ import { Project } from '../../models/project.interface';
 import { ProjectCategoryComponent } from './project-category/project-category.component';
 import { ButtonModule } from 'primeng/button';
 import { NgIf } from '@angular/common';
-import { ProjectService } from '../../services/project.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-card',
@@ -20,5 +20,9 @@ import { ProjectService } from '../../services/project.service';
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
-  protected projectService = inject(ProjectService);
+  private router = inject(Router);
+
+  navigateToProject(): void {
+    this.router.navigateByUrl(`/projects/${this.project?.id}`);
+  }
 }

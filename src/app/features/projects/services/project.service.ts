@@ -52,8 +52,4 @@ export class ProjectService {
       .delete<void>(`${this.resourcePath}/${id}`)
       .pipe(switchMap(() => this.loadProjects()));
   }
-
-  viewProjectDetails(projectId: number): void {
-    this.router.navigate(['/projects', projectId]);
-  }
 }

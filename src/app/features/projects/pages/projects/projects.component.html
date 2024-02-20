@@ -2,7 +2,7 @@
   <app-projects-filter (onFilterChange)="searchProject($event)" />
 
   <p-toggleButton
-    [(ngModel)]="isCardView"
+    (click)="isCardView.set(!isCardView())"
     onIcon="pi pi-th-large"
     offIcon="pi pi-bars"
   ></p-toggleButton>
