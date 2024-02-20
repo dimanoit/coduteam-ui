@@ -7,6 +7,7 @@ import { toHttpParams } from '../../../core/utils/http-params.util';
 import { CreateProjectRequest } from '../models/create-project.interface';
 import { ProjectState } from '../state/project.state';
 import { Router } from '@angular/router';
+import { State } from '../../../state';
 
 @Injectable()
 export class ProjectService {
@@ -15,30 +16,29 @@ export class ProjectService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private projectState: ProjectState,
+    private state: State,
   ) {}
 
-  loadProjects(params?: ProjectSearchRequest, join = false): Observable<void> {
-    params = params ?? { skip: 0, take: 5 };
+  loadProjects(
+    params: ProjectSearchRequest = { skip: 0, take: 5 },
+    join = false,
+  ): Observable<void> {
     const httpParams = toHttpParams(params);
 
-    this.projectState.setIsLoading(true);
     return this.http
       .get<Project[]>(this.resourcePath, {
         params: httpParams,
       })
       .pipe(
-        map((projects) => this.projectState.setProjects(projects, join)),
-        finalize(() => this.projectState.setIsLoading(false)),
+        tap(() => this.state.endLoading()),
+        map((projects) => this.state.project.setProjects(projects, join)),
       );
   }
 
   loadSelectedProject(id: number): Observable<void> {
-    this.projectState.setIsLoading(true);
-    return this.http.get<Project>(`${this.resourcePath}/${id}`).pipe(
-      map((project) => this.projectState.setSelectedProject(project)),
-      finalize(() => this.projectState.setIsLoading(false)),
-    );
+    return this.http
+      .get<Project>(`${this.resourcePath}/${id}`)
+      .pipe(map((project) => this.state.project.setSelectedProject(project)));
   }
 
   createProject(request: CreateProjectRequest): Observable<void> {
@@ -48,7 +48,6 @@ export class ProjectService {
   }
 
   remove(id: number): Observable<void> {
-    this.projectState.setIsLoading(true);
     return this.http
       .delete<void>(`${this.resourcePath}/${id}`)
       .pipe(switchMap(() => this.loadProjects()));

@@ -15,11 +15,17 @@ import {
 } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
+import { State } from './app/state';
+import { ProjectState } from './app/features/projects/state/project.state';
+import { PositionState } from './app/features/positions/position.state';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     MessageService,
+    State,
+    ProjectState,
+    PositionState,
     provideAnimations(),
     provideHttpClient(
       withFetch(),

@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   inject,
   OnInit,
+  Output,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -17,7 +19,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProjectService } from '../../services/project.service';
 import { ProjectSearchRequest } from '../../models/project-search-request.interface';
-import { debounceTime, filter, switchMap } from 'rxjs';
+import { debounceTime, filter, map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-projects-filter',
@@ -35,8 +37,8 @@ import { debounceTime, filter, switchMap } from 'rxjs';
 })
 export class ProjectsFilterComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  private projectService = inject(ProjectService);
 
+  @Output() onFilterChange = new EventEmitter<ProjectSearchRequest>();
   searchForm!: FormGroup;
 
   ngOnInit(): void {
@@ -49,14 +51,13 @@ export class ProjectsFilterComponent implements OnInit {
       .pipe(
         debounceTime(300),
         filter(() => this.searchForm.valid),
-        switchMap(() => this.search()),
+        map(() => this.search()),
       )
       .subscribe();
   }
 
-  search() {
+  search(): void {
     const request = this.searchForm.value as ProjectSearchRequest;
-    console.log(request);
-    return this.projectService.loadProjects(request);
+    this.onFilterChange.emit(request);
   }
 }

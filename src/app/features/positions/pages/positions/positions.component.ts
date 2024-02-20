@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   inject,
   OnInit,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { State } from '../../../../state';
 import { PositionApplyService } from '../../services/position-apply.service';
 import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-positions',
@@ -25,18 +27,22 @@ import { ProgressBarModule } from 'primeng/progressbar';
     NgForOf,
     ProgressBarModule,
   ],
-  providers: [PositionService, PositionApplyService, State],
+  providers: [PositionService, PositionApplyService],
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
 export class PositionsComponent implements OnInit {
   positionService = inject(PositionService);
   positionApplyService = inject(PositionApplyService);
+  destroyRef = inject(DestroyRef);
 
   state = inject(State);
 
   ngOnInit(): void {
-    this.positionService.loadPositions().subscribe();
+    this.positionService
+      .loadPositions()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 
   handleOnPositionApply(positionId: number): void {
@@ -44,6 +50,9 @@ export class PositionsComponent implements OnInit {
       positionId: positionId,
     };
 
-    this.positionApplyService.applyOnPosition(request).subscribe();
+    this.positionApplyService
+      .applyOnPosition(request)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
   }
 }

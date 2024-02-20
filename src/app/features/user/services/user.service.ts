@@ -4,7 +4,7 @@ import {
   AuthDto,
   AccountRegistrationDto,
 } from '../models/user.interface';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { State } from '../../../state';
 
@@ -28,7 +28,9 @@ export class UserService {
       .pipe(tap(() => this.state.user.setIsActivation(false)));
   }
 
-  getCurrentUser(): Observable<User> {
-    return this.http.get<User>('/users');
+  loadCurrentUser(): Observable<void> {
+    return this.http
+      .get<User>('/users')
+      .pipe(map((response: User) => this.state.user.setCurrentUser(response)));
   }
 }

@@ -4,7 +4,7 @@ import { finalize, map, Observable, tap } from 'rxjs';
 import { PositionDto } from '../models/position-dto.interface';
 import { PositionSearchRequest } from '../models/position-search-request.interface';
 import { toHttpParams } from '../../../core/utils/http-params.util';
-import { PositionState } from '../position.state';
+import { State } from '../../../state';
 
 @Injectable()
 export class PositionService {
@@ -12,22 +12,21 @@ export class PositionService {
 
   constructor(
     private http: HttpClient,
-    private positionState: PositionState,
+    private state: State,
   ) {}
 
   loadPositions(params?: PositionSearchRequest): Observable<void> {
     params = params ?? { skip: 0, take: 5, withApplicationStatus: true };
     const httpParams = toHttpParams(params);
 
-    this.positionState.setIsLoading(true);
+    this.state.startLoading();
     return this.http
       .get<PositionDto[]>(this.resourcePath, {
         params: httpParams,
       })
       .pipe(
-        tap((positions) => this.positionState.setPositions(positions)),
-        finalize(() => this.positionState.setIsLoading(false)),
-        map(() => void 0),
+        map((positions) => this.state.position.setPositions(positions)),
+        finalize(() => this.state.endLoading()),
       );
   }
 }

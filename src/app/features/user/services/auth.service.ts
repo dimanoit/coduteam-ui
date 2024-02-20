@@ -24,11 +24,9 @@ export class AuthService {
   }
 
   login(authDto: AuthDto): Observable<void> {
-    this.state.user.setIsLoading(true);
-    return this.http.post<AuthToken>('/auth/login', authDto).pipe(
-      map((authToken) => this.storeTokenOnAuth(authToken)),
-      finalize(() => this.state.user.setIsLoading(false)),
-    );
+    return this.http
+      .post<AuthToken>('/auth/login', authDto)
+      .pipe(map((authToken) => this.storeTokenOnAuth(authToken)));
   }
 
   refreshToken(): Observable<void> {
