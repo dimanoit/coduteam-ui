@@ -43,15 +43,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = [
-      { label: 'Join Projects', routerLink: 'projects' },
-      {
-        label: 'Create Project',
-        command: () => {
-          if (this.userService.isUserLoggedIn()) {
-            this.isShownCreateProjectDialog = true;
-          }
-        },
-      },
+      { label: 'Projects', routerLink: 'projects' },
+
       { label: 'Positions', routerLink: 'positions' },
     ];
   }
@@ -65,3 +58,12 @@ export class NavbarComponent implements OnInit {
     await this.router.navigateByUrl('');
   }
 }
+
+// {
+//   label: 'Create Project',
+//     command: () => {
+//   if (this.userService.isUserLoggedIn()) {
+//     this.isShownCreateProjectDialog = true;
+//   }
+// },
+// },

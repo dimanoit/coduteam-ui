@@ -1,5 +1,12 @@
 <div class="page-container">
   <app-navbar></app-navbar>
+  @if (state.isLoading()) {
+    <p-progressBar
+      mode="indeterminate"
+      [style]="{ height: '6px' }"
+    ></p-progressBar>
+  }
+
   <p-toast></p-toast>
   <div class="content-wrap">
     <router-outlet></router-outlet>

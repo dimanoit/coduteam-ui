@@ -1,5 +1,5 @@
 <div class="flex mt-2 w-full align-items-center justify-content-center">
-  <app-projects-filter />
+  <app-projects-filter (onFilterChange)="searchProject($event)" />
 
   <p-toggleButton
     [(ngModel)]="isCardView"
@@ -7,13 +7,6 @@
     offIcon="pi pi-bars"
   ></p-toggleButton>
 </div>
-
-@if (state.project.isLoading()) {
-  <p-progressBar
-    mode="indeterminate"
-    [style]="{ height: '6px' }"
-  ></p-progressBar>
-}
 
 <div class="projects-container" (scroll)="onScroll($event)">
   @if (state.project.data()) {

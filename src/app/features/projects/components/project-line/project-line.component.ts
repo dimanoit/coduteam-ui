@@ -3,13 +3,13 @@ import {
   Component,
   inject,
   Input,
+  OnInit,
 } from '@angular/core';
 import { CommonModule, NgFor } from '@angular/common';
 import { Project } from '../../models/project.interface';
 import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ProjectService } from '../../services/project.service';
-import { ProjectState } from '../../state/project.state';
 import { ButtonModule } from 'primeng/button';
 
 @Component({
@@ -24,7 +24,6 @@ export class ProjectLineComponent {
   @Input() isRemovable: boolean = false;
 
   protected projectService = inject(ProjectService);
-  protected projectState = inject(ProjectState);
 
   removeProject() {
     if (!this.project?.id) {

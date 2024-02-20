@@ -5,25 +5,25 @@ import { patchState, signalState } from '@ngrx/signals';
 export interface PositionStateModel {
   positions: PositionDto[];
   selectedPosition: PositionDto | null;
-  isLoading: boolean;
+  myApplications: PositionDto[];
 }
 
 @Injectable({ providedIn: 'root' })
 export class PositionState {
   private state = signalState<PositionStateModel>({
     positions: [],
+    myApplications: [],
     selectedPosition: null,
-    isLoading: false,
   });
 
-  isLoading = this.state.isLoading;
-  data = this.state.positions;
-
-  setIsLoading(isLoading: boolean) {
-    patchState(this.state, () => ({ isLoading }));
-  }
+  positions = this.state.positions;
+  myApplications = this.state.myApplications;
 
   setPositions(positions: PositionDto[]): void {
     patchState(this.state, () => ({ positions }));
+  }
+
+  setMyApplications(applications: PositionDto[]): void {
+    patchState(this.state, () => ({ myApplications: applications }));
   }
 }
