@@ -22,6 +22,7 @@ import { ProjectSearchRequest } from '../../models/project-search-request.interf
 import { CreateProjectDialogComponent } from '../../components/create-project-dialog/create-project-dialog.component';
 import { ButtonModule } from 'primeng/button';
 import { CreateProjectRequest } from '../../models/create-project.interface';
+import { ProjectsNotFoundComponent } from '../../components/projects-not-found/projects-not-found.component';
 
 @Component({
   selector: 'app-projects',
@@ -38,6 +39,7 @@ import { CreateProjectRequest } from '../../models/create-project.interface';
     ProgressBarModule,
     CreateProjectDialogComponent,
     ButtonModule,
+    ProjectsNotFoundComponent,
   ],
   providers: [ProjectService],
   standalone: true,

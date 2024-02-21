@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  Input,
   OnInit,
   ViewEncapsulation,
 } from '@angular/core';
@@ -13,6 +14,7 @@ import { CreateProjectDialogComponent } from '../../../features/projects/compone
 import { NgClass, NgIf } from '@angular/common';
 import { ThemeService } from '../../../shared/services/theme.service';
 import { AuthService } from '../../../features/user/services/auth.service';
+import { AvatarModule } from 'primeng/avatar';
 
 @Component({
   selector: 'app-navbar',
@@ -28,12 +30,15 @@ import { AuthService } from '../../../features/user/services/auth.service';
     CreateProjectDialogComponent,
     NgIf,
     NgClass,
+    AvatarModule,
   ],
 })
 export class NavbarComponent implements OnInit {
   private userService = inject(AuthService);
   private router = inject(Router);
   private themeService = inject(ThemeService);
+
+  @Input() profileImg?: string;
 
   items: MenuItem[] | undefined;
   isLoggedIn = this.userService.isUserLoggedIn;

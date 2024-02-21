@@ -18,12 +18,14 @@ import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
 import { State } from './app/state';
 import { ProjectState } from './app/features/projects/state/project.state';
 import { PositionState } from './app/features/positions/position.state';
+import { UserState } from './app/features/user/user.state';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     MessageService,
     State,
+    UserState,
     ProjectState,
     PositionState,
     provideAnimations(),

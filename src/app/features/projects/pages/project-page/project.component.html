@@ -1,8 +1,11 @@
-@if (state.isLoading()) {
-} @else if (state.project.selected()) {
+@if (state.project.selected()) {
   <div class="p-3 flex flex-column gap-3">
-    <app-project-line [project]="state.project.selected()!" />
-
+    <div class="flex justify-content-between">
+      <app-project-line [project]="state.project.selected()!" />
+      @if (isUserOwnerOfProject()) {
+        <p-button label="Create position" />
+      }
+    </div>
     <div class="grid">
       <div class="col-4 flex flex-column row-gap-3">
         <p-card header="Participants">
@@ -30,6 +33,6 @@
       </p-card>
     </div>
   </div>
-} @else {
+} @else if (!state.isLoading()) {
   <div>Current project not found!</div>
 }

@@ -49,7 +49,7 @@ export class ProjectsFilterComponent implements OnInit {
 
     this.searchForm.valueChanges
       .pipe(
-        debounceTime(300),
+        debounceTime(600),
         filter(() => this.searchForm.valid),
         map(() => this.search()),
       )

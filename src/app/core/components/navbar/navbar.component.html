@@ -4,8 +4,8 @@
       src="../assets/codu-team-icon.png"
       height="60"
       routerLink=""
-      class="mr-2"
-      alt="Coud team icon"
+      class="mr-2 cursor-pointer"
+      alt="Coduteam icon"
     />
   </ng-template>
   <ng-template pTemplate="end">
@@ -16,11 +16,14 @@
         [ngClass]="isLightTheme() ? 'pi pi-moon' : 'pi pi-sun'"
       ></i>
 
-      <i
-        class="pi pi-user"
+      <p-avatar
+        [image]="profileImg"
+        styleClass="mr-2"
+        size="normal"
+        shape="circle"
         routerLink="/account"
-        style="font-size: 1.5rem; cursor: pointer"
-      ></i>
+        class="cursor-pointer"
+      ></p-avatar>
 
       @if (isLoggedIn()) {
         <p-button

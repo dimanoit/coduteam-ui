@@ -1,10 +1,14 @@
 <div class="page-container">
-  <app-navbar></app-navbar>
+  <app-navbar
+    [profileImg]="state.user.currentUser()?.profileImage"
+  ></app-navbar>
   @if (state.isLoading()) {
     <p-progressBar
       mode="indeterminate"
       [style]="{ height: '6px' }"
     ></p-progressBar>
+  } @else {
+    <div style="height: 6px"></div>
   }
 
   <p-toast></p-toast>

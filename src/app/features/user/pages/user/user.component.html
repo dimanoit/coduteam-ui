@@ -2,7 +2,7 @@
   <div class="col-3">
     <div class="surface-card border-1 border-round surface-border flex p-3">
       <p-avatar
-        image="https://source.unsplash.com/random/200x200"
+        [image]="currentUser()?.profileImage"
         styleClass="mr-2"
         size="xlarge"
         shape="circle"
