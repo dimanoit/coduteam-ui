@@ -12,6 +12,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
+import { truncateString } from '../../../../shared/utils/text.util';
 
 @Component({
   selector: 'app-project-line',
@@ -32,14 +33,11 @@ export class ProjectLineComponent {
   private maxTitleSize = 26;
 
   get description(): string | undefined {
-    return this.truncateString(
-      this.project?.description,
-      this.maxDescriptionSize,
-    );
+    return truncateString(this.project?.description, this.maxDescriptionSize);
   }
 
   get title(): string | undefined {
-    return this.truncateString(this.project?.title, this.maxTitleSize);
+    return truncateString(this.project?.title, this.maxTitleSize);
   }
 
   removeProject() {
@@ -52,14 +50,5 @@ export class ProjectLineComponent {
 
   navigateToProject(): void {
     this.router.navigateByUrl(`/projects/${this.project?.id}`);
-  }
-
-  private truncateString(
-    str: string | undefined,
-    maxLength: number,
-  ): string | undefined {
-    return str?.length !== undefined && str.length > maxLength
-      ? `${str.slice(0, maxLength)}...`
-      : str;
   }
 }

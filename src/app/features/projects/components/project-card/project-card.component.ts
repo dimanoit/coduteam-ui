@@ -9,6 +9,7 @@ import { ProjectCategoryComponent } from './project-category/project-category.co
 import { ButtonModule } from 'primeng/button';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
+import { truncateString } from '../../../../shared/utils/text.util';
 
 @Component({
   selector: 'app-project-card',
@@ -21,6 +22,17 @@ import { Router } from '@angular/router';
 export class ProjectCardComponent {
   @Input() project!: Project;
   private router = inject(Router);
+
+  private maxDescriptionSize = 200;
+  private maxTitleSize = 26;
+
+  get description(): string | undefined {
+    return truncateString(this.project?.description, this.maxDescriptionSize);
+  }
+
+  get title(): string | undefined {
+    return truncateString(this.project?.title, this.maxTitleSize);
+  }
 
   navigateToProject(): void {
     this.router.navigateByUrl(`/projects/${this.project?.id}`);

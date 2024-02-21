@@ -1,9 +1,9 @@
 .card {
   position: relative;
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 8px var(--primary-color);
+  box-shadow: var(--box-shadow-value);
   overflow: hidden;
-  
+
   width: 328px;
   height: 400px;
 
