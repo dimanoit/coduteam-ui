@@ -1,9 +1,11 @@
-@if (state.project.selected()) {
+@if (state.project.selected() && !this.state.isLoading()) {
   <div class="p-3 flex flex-column gap-3">
     <div class="flex justify-content-between">
       <app-project-line [project]="state.project.selected()!" />
       @if (isUserOwnerOfProject()) {
         <p-button label="Create position" />
+
+        <app-create-position-dialog [isShown]="true" />
       }
     </div>
     <div class="grid">

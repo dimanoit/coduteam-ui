@@ -9,7 +9,7 @@ import { ProjectCategoryComponent } from './project-category/project-category.co
 import { ButtonModule } from 'primeng/button';
 import { NgIf } from '@angular/common';
 import { Router } from '@angular/router';
-import { truncateString } from '../../../../shared/utils/text.util';
+import { truncateString } from '../../../../shared/utils/utilities';
 
 @Component({
   selector: 'app-project-card',

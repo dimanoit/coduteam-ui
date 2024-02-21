@@ -12,7 +12,10 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
-import { truncateString } from '../../../../shared/utils/text.util';
+import {
+  openInNewTab,
+  truncateString,
+} from '../../../../shared/utils/utilities';
 
 @Component({
   selector: 'app-project-line',
@@ -49,6 +52,6 @@ export class ProjectLineComponent {
   }
 
   navigateToProject(): void {
-    this.router.navigateByUrl(`/projects/${this.project?.id}`);
+    openInNewTab(`/projects/${this.project?.id}`);
   }
 }

@@ -1,0 +1,66 @@
+<div class="card flex justify-content-center">
+  <p-dialog
+    (onHide)="closeDialog()"
+    header="Header"
+    [(visible)]="isShown"
+    [style]="{ width: '50vw' }"
+  >
+    <ng-template pTemplate="header">
+      <span class="text-xl font-bold">Create Position</span>
+    </ng-template>
+
+    <div class="p-5">
+      <form class="flex gap-4 flex-wrap" [formGroup]="positionForm">
+        <div class="p-float-label">
+          <input pInputText id="title" formControlName="title" />
+          <label for="title">Title</label>
+        </div>
+
+        <div class="p-float-label">
+          <input
+            pInputText
+            id="shortDescription"
+            formControlName="shortDescription"
+          />
+          <label for="title">Short description</label>
+        </div>
+
+        <div>
+          <p-checkbox formControlName="isRemote"></p-checkbox>
+          <label>Remote</label>
+        </div>
+
+        <div class="p-float-label">
+          <p-calendar id="deadline" formControlName="deadline"></p-calendar>
+          <label for="deadline">Deadline</label>
+        </div>
+
+        <div class="p-float-label">
+          <textarea
+            rows="5"
+            cols="65"
+            pInputTextarea
+            id="description"
+            formControlName="description"
+          ></textarea>
+          <label for="description">Description</label>
+        </div>
+      </form>
+    </div>
+
+    <ng-template pTemplate="footer">
+      <p-button
+        (click)="onCreateClick()"
+        label="Create"
+        styleClass="p-button-text"
+        [disabled]="!positionForm.valid"
+      ></p-button>
+      <p-button
+        (click)="closeDialog()"
+        label="Cancel"
+        severity="secondary"
+        styleClass="p-button-text"
+      ></p-button>
+    </ng-template>
+  </p-dialog>
+</div>

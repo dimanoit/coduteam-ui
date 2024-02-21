@@ -3,6 +3,7 @@ import {
   Component,
   computed,
   DestroyRef,
+  effect,
   inject,
   OnInit,
   signal,
@@ -22,6 +23,7 @@ import { PositionService } from '../../../positions/services/position.service';
 import { State } from '../../../../state';
 import { ButtonModule } from 'primeng/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { CreatePositionDialogComponent } from '../../../positions/components/create-position-dialog/create-position-dialog.component';
 
 @Component({
   selector: 'app-project-page',
@@ -39,6 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     PositionLineComponent,
     ScrollPanelModule,
     ButtonModule,
+    CreatePositionDialogComponent,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -49,7 +52,11 @@ export class ProjectComponent implements OnInit {
   destroyRef = inject(DestroyRef);
   route = inject(ActivatedRoute);
 
-  isUserOwnerOfProject = signal(false);
+  isUserOwnerOfProject = computed(
+    () =>
+      this.state.project.selected()?.ownerId ===
+      this.state.user.currentUser()?.id,
+  );
 
   ngOnInit() {
     this.route.params
@@ -70,18 +77,10 @@ export class ProjectComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
 
-    return this.projectService.loadSelectedProject(projectId).pipe(
-      tap(() => this.setIsUserOwnerOfProject()),
-      takeUntilDestroyed(this.destroyRef),
-    );
+    return this.projectService
+      .loadSelectedProject(projectId)
+      .pipe(takeUntilDestroyed(this.destroyRef));
   }
 
-  setIsUserOwnerOfProject() {
-    // TODO figure out why state is undefined
-    const isUserOwnerOfProject =
-      this.state.user.currentUser()?.userId ===
-      this.state.project.selected()?.ownerId;
-
-    this.isUserOwnerOfProject.set(isUserOwnerOfProject);
-  }
+  protected readonly takeUntilDestroyed = takeUntilDestroyed;
 }
