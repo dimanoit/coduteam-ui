@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   DestroyRef,
   inject,
   OnInit,
@@ -56,6 +57,7 @@ export class UserComponent implements OnInit {
   state = inject(State);
   destroyRef = inject(DestroyRef);
   positionApplyService = inject(PositionApplyService);
+  currentUser = computed(() => this.state.user.currentUser());
 
   ngOnInit(): void {
     const requests$ = this.getPageRequests();

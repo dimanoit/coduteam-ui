@@ -1,6 +1,6 @@
-<div class="flex gap-3 pt-5">
-  <div class="flex flex-column gap-3">
-    <div class="flex p-5 surface-card border-1 border-round surface-border">
+<div class="grid pt-5">
+  <div class="col-3">
+    <div class="surface-card border-1 border-round surface-border flex p-3">
       <p-avatar
         image="https://source.unsplash.com/random/200x200"
         styleClass="mr-2"
@@ -8,23 +8,19 @@
         shape="circle"
       ></p-avatar>
 
-      <div class="ml-2">
+      <div>
         <div class="font-semibold font-italic">
-          <span>{{ state.user.currentUser()?.firstName }} </span>
-          <span>{{ state.user.currentUser()?.lastName }}</span>
+          <span>{{ currentUser()?.firstName }} </span>
+          <span>{{ currentUser()?.lastName }}</span>
         </div>
         <div class="text-sm">
-          {{ state.user.currentUser()?.title }}
+          {{ currentUser()?.title }}
         </div>
       </div>
     </div>
-
-    <div class="flex justify-content-center min-w-max">
-      <p-toast></p-toast>
-    </div>
   </div>
 
-  <div class="flex flex-column gap-3 w-full">
+  <div class="col-9">
     <p-panel header="My Projects" [toggleable]="true" [collapsed]="true">
       <p-scrollPanel [style]="{ width: '100%', height: '350px' }">
         <div class="flex flex-column gap-3">
