@@ -9,7 +9,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { AvatarModule } from 'primeng/avatar';
-import { ProjectsComponent } from '../../../projects/pages/projects/projects.component';
+import { ProjectsPageComponent } from '../../../projects/pages/projects-page/projects-page.component';
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
@@ -29,7 +29,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   selector: 'app-user',
   imports: [
     AvatarModule,
-    ProjectsComponent,
+    ProjectsPageComponent,
     CommonModule,
     ToastModule,
     PanelModule,

@@ -17,10 +17,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { SharedModule } from 'primeng/api';
+import { SelectItem, SharedModule } from 'primeng/api';
 import { CreateProjectRequest } from '../../../projects/models/create-project.interface';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
+import { CreatePositionRequest } from '../../models/create-position-request.interface';
+import { PositionCategory } from '../../models/position-category.enum';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-create-position-dialog',
@@ -35,6 +38,7 @@ import { CalendarModule } from 'primeng/calendar';
     SharedModule,
     CheckboxModule,
     CalendarModule,
+    DropdownModule,
   ],
   templateUrl: './create-position-dialog.component.html',
   styleUrl: './create-position-dialog.component.scss',
@@ -45,14 +49,15 @@ export class CreatePositionDialogComponent {
 
   @Input() isShown = false;
   @Output() closedDialog = new EventEmitter<void>();
-  @Output() createProject = new EventEmitter<CreateProjectRequest>();
+  @Output() createPosition = new EventEmitter<CreatePositionRequest>();
 
   positionForm: FormGroup = this.formBuilder.group({
     title: ['', [Validators.required, Validators.maxLength(100)]],
     shortDescription: ['', [Validators.required, Validators.maxLength(250)]],
     description: ['', [Validators.required, Validators.maxLength(1000)]],
-    isRemote: [false, Validators.required],
+    isRemote: false,
     deadline: ['', Validators.required],
+    category: ['', Validators.required],
   });
 
   onCreateClick(): void {
@@ -60,8 +65,9 @@ export class CreatePositionDialogComponent {
       alert('Form is invalid');
     }
 
-    const request = this.positionForm.value as CreateProjectRequest;
-    this.createProject.emit(request);
+    const request = this.positionForm.value as CreatePositionRequest;
+    request.isRemote = this.positionForm.value['isRemote'][0] === 'true';
+    this.createPosition.emit(request);
 
     this.closeDialog();
   }
@@ -69,4 +75,11 @@ export class CreatePositionDialogComponent {
   closeDialog(): void {
     this.closedDialog.emit();
   }
+
+  specialities: SelectItem[] = Object.keys(PositionCategory).map(
+    (categoryKey): SelectItem => ({
+      label: PositionCategory[categoryKey as keyof typeof PositionCategory],
+      value: categoryKey,
+    }),
+  );
 }

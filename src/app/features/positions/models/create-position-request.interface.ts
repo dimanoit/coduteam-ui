@@ -1,3 +1,5 @@
+import { PositionCategory } from './position-category.enum';
+
 export interface CreatePositionRequest {
   projectId: number;
   title: string;
@@ -5,4 +7,5 @@ export interface CreatePositionRequest {
   shortDescription: string;
   deadLine: Date;
   isRemote: boolean;
+  category: PositionCategory;
 }

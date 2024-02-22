@@ -24,11 +24,12 @@ import { State } from '../../../../state';
 import { ButtonModule } from 'primeng/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreatePositionDialogComponent } from '../../../positions/components/create-position-dialog/create-position-dialog.component';
+import { CreatePositionRequest } from '../../../positions/models/create-position-request.interface';
 
 @Component({
   selector: 'app-project-page',
-  templateUrl: './project.component.html',
-  styleUrls: ['./project.component.scss'],
+  templateUrl: './project-page.component.html',
+  styleUrls: ['./project-page.component.scss'],
   standalone: true,
   providers: [ProjectService, PositionService],
   imports: [
@@ -45,12 +46,13 @@ import { CreatePositionDialogComponent } from '../../../positions/components/cre
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProjectComponent implements OnInit {
+export class ProjectPageComponent implements OnInit {
   projectService = inject(ProjectService);
   positionService = inject(PositionService);
   state = inject(State);
   destroyRef = inject(DestroyRef);
   route = inject(ActivatedRoute);
+  isShownDialog: boolean = false;
 
   isUserOwnerOfProject = computed(
     () =>
@@ -73,7 +75,7 @@ export class ProjectComponent implements OnInit {
 
   private loadProjectAndPositions(projectId: number) {
     this.positionService
-      .loadPositions({ projectId })
+      .loadPositions({ projectId, withApplicationStatus: true })
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
 
@@ -82,5 +84,12 @@ export class ProjectComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef));
   }
 
-  protected readonly takeUntilDestroyed = takeUntilDestroyed;
+  createPosition(position: CreatePositionRequest) {
+    position.projectId = this.state.project.selected()?.id!;
+    this.isShownDialog = false;
+    this.positionService
+      .createPosition(position)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
 }

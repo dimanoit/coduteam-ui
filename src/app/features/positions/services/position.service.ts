@@ -19,6 +19,7 @@ export class PositionService {
 
   loadPositions(params?: PositionSearchRequest): Observable<void> {
     params = params ?? { skip: 0, take: 5, withApplicationStatus: true };
+    params.withApplicationStatus = true;
     const httpParams = toHttpParams(params);
 
     this.state.startLoading();

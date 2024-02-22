@@ -1,5 +1,5 @@
 import { HomeComponent } from './features/home/home.component';
-import { ProjectComponent } from './features/projects/pages/project-page/project.component';
+import { ProjectPageComponent } from './features/projects/pages/project-page/project-page.component';
 import { AuthGuard } from './features/user/guards/auth.guard';
 import { mapToCanActivate, Routes } from '@angular/router';
 import { LoginComponent } from './features/user/pages/login/login.component';
@@ -20,9 +20,9 @@ export const routes: Routes = [
     path: 'projects',
     canActivate: mapToCanActivate([AuthGuard]),
     loadComponent: () =>
-      import('./features/projects/pages/projects/projects.component').then(
-        (x) => x.ProjectsComponent,
-      ),
+      import(
+        './features/projects/pages/projects-page/projects-page.component'
+      ).then((x) => x.ProjectsPageComponent),
   },
   {
     path: 'account',
@@ -42,7 +42,7 @@ export const routes: Routes = [
   },
   {
     path: 'projects/:projectId',
-    component: ProjectComponent,
+    component: ProjectPageComponent,
     canActivate: mapToCanActivate([AuthGuard]),
   },
 ];

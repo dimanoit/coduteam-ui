@@ -3,9 +3,13 @@
     <div class="flex justify-content-between">
       <app-project-line [project]="state.project.selected()!" />
       @if (isUserOwnerOfProject()) {
-        <p-button label="Create position" />
+        <p-button (click)="isShownDialog = true" label="Create position" />
 
-        <app-create-position-dialog [isShown]="true" />
+        <app-create-position-dialog
+          (createPosition)="createPosition($event)"
+          (closedDialog)="isShownDialog = false"
+          [isShown]="isShownDialog"
+        />
       }
     </div>
     <div class="grid">

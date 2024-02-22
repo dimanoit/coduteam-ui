@@ -26,8 +26,8 @@ import { ProjectsNotFoundComponent } from '../../components/projects-not-found/p
 
 @Component({
   selector: 'app-projects',
-  templateUrl: './projects.component.html',
-  styleUrl: './projects.component.scss',
+  templateUrl: './projects-page.component.html',
+  styleUrl: './projects-page.component.scss',
   imports: [
     ProjectCardComponent,
     CommonModule,
@@ -44,7 +44,7 @@ import { ProjectsNotFoundComponent } from '../../components/projects-not-found/p
   providers: [ProjectService],
   standalone: true,
 })
-export class ProjectsComponent implements OnInit {
+export class ProjectsPageComponent implements OnInit {
   isCardView = signal(false);
   isShownCreateProjectDialog = signal(false);
 

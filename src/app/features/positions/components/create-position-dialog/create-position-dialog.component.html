@@ -1,5 +1,7 @@
 <div class="card flex justify-content-center">
   <p-dialog
+    [resizable]="false"
+    [draggable]="false"
     (onHide)="closeDialog()"
     header="Header"
     [(visible)]="isShown"
@@ -9,44 +11,55 @@
       <span class="text-xl font-bold">Create Position</span>
     </ng-template>
 
-    <div class="p-5">
-      <form class="flex gap-4 flex-wrap" [formGroup]="positionForm">
-        <div class="p-float-label">
-          <input pInputText id="title" formControlName="title" />
-          <label for="title">Title</label>
-        </div>
+    <form class="p-5 flex gap-4 flex-wrap" [formGroup]="positionForm">
+      <div class="p-float-label">
+        <input pInputText id="title" formControlName="title" />
+        <label for="title">Title</label>
+      </div>
 
-        <div class="p-float-label">
-          <input
-            pInputText
-            id="shortDescription"
-            formControlName="shortDescription"
-          />
-          <label for="title">Short description</label>
-        </div>
+      <div class="p-float-label">
+        <p-calendar
+          appendTo="body"
+          id="deadline"
+          formControlName="deadline"
+        ></p-calendar>
+        <label for="deadline">Deadline</label>
+      </div>
 
-        <div>
-          <p-checkbox formControlName="isRemote"></p-checkbox>
-          <label>Remote</label>
-        </div>
+      <p-dropdown
+        formControlName="category"
+        [options]="specialities"
+        placeholder="Speciality"
+        [editable]="true"
+      ></p-dropdown>
 
-        <div class="p-float-label">
-          <p-calendar id="deadline" formControlName="deadline"></p-calendar>
-          <label for="deadline">Deadline</label>
-        </div>
+      <div class="flex align-items-center column-gap-1">
+        <p-checkbox value="false" formControlName="isRemote"></p-checkbox>
+        <label>Remote</label>
+      </div>
 
-        <div class="p-float-label">
-          <textarea
-            rows="5"
-            cols="65"
-            pInputTextarea
-            id="description"
-            formControlName="description"
-          ></textarea>
-          <label for="description">Description</label>
-        </div>
-      </form>
-    </div>
+      <div class="p-float-label">
+        <textarea
+          rows="2"
+          cols="65"
+          pInputTextarea
+          id="shortDescription"
+          formControlName="shortDescription"
+        ></textarea>
+        <label for="title">Short description</label>
+      </div>
+
+      <div class="p-float-label">
+        <textarea
+          rows="5"
+          cols="65"
+          pInputTextarea
+          id="description"
+          formControlName="description"
+        ></textarea>
+        <label for="description">Description</label>
+      </div>
+    </form>
 
     <ng-template pTemplate="footer">
       <p-button

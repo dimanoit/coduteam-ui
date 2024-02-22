@@ -20,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
 export class PositionLineComponent {
   @Input() position!: PositionDto;
 
+  @Input() editable = false;
   @Output() onPositionApply = new EventEmitter<number>();
 
   applyOnPosition() {
