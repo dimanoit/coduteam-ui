@@ -32,4 +32,11 @@ export class PositionService {
         finalize(() => this.state.endLoading()),
       );
   }
+
+  removePosition(positionId: number) {
+    this.state.startLoading();
+    return this.http
+      .delete<void>(`${this.resourcePath}/${positionId}`)
+      .pipe(finalize(() => this.state.endLoading()));
+  }
 }

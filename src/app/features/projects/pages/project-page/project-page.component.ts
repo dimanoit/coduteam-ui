@@ -92,4 +92,11 @@ export class ProjectPageComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
+
+  removePosition(positionId: number) {
+    this.positionService
+      .removePosition(positionId)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe();
+  }
 }

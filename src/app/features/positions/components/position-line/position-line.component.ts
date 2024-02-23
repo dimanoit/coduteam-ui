@@ -22,8 +22,13 @@ export class PositionLineComponent {
 
   @Input() editable = false;
   @Output() onPositionApply = new EventEmitter<number>();
+  @Output() onRemovePosition = new EventEmitter<number>();
 
   applyOnPosition() {
     this.onPositionApply.emit(this.position.id);
+  }
+
+  removePosition() {
+    this.onRemovePosition.emit(this.position.id);
   }
 }
