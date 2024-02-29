@@ -13,24 +13,18 @@ export class PositionApplyService {
   private state = inject(State);
 
   applyOnPosition(request: ApplyOnPositionRequest): Observable<void> {
-    this.state.startLoading();
-    return this.http
-      .post<void>(this.resourcePath, request)
-      .pipe(finalize(() => this.state.endLoading()));
+    return this.http.post<void>(this.resourcePath, request);
   }
 
   loadMyApplications(): Observable<void> {
     return this.http
       .get<PositionDto[]>(this.resourcePath)
       .pipe(
-        map((positions) => this.state.position.setMyApplications(positions)),
+        map((positions) => this.state.position.setMyApplications(positions))
       );
   }
 
   changePositionApplyStatus(request: ChangePositionApplyStatusRequest) {
-    this.state.startLoading();
-    return this.http
-      .patch<void>(`${this.resourcePath}/status`, request)
-      .pipe(finalize(() => this.state.endLoading()));
+    return this.http.patch<void>(`${this.resourcePath}/status`, request);
   }
 }

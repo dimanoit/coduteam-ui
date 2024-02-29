@@ -89,7 +89,6 @@ export class ProjectsPageComponent implements OnInit {
     request?: ProjectSearchRequest,
     withJoin: boolean = false,
   ): void {
-    this.state.startLoading();
     this.projectService
       .loadProjects(request, withJoin)
       .pipe(

@@ -5,10 +5,11 @@ import {
   HttpHandlerFn,
   HttpRequest,
 } from '@angular/common/http';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MessageService } from 'primeng/api';
+import { State } from '../../state';
 
 export function loggingInterceptor(
   req: HttpRequest<unknown>,
@@ -21,6 +22,16 @@ export function loggingInterceptor(
       }
     }),
   );
+}
+
+export function loadingInterceptor(
+  req: HttpRequest<unknown>,
+  next: HttpHandlerFn,
+): Observable<HttpEvent<unknown>> {
+  const state = inject(State);
+
+  state.startLoading();
+  return next(req).pipe(finalize(() => state.endLoading()));
 }
 
 export function baseUrlInterceptor(

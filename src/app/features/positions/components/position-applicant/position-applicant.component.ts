@@ -32,7 +32,6 @@ export class PositionApplicantComponent {
       status,
     };
 
-    console.log(request);
     this.changeApplicantStatus.emit(request);
   }
 }

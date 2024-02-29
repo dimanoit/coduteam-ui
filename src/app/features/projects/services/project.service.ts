@@ -28,10 +28,7 @@ export class ProjectService {
       .get<Project[]>(this.resourcePath, {
         params: httpParams,
       })
-      .pipe(
-        tap(() => this.state.endLoading()),
-        map((projects) => this.state.project.setProjects(projects, join)),
-      );
+      .pipe(map((projects) => this.state.project.setProjects(projects, join)));
   }
 
   loadSelectedProject(id: number): Observable<void> {

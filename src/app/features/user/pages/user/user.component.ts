@@ -61,14 +61,8 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     const requests$ = this.getPageRequests();
-    this.state.startLoading();
 
-    forkJoin(requests$)
-      .pipe(
-        finalize(() => this.state.endLoading()),
-        takeUntilDestroyed(this.destroyRef),
-      )
-      .subscribe();
+    forkJoin(requests$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
   private getPageRequests(): Observable<void>[] {

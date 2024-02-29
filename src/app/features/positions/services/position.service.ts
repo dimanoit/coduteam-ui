@@ -21,7 +21,7 @@ export class PositionService {
     return this.http
       .get<PositionDto>(`${this.resourcePath}/${id}`)
       .pipe(
-        map((position) => this.state.position.setSelectedProject(position)),
+        map((position) => this.state.position.setSelectedProject(position))
       );
   }
 
@@ -30,21 +30,14 @@ export class PositionService {
     params.withApplicationStatus = true;
     const httpParams = toHttpParams(params);
 
-    this.state.startLoading();
     return this.http
       .get<PositionDto[]>(this.resourcePath, {
         params: httpParams,
       })
-      .pipe(
-        map((positions) => this.state.position.setPositions(positions)),
-        finalize(() => this.state.endLoading()),
-      );
+      .pipe(map((positions) => this.state.position.setPositions(positions)));
   }
 
   removePosition(positionId: number) {
-    this.state.startLoading();
-    return this.http
-      .delete<void>(`${this.resourcePath}/${positionId}`)
-      .pipe(finalize(() => this.state.endLoading()));
+    return this.http.delete<void>(`${this.resourcePath}/${positionId}`);
   }
 }

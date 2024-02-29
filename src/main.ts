@@ -6,6 +6,7 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import {
   baseUrlInterceptor,
   errorHandlingInterceptor,
+  loadingInterceptor,
   loggingInterceptor,
 } from './app/core/api/interceptors';
 import {
@@ -35,6 +36,7 @@ bootstrapApplication(AppComponent, {
         loggingInterceptor,
         baseUrlInterceptor,
         authInterceptor,
+        loadingInterceptor,
         errorHandlingInterceptor,
       ]),
     ),
