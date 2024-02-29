@@ -12,6 +12,7 @@ export interface PositionSearchRequest {
   term?: string;
   applicationStatus?: PositionApplyStatus;
   withApplicationStatus?: boolean;
+  withApplicants?: boolean;
 }
 
 // TODO make skip and take base

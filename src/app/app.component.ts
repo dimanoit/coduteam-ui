@@ -1,4 +1,4 @@
-import { Component, DestroyRef, effect, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { SmallFooterComponent } from './core/components/small-footer/small-footer.component';

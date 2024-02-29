@@ -5,7 +5,6 @@ import {
   inject,
   OnInit,
 } from '@angular/core';
-import { PositionComponent } from '../position/position.component';
 import { PositionFilterComponent } from '../../components/position-filter/position-filter.component';
 import { PositionLineComponent } from '../../components/position-line/position-line.component';
 import { NgForOf } from '@angular/common';
@@ -15,13 +14,15 @@ import { PositionApplyService } from '../../services/position-apply.service';
 import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { PositionDto } from '../../models/position-dto.interface';
+import { PositionPageComponent } from '../position-page/position-page.component';
 
 @Component({
   selector: 'app-positions',
-  templateUrl: './positions.component.html',
-  styleUrls: ['./positions.component.scss'],
+  templateUrl: './positions-page.component.html',
+  styleUrls: ['./positions-page.component.scss'],
   imports: [
-    PositionComponent,
+    PositionPageComponent,
     PositionFilterComponent,
     PositionLineComponent,
     NgForOf,
@@ -31,7 +32,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
   standalone: true,
 })
-export class PositionsComponent implements OnInit {
+export class PositionsPageComponent implements OnInit {
   positionService = inject(PositionService);
   positionApplyService = inject(PositionApplyService);
   destroyRef = inject(DestroyRef);
@@ -54,5 +55,9 @@ export class PositionsComponent implements OnInit {
       .applyOnPosition(request)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
+  }
+
+  isPositionEditable(position: PositionDto) {
+    return position.project.ownerId === this.state.user.currentUser()?.id;
   }
 }

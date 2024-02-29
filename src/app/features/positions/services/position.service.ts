@@ -17,6 +17,14 @@ export class PositionService {
     return this.http.post<void>(this.resourcePath, request);
   }
 
+  loadSelectedPosition(id: number): Observable<void> {
+    return this.http
+      .get<PositionDto>(`${this.resourcePath}/${id}`)
+      .pipe(
+        map((position) => this.state.position.setSelectedProject(position)),
+      );
+  }
+
   loadPositions(params?: PositionSearchRequest): Observable<void> {
     params = params ?? { skip: 0, take: 5, withApplicationStatus: true };
     params.withApplicationStatus = true;

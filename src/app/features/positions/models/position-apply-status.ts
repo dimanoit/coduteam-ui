@@ -1,6 +1,6 @@
 export enum PositionApplyStatus {
-  Sent,
-  OnReview,
-  Rejected,
-  Confirmed,
+  Sent = 'Sent',
+  OnReview = 'OnReview',
+  Rejected = 'Rejected',
+  Confirmed = 'Confirmed',
 }

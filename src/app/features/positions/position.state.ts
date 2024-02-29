@@ -18,6 +18,7 @@ export class PositionState {
 
   positions = this.state.positions;
   myApplications = this.state.myApplications;
+  selectedPosition = this.state.selectedPosition;
 
   setPositions(positions: PositionDto[]): void {
     patchState(this.state, () => ({ positions }));
@@ -25,5 +26,9 @@ export class PositionState {
 
   setMyApplications(applications: PositionDto[]): void {
     patchState(this.state, () => ({ myApplications: applications }));
+  }
+
+  setSelectedProject(selectedPosition: PositionDto) {
+    patchState(this.state, () => ({ selectedPosition }));
   }
 }

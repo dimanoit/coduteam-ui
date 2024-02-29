@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { PositionDto } from '../../models/position-dto.interface';
 import { ButtonModule } from 'primeng/button';
+import { openInNewTab } from '../../../../shared/utils/utilities';
 
 @Component({
   selector: 'app-position-line',
@@ -19,8 +20,8 @@ import { ButtonModule } from 'primeng/button';
 })
 export class PositionLineComponent {
   @Input() position!: PositionDto;
-
-  @Input() editable = false;
+  @Input() isEditable = false;
+  
   @Output() onPositionApply = new EventEmitter<number>();
   @Output() onRemovePosition = new EventEmitter<number>();
 
@@ -30,5 +31,9 @@ export class PositionLineComponent {
 
   removePosition() {
     this.onRemovePosition.emit(this.position.id);
+  }
+
+  navigateToPositionPage(): void {
+    openInNewTab(`/positions/${this.position?.id}`);
   }
 }

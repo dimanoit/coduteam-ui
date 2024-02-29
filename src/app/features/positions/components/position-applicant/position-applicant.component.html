@@ -1,0 +1,46 @@
+<div
+  class="flex justify-content-between surface-card border-1 border-round surface-border flex p-3"
+>
+  <div>
+    <p-avatar
+      [image]="applicant.imageSrc"
+      styleClass="mr-2"
+      size="xlarge"
+      shape="circle"
+    ></p-avatar>
+
+    <div>
+      <div class="font-semibold font-italic">
+        <span>{{ applicant.firstName }} </span>
+        <span>{{ applicant.lastName }}</span>
+      </div>
+      <div class="text-sm">
+        {{ applicant.title }}
+      </div>
+    </div>
+  </div>
+  <div>
+    {{ applicant.status }}
+  </div>
+
+  <div class="flex column-gap-1">
+    @if (
+      applicant.status === statuses.Sent ||
+      applicant.status === statuses.OnReview
+    ) {
+      <p-button
+        (click)="changeStatus(statuses.Rejected)"
+        severity="danger"
+        label="Reject"
+      />
+    }
+
+    @if (applicant.status === statuses.Sent) {
+      <p-button (click)="changeStatus(statuses.OnReview)" label="Review" />
+    }
+
+    @if (applicant.status === statuses.OnReview) {
+      <p-button (click)="changeStatus(statuses.Confirmed)" label="Confirm" />
+    }
+  </div>
+</div>

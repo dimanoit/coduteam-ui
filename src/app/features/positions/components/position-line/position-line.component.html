@@ -1,6 +1,8 @@
 <div class="mt-3 p-2 border-round-md border-1 border-primary shadow-5">
   <div>
-    <span class="underline cursor-pointer">{{ position.title }}</span>
+    <span (click)="navigateToPositionPage()" class="underline cursor-pointer">{{
+      position.title
+    }}</span>
     <span> at </span>
     <span class="font-italic mr-2">{{ position.project.title }}</span>
 
@@ -15,7 +17,7 @@
 
     @if (position.currentUserPositionApplyStatus) {
       <div>{{ position.currentUserPositionApplyStatus }}</div>
-    } @else if (editable) {
+    } @else if (isEditable) {
       <p-button (click)="removePosition()" label="Remove"></p-button>
     } @else {
       <p-button (click)="applyOnPosition()" label="Apply"></p-button>

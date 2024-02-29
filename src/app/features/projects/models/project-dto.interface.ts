@@ -7,4 +7,5 @@ export interface ProjectDto {
   category: ProjectCategory;
   country: string;
   projectImgUrl: string;
+  ownerId: number;
 }
