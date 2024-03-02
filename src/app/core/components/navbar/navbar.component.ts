@@ -49,6 +49,7 @@ export class NavbarComponent implements OnInit {
       { label: 'Projects', routerLink: 'projects' },
 
       { label: 'Positions', routerLink: 'positions' },
+      { label: 'Messages', routerLink: 'chat' },
     ];
   }
 

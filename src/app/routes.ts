@@ -5,6 +5,7 @@ import { LoginComponent } from './features/user/pages/login/login.component';
 import { RegisterComponent } from './features/user/pages/register/register.component';
 import { authGuard } from './features/user/guards/auth.guard';
 import { PositionPageComponent } from './features/positions/pages/position-page/position-page.component';
+import { ChatWindowComponent } from './features/chat/chat-window/chat-window.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -35,7 +36,7 @@ export const routes: Routes = [
     canActivate: [authGuard],
     loadComponent: () =>
       import('./features/user/pages/user/user.component').then(
-        (x) => x.UserComponent,
+        (x) => x.UserComponent
       ),
   },
   {
@@ -49,6 +50,11 @@ export const routes: Routes = [
   {
     path: 'positions/:positionId',
     component: PositionPageComponent,
+    canActivate: [authGuard],
+  },
+  {
+    path: 'chat',
+    component: ChatWindowComponent,
     canActivate: [authGuard],
   },
 ];
