@@ -4,3 +4,7 @@ export enum PositionApplyStatus {
   Rejected = 'Rejected',
   Confirmed = 'Confirmed',
 }
+
+export type PositionApplyStatusTags = {
+  [key in PositionApplyStatus]: string;
+};

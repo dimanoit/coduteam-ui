@@ -5,61 +5,51 @@
     (onHide)="closeDialog()"
     header="Header"
     [(visible)]="isShown"
-    [style]="{ width: '50vw' }"
+    [style]="{
+      width: '100vw',
+      height: '100%',
+      maxHeight: '100%'
+    }"
   >
     <ng-template pTemplate="header">
-      <span class="text-xl font-bold">Create Position</span>
+      <div class="m-5 text-xl font-bold">Create Position</div>
     </ng-template>
 
-    <form class="p-5 flex gap-4 flex-wrap" [formGroup]="positionForm">
-      <div class="p-float-label">
-        <input pInputText id="title" formControlName="title" />
-        <label for="title">Title</label>
-      </div>
+    <form class="m-5" [formGroup]="positionForm">
+      <div class="flex column-gap-3 justify-content-start">
+        <div class="p-float-label">
+          <input pInputText id="title" formControlName="title" />
+          <label for="title">Title</label>
+        </div>
 
-      <div class="p-float-label">
-        <p-calendar
+        <div class="p-float-label">
+          <p-calendar
+            appendTo="body"
+            id="deadline"
+            formControlName="deadline"
+          ></p-calendar>
+          <label for="deadline">Deadline</label>
+        </div>
+
+        <p-dropdown
+          formControlName="category"
+          [options]="specialities"
+          scrollHeight="400px"
           appendTo="body"
-          id="deadline"
-          formControlName="deadline"
-        ></p-calendar>
-        <label for="deadline">Deadline</label>
+          placeholder="Speciality"
+          [editable]="true"
+        ></p-dropdown>
+
+        <div class="flex align-items-center column-gap-1">
+          <p-checkbox value="false" formControlName="isRemote"></p-checkbox>
+          <label>Remote</label>
+        </div>
       </div>
-
-      <p-dropdown
-        formControlName="category"
-        [options]="specialities"
-        scrollHeight="400px"
-        appendTo="body"
-        placeholder="Speciality"
-        [editable]="true"
-      ></p-dropdown>
-
-      <div class="flex align-items-center column-gap-1">
-        <p-checkbox value="false" formControlName="isRemote"></p-checkbox>
-        <label>Remote</label>
-      </div>
-
-      <div class="p-float-label">
-        <textarea
-          rows="2"
-          cols="65"
-          pInputTextarea
-          id="shortDescription"
-          formControlName="shortDescription"
-        ></textarea>
-        <label for="title">Short description</label>
-      </div>
-
-      <div class="p-float-label">
-        <textarea
-          rows="5"
-          cols="65"
-          pInputTextarea
-          id="description"
-          formControlName="description"
-        ></textarea>
-        <label for="description">Description</label>
+      <div class="mt-3">
+        <p-editor
+          (onTextChange)="updateDescription($event)"
+          [style]="{ height: '320px' }"
+        ></p-editor>
       </div>
     </form>
 
@@ -68,8 +58,9 @@
         (click)="onCreateClick()"
         label="Create"
         styleClass="p-button-text"
-        [disabled]="!positionForm.valid"
+        [disabled]="positionForm.invalid || !description"
       ></p-button>
+
       <p-button
         (click)="closeDialog()"
         label="Cancel"

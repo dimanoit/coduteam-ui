@@ -1,16 +1,68 @@
 @if (selectedPosition()) {
-  <app-position-line [position]="selectedPosition()!" />
+  <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
 
-  @if (state.user.currentUser()?.id == selectedPosition()?.project?.ownerId) {
-    <p-card class="col-8" header="Applicants">
-      <p-scrollPanel [style]="{ width: '100%', height: '50vh' }">
-        @for (applicant of selectedPosition()!.applicants; track $index) {
-          <app-position-applicant
-            (changeApplicantStatus)="changeApplicantStatus($event)"
-            [applicant]="applicant"
+  <div class="grid">
+    <p-card class="col-8">
+      <div class="flex align-items-center column-gap-3">
+        <div class="flex flex-column justify-content-between">
+          <img
+            class="project-image"
+            [src]="selectedPosition()?.project?.projectImgUrl ?? ''"
+            alt="Project picture"
           />
-        }
-      </p-scrollPanel>
+        </div>
+
+        <div class="flex flex-column gap-3">
+          <div class="flex column-gap-3 align-items-center">
+            <div class="underline cursor-pointer font-bold">
+              {{ selectedPosition()?.project?.title ?? "" }}
+            </div>
+            <div class="underline">All companies positions</div>
+            <p-button class="ml-auto">Apply</p-button>
+          </div>
+          <div class="text-sm">{{ projectDescription() }}</div>
+        </div>
+      </div>
+
+      <p-divider />
+
+      <div class="text-sm font-italic mb-1">15 March 2024</div>
+      <div class="flex align-items-center">
+        <div class="text-3xl font-bold">{{ selectedPosition()?.title }}</div>
+        <p-tag
+          class="ml-2 cursor-pointer"
+          [value]="selectedPosition()?.positionCategory"
+        />
+        <p-tag
+          class="ml-1 cursor-pointer"
+          severity="success"
+          [value]="selectedPosition()?.project?.category ?? ''"
+        ></p-tag>
+      </div>
+      <div [innerHTML]="safeDescription()"></div>
     </p-card>
-  }
+
+    <div class="col-4 flex flex-column gap-1">
+      <p-card header="Check similar offers"></p-card>
+
+      @if (
+        state.user.currentUser()?.id == selectedPosition()?.project?.ownerId
+      ) {
+        <p-card header="Applicants">
+          <p-scrollPanel [style]="{ width: '100%', height: '50vh' }">
+            @for (applicant of selectedPosition()!.applicants; track $index) {
+              <app-position-applicant
+                (changeApplicantStatus)="changeApplicantStatus($event)"
+                [applicant]="applicant"
+              />
+
+              @if ($index !== selectedPosition()!.applicants.length) {
+                <p-divider />
+              }
+            }
+          </p-scrollPanel>
+        </p-card>
+      }
+    </div>
+  </div>
 }
