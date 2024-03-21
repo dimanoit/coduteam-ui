@@ -56,9 +56,11 @@ export class ProjectPageComponent implements OnInit {
 
   isUserOwnerOfProject = computed(
     () =>
-      this.state.project.selected()?.ownerId ===
+      this.state.project.selectedProject()?.ownerId ===
       this.state.user.currentUser()?.id,
   );
+
+  selectedProject = computed(() => this.state.project.selectedProject());
 
   ngOnInit() {
     this.route.params
@@ -85,7 +87,7 @@ export class ProjectPageComponent implements OnInit {
   }
 
   createPosition(position: CreatePositionRequest) {
-    position.projectId = this.state.project.selected()?.id!;
+    position.projectId = this.state.project.selectedProject()?.id!;
     this.isShownDialog = false;
     this.positionService
       .createPosition(position)

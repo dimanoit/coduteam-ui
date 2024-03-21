@@ -14,10 +14,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ProjectService } from '../../../projects/services/project.service';
-import { finalize, forkJoin, Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
-import { ProjectState } from '../../../projects/state/project.state';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplyService } from '../../../positions/services/position-apply.service';
 import { State } from '../../../../state';
@@ -43,7 +42,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ProjectService,
     UserService,
     PositionService,
-    ProjectState,
     UserState,
   ],
   templateUrl: './user.component.html',
@@ -61,7 +59,6 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     const requests$ = this.getPageRequests();
-
     forkJoin(requests$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 

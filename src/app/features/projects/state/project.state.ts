@@ -1,30 +1,28 @@
-import { patchState, signalState } from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { Project } from '../models/project.interface';
-import { Injectable } from '@angular/core';
 
-export interface ProjectStateModel {
+type ProjectState = {
   projects: Project[];
   selectedProject: Project | null;
-}
+};
 
-@Injectable({ providedIn: 'root' })
-export class ProjectState {
-  private state = signalState<ProjectStateModel>({
-    projects: [],
-    selectedProject: null,
-  });
+const initialState: ProjectState = {
+  projects: [],
+  selectedProject: null,
+};
 
-  data = this.state.projects;
-  selected = this.state.selectedProject;
-
-  setProjects(projects: Project[], join: boolean) {
-    const projectsUpdated = join
-      ? [...this.state.projects(), ...projects]
-      : projects;
-    patchState(this.state, () => ({ projects: projectsUpdated }));
-  }
-
-  setSelectedProject(project: Project) {
-    patchState(this.state, () => ({ selectedProject: project }));
-  }
-}
+export const ProjectStore = signalStore(
+  { providedIn: 'root' },
+  withState(initialState),
+  withMethods((store) => ({
+    setProjects(projects: Project[], join: boolean) {
+      const projectsUpdated = join
+        ? [...store.projects(), ...projects]
+        : projects;
+      patchState(store, () => ({ projects: projectsUpdated }));
+    },
+    setSelectedProject(project: Project) {
+      patchState(store, () => ({ selectedProject: project }));
+    },
+  })),
+);

@@ -48,7 +48,8 @@ export class ProjectsPageComponent implements OnInit {
   isCardView = signal(false);
   isShownCreateProjectDialog = signal(false);
 
-  lastIdx = computed(() => this.state.project.data().length);
+  lastIdx = computed(() => this.state.project.projects().length);
+  projects = computed(() => this.state.project.projects());
   lastIdxSent = 0;
 
   private cancelPrevious = new Subject<void>();
