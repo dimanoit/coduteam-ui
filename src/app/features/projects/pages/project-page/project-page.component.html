@@ -1,20 +1,29 @@
 @if (state.project.selected() && !this.state.isLoading()) {
-  <div class="p-3 flex flex-column gap-3">
+  <p-card>
+    <div class="flex column-gap-1 align-items-center">
+      <img
+        class="block border-round"
+        [src]="state.project.selected()?.projectImgUrl"
+      />
+      <div class="text-base">{{ state.project.selected()?.description }}</div>
+    </div>
+  </p-card>
+  <div class="flex flex-column gap-3">
     <div class="flex justify-content-between">
-      <app-project-line [project]="state.project.selected()!" />
-      @if (isUserOwnerOfProject()) {
-        <p-button (click)="isShownDialog = true" label="Create position" />
-
-        <app-create-position-dialog
-          (createPosition)="createPosition($event)"
-          (closedDialog)="isShownDialog = false"
-          [isShown]="isShownDialog"
-        />
-      }
+      <app-create-position-dialog
+        (createPosition)="createPosition($event)"
+        (closedDialog)="isShownDialog = false"
+        [isShown]="isShownDialog"
+      />
     </div>
     <div class="grid">
       <div class="col-4 flex flex-column row-gap-3">
-        <p-card header="Participants">
+        <p-card>
+          <ng-template pTemplate="header">
+            <div class="p-5 column-gap-5 flex align-items-center">
+              <div class="text-xl font-bold">Participants</div>
+            </div>
+          </ng-template>
           <p-scrollPanel [style]="{ width: '100%', height: '50vh' }">
             <div class="flex flex-column gap-2">
               @for (
@@ -27,17 +36,24 @@
           </p-scrollPanel>
         </p-card>
       </div>
-      <p-card class="col-8" header="Positions">
+      <p-card class="col-8">
+        <ng-template pTemplate="header">
+          <div class="p-5 column-gap-5 flex align-items-center">
+            <div class="text-xl font-bold">Positions</div>
+            @if (isUserOwnerOfProject()) {
+              <p-button
+                (click)="isShownDialog = true"
+                label="Create position"
+              />
+            }
+          </div>
+        </ng-template>
         <p-scrollPanel
           class="h-28rem"
           [style]="{ width: '100%', height: '50vh' }"
         >
           @for (position of state.position.positions(); track $index) {
-            <app-position-line
-              (onRemovePosition)="removePosition($event)"
-              [isEditable]="true"
-              [position]="position"
-            />
+            <app-position-line [position]="position" />
           }
         </p-scrollPanel>
       </p-card>

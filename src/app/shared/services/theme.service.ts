@@ -3,13 +3,11 @@ import { computed, Injectable, signal } from '@angular/core';
 @Injectable()
 export class ThemeService {
   private currentTheme = signal(this.getInitTheme());
-  isLightTeam = computed(() => this.currentTheme() === 'lara-light-blue');
+  isLightTeam = computed(() => this.currentTheme() === 'soho-light');
 
   switchTheme() {
     this.currentTheme.set(
-      this.currentTheme() === 'lara-light-blue'
-        ? 'lara-dark-blue'
-        : 'lara-light-blue',
+      this.currentTheme() === 'soho-light' ? 'soho-dark' : 'soho-light',
     );
 
     this.loadTheme();
@@ -24,6 +22,6 @@ export class ThemeService {
   }
 
   getInitTheme() {
-    return localStorage.getItem('theme') || 'lara-light-blue';
+    return localStorage.getItem('theme') || 'soho-light';
   }
 }

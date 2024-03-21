@@ -3,11 +3,7 @@
 
   <div>
     @for (position of state.position.positions(); track $index) {
-      <app-position-line
-        (onPositionApply)="handleOnPositionApply($event)"
-        [isEditable]="isPositionEditable(position)"
-        [position]="position"
-      ></app-position-line>
+      <app-position-line [position]="position"></app-position-line>
     }
   </div>
 </div>
