@@ -38,6 +38,7 @@ export class ProjectsPageComponent implements OnInit {
   protected state = inject(State);
 
   ngOnInit(): void {
+    this.state.project.updateSearchRequest({ skip: 0, take: 10 });
     this.state.project.loadProjects(this.state.project.searchRequest);
   }
 

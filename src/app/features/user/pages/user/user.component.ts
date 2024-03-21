@@ -51,7 +51,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class UserComponent implements OnInit {
   userService = inject(UserService);
-  projectService = inject(ProjectService);
   state = inject(State);
   destroyRef = inject(DestroyRef);
   positionApplyService = inject(PositionApplyService);
@@ -59,6 +58,8 @@ export class UserComponent implements OnInit {
   projects = computed(() => this.state.project.projects());
 
   ngOnInit(): void {
+    this.state.project.updateSearchRequest({ onlyRelatedToCurrentUser: true });
+    this.state.project.loadProjects(this.state.project.searchRequest);
     const requests$ = this.getPageRequests();
     forkJoin(requests$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
@@ -68,18 +69,9 @@ export class UserComponent implements OnInit {
       .loadCurrentUser()
       .pipe(takeUntilDestroyed(this.destroyRef));
 
-    const projectsRequest$ = this.projectService
-      .loadProjects({
-        onlyRelatedToCurrentUser: true,
-      })
-      .pipe(
-        takeUntilDestroyed(this.destroyRef),
-        map(() => {}),
-      );
-
     const positionRequest$ = this.positionApplyService
       .loadMyApplications()
       .pipe(takeUntilDestroyed(this.destroyRef));
-    return [userRequest$, projectsRequest$, positionRequest$];
+    return [userRequest$, positionRequest$];
   }
 }
