@@ -13,7 +13,7 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
-import { ProjectCategory } from '../project-card/project-category/project-category.enum';
+import { ProjectCategory } from '../../models/project.interface';
 
 @Component({
   selector: 'app-project-category-dropdown',

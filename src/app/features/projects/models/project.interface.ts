@@ -1,4 +1,3 @@
-import { ProjectCategory } from '../components/project-card/project-category/project-category.enum';
 import { Gender } from '../../user/models/user.interface';
 
 export interface Project {
@@ -21,4 +20,22 @@ export interface ProjectParticipant {
   projectTitle: string;
   technologies: string[];
   gender?: Gender;
+}
+
+export enum ProjectCategory {
+  None = 'None',
+  FoodAndBeverages = 'Food and Beverages',
+  Pharmaceuticals = 'Pharmaceuticals',
+  Marketing = 'Marketing',
+  Gaming = 'Gaming',
+  Finance = 'Finance',
+  Biotech = 'Biotech',
+  Defence = 'Defence',
+  RealEstate = 'Real Estate',
+  Logistics = 'Logistics',
+  Government = 'Government',
+  Media = 'Media',
+  Healthcare = 'Healthcare',
+  Education = 'Education',
+  Fashion = 'Fashion',
 }

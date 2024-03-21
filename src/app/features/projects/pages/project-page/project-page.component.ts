@@ -74,13 +74,10 @@ export class ProjectPageComponent implements OnInit {
   }
 
   private loadProjectAndPositions(projectId: number) {
-    this.positionService
-      .loadPositions({ projectId, withApplicationStatus: true })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.state.project.loadSelectedProject(projectId);
 
-    return this.projectService
-      .loadSelectedProject(projectId)
+    return this.positionService
+      .loadPositions({ projectId, withApplicationStatus: true })
       .pipe(takeUntilDestroyed(this.destroyRef));
   }
 

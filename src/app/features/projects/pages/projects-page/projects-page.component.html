@@ -1,12 +1,6 @@
 <div class="flex mt-2 w-full align-items-center justify-content-center">
   <app-projects-filter (onFilterChange)="searchProject($event)" />
 
-  <p-toggleButton
-    (click)="isCardView.set(!isCardView())"
-    onIcon="pi pi-th-large"
-    offIcon="pi pi-bars"
-  ></p-toggleButton>
-
   <p-button
     class="ml-2"
     (click)="isShownCreateProjectDialog.set(true)"
@@ -19,22 +13,12 @@
   ></app-create-project-dialog>
 </div>
 
-<div class="projects-container" (scroll)="onScroll($event)">
-  @if (projects()) {
-    @if (isCardView()) {
-      <div class="flex gap-5 flex-wrap justify-content-center py-5">
-        @for (project of projects(); track $index) {
-          <app-project-card [project]="project"></app-project-card>
-        }
-      </div>
-    } @else {
-      <div class="flex flex-column align-items-center row-gap-3 mt-5">
-        @for (project of projects(); track $index) {
-          <app-project-line [project]="project"></app-project-line>
-        }
-      </div>
+@if (projects()) {
+  <div class="flex flex-column align-items-center row-gap-3 mt-5">
+    @for (project of projects(); track $index) {
+      <app-project-line [project]="project"></app-project-line>
     }
-  } @else {
-    <app-projects-not-found />
-  }
-</div>
+  </div>
+} @else {
+  <app-projects-not-found />
+}

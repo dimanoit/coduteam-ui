@@ -14,7 +14,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ProjectService } from '../../../projects/services/project.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
@@ -72,7 +72,10 @@ export class UserComponent implements OnInit {
       .loadProjects({
         onlyRelatedToCurrentUser: true,
       })
-      .pipe(takeUntilDestroyed(this.destroyRef));
+      .pipe(
+        takeUntilDestroyed(this.destroyRef),
+        map(() => {}),
+      );
 
     const positionRequest$ = this.positionApplyService
       .loadMyApplications()
