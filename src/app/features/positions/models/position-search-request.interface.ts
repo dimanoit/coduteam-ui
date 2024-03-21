@@ -1,6 +1,6 @@
-import { ProjectCategory } from '../../projects/components/project-card/project-category/project-category.enum';
 import { PositionCategory } from './position-category.enum';
 import { PositionApplyStatus } from './position-apply-status';
+import { ProjectCategory } from '../../projects/models/project.interface';
 
 export interface PositionSearchRequest {
   projectId?: number;

@@ -3,10 +3,8 @@ import {
   Component,
   computed,
   DestroyRef,
-  effect,
   inject,
   OnInit,
-  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotFoundPageComponent } from '../../../../shared/components/not-found-page/not-found-page.component';
@@ -17,8 +15,8 @@ import { CardModule } from 'primeng/card';
 import { ProjectParticipantComponent } from '../../components/project-participant/project-participant.component';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { State } from '../../../../state';
 import { ButtonModule } from 'primeng/button';
@@ -56,9 +54,11 @@ export class ProjectPageComponent implements OnInit {
 
   isUserOwnerOfProject = computed(
     () =>
-      this.state.project.selected()?.ownerId ===
+      this.state.project.selectedProject()?.ownerId ===
       this.state.user.currentUser()?.id,
   );
+
+  selectedProject = computed(() => this.state.project.selectedProject());
 
   ngOnInit() {
     this.route.params
@@ -74,18 +74,15 @@ export class ProjectPageComponent implements OnInit {
   }
 
   private loadProjectAndPositions(projectId: number) {
-    this.positionService
-      .loadPositions({ projectId, withApplicationStatus: true })
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.state.project.loadSelectedProject(projectId);
 
-    return this.projectService
-      .loadSelectedProject(projectId)
+    return this.positionService
+      .loadPositions({ projectId, withApplicationStatus: true })
       .pipe(takeUntilDestroyed(this.destroyRef));
   }
 
   createPosition(position: CreatePositionRequest) {
-    position.projectId = this.state.project.selected()?.id!;
+    position.projectId = this.state.project.selectedProject()?.id!;
     this.isShownDialog = false;
     this.positionService
       .createPosition(position)

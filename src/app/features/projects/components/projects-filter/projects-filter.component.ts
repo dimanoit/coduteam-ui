@@ -12,14 +12,13 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ProjectCategory } from '../project-card/project-category/project-category.enum';
 import { ProjectCategoryDropdownComponent } from '../project-category-dropdown/project-category-dropdown.component';
 import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
-import { ProjectService } from '../../services/project.service';
 import { ProjectSearchRequest } from '../../models/project-search-request.interface';
-import { debounceTime, filter, map, switchMap } from 'rxjs';
+import { debounceTime, filter, map } from 'rxjs';
+import { ProjectCategory } from '../../models/project.interface';
 
 @Component({
   selector: 'app-projects-filter',

@@ -14,11 +14,11 @@ import {
   Validators,
 } from '@angular/forms';
 import { PositionCategory } from '../../models/position-category.enum';
-import { ProjectCategory } from '../../../projects/components/project-card/project-category/project-category.enum';
 import { debounceTime, filter, switchMap } from 'rxjs';
 import { PositionService } from '../../services/position.service';
 import { PositionSearchRequest } from '../../models/position-search-request.interface';
 import { SelectItem } from 'primeng/api';
+import { ProjectCategory } from '../../../projects/models/project.interface';
 
 @Component({
   selector: 'app-position-filter',

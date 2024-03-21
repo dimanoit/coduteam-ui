@@ -14,10 +14,9 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ProjectService } from '../../../projects/services/project.service';
-import { finalize, forkJoin, Observable } from 'rxjs';
+import { forkJoin, map, Observable } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
-import { ProjectState } from '../../../projects/state/project.state';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplyService } from '../../../positions/services/position-apply.service';
 import { State } from '../../../../state';
@@ -43,7 +42,6 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ProjectService,
     UserService,
     PositionService,
-    ProjectState,
     UserState,
   ],
   templateUrl: './user.component.html',
@@ -53,15 +51,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class UserComponent implements OnInit {
   userService = inject(UserService);
-  projectService = inject(ProjectService);
   state = inject(State);
   destroyRef = inject(DestroyRef);
   positionApplyService = inject(PositionApplyService);
   currentUser = computed(() => this.state.user.currentUser());
+  projects = computed(() => this.state.project.projects());
 
   ngOnInit(): void {
+    this.state.project.updateSearchRequest({ onlyRelatedToCurrentUser: true });
+    this.state.project.loadProjects(this.state.project.searchRequest);
     const requests$ = this.getPageRequests();
-
     forkJoin(requests$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 
@@ -70,15 +69,9 @@ export class UserComponent implements OnInit {
       .loadCurrentUser()
       .pipe(takeUntilDestroyed(this.destroyRef));
 
-    const projectsRequest$ = this.projectService
-      .loadProjects({
-        onlyRelatedToCurrentUser: true,
-      })
-      .pipe(takeUntilDestroyed(this.destroyRef));
-
     const positionRequest$ = this.positionApplyService
       .loadMyApplications()
       .pipe(takeUntilDestroyed(this.destroyRef));
-    return [userRequest$, projectsRequest$, positionRequest$];
+    return [userRequest$, positionRequest$];
   }
 }

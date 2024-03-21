@@ -1,4 +1,4 @@
-import { ProjectCategory } from '../components/project-card/project-category/project-category.enum';
+import { ProjectCategory } from './project.interface';
 
 export interface CreateProjectRequest {
   title: string;
