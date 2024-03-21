@@ -61,7 +61,7 @@ export class CreatePositionDialogComponent {
     title: ['', [Validators.required, Validators.maxLength(100)]],
     category: ['', Validators.required],
     isRemote: false,
-    deadline: [''],
+    deadline: [null],
   });
 
   onCreateClick(): void {

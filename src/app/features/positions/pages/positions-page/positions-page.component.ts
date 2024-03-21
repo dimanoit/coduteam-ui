@@ -56,8 +56,4 @@ export class PositionsPageComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe();
   }
-
-  isPositionEditable(position: PositionDto) {
-    return position.project.ownerId === this.state.user.currentUser()?.id;
-  }
 }

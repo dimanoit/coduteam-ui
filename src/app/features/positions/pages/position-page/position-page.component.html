@@ -43,7 +43,11 @@
     </p-card>
 
     <div class="col-4 flex flex-column gap-1">
-      <p-card header="Check similar offers"></p-card>
+      <p-card header="Check similar offers">
+        @for (position of state.position.positions(); track $index) {
+          <app-position-line [position]="position"></app-position-line>
+        }
+      </p-card>
 
       @if (
         state.user.currentUser()?.id == selectedPosition()?.project?.ownerId

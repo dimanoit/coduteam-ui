@@ -25,6 +25,7 @@ import { truncateString } from '../../../../shared/utils/utilities';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { MenuItem } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
+import { PositionSearchRequest } from '../../models/position-search-request.interface';
 
 @Component({
   selector: 'app-position',
@@ -64,6 +65,15 @@ export class PositionPageComponent implements OnInit {
       this.state.position.selectedPosition()?.description ?? '',
     ),
   );
+  similarPositionsParams = computed(() => {
+    const loadPositionsParams: PositionSearchRequest = {
+      positionCategory: this.selectedPosition()?.positionCategory,
+      projectCategory: this.selectedPosition()?.project?.category,
+      take: 5,
+    };
+
+    return loadPositionsParams;
+  });
 
   ngOnInit(): void {
     this.home = { icon: 'pi pi-home', routerLink: '/' };
@@ -76,13 +86,22 @@ export class PositionPageComponent implements OnInit {
             .loadSelectedPosition(positionId)
             .pipe(takeUntilDestroyed(this.destroyRef)),
         ),
+        switchMap(() =>
+          this.positionService.loadPositions(this.similarPositionsParams()),
+        ),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe(() => {
         this.items = [
-          { label: 'Positions' },
-          { label: this.selectedPosition()?.positionCategory },
-          { label: this.selectedPosition()?.project?.title },
+          { label: 'Positions', routerLink: '/positions' },
+          {
+            label: this.selectedPosition()?.positionCategory,
+            routerLink: '/positions',
+          },
+          {
+            label: this.selectedPosition()?.project?.title,
+            routerLink: `/projects/${this.selectedPosition()?.project?.id}`,
+          },
         ];
       });
   }
