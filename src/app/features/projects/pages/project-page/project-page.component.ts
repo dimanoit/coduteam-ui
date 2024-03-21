@@ -3,10 +3,8 @@ import {
   Component,
   computed,
   DestroyRef,
-  effect,
   inject,
   OnInit,
-  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotFoundPageComponent } from '../../../../shared/components/not-found-page/not-found-page.component';
@@ -17,8 +15,8 @@ import { CardModule } from 'primeng/card';
 import { ProjectParticipantComponent } from '../../components/project-participant/project-participant.component';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
-import { ActivatedRoute, Params, Router } from '@angular/router';
-import { filter, map, switchMap, tap } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
+import { filter, map, switchMap } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { State } from '../../../../state';
 import { ButtonModule } from 'primeng/button';

@@ -56,6 +56,7 @@ export class UserComponent implements OnInit {
   destroyRef = inject(DestroyRef);
   positionApplyService = inject(PositionApplyService);
   currentUser = computed(() => this.state.user.currentUser());
+  projects = computed(() => this.state.project.projects());
 
   ngOnInit(): void {
     const requests$ = this.getPageRequests();
