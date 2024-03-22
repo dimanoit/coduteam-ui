@@ -1,5 +1,5 @@
 @if (selectedPosition()) {
-  <p-breadcrumb class="max-w-full" [model]="items" [home]="home"></p-breadcrumb>
+  <p-breadcrumb class="max-w-full" [model]="items()"></p-breadcrumb>
 
   <div class="grid">
     <p-card class="col-8">
@@ -8,7 +8,7 @@
           <img
             class="project-image"
             [src]="selectedPosition()?.project?.projectImgUrl ?? ''"
-            alt="Project picture"
+            alt="Project "
           />
         </div>
 
@@ -18,7 +18,9 @@
               {{ selectedPosition()?.project?.title ?? "" }}
             </div>
             <div class="underline">All companies positions</div>
-            <p-button class="ml-auto">Apply</p-button>
+            <p-button (click)="applyOnPosition()" class="ml-auto"
+              >Apply
+            </p-button>
           </div>
           <div class="text-sm">{{ projectDescription() }}</div>
         </div>

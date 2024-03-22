@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { ProjectStore } from './features/projects/state/project.state';
-import { PositionState } from './features/positions/position.state';
-import { UserState } from './features/user/user.state';
+import { ProjectStore } from './project.store';
+import { PositionStore } from './position.store';
+import { UserState } from './user.state';
 import { patchState, signalState } from '@ngrx/signals';
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +11,7 @@ export class State {
   });
 
   project = inject(ProjectStore);
-  position = inject(PositionState);
+  position = inject(PositionStore);
   user = inject(UserState);
   isLoading = this.state.isLoading;
 

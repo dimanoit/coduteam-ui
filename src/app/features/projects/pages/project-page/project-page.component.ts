@@ -18,7 +18,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ActivatedRoute, Params } from '@angular/router';
 import { filter, map, switchMap } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
-import { State } from '../../../../state';
+import { State } from '../../../../store/state';
 import { ButtonModule } from 'primeng/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreatePositionDialogComponent } from '../../../positions/components/create-position-dialog/create-position-dialog.component';

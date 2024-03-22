@@ -20,7 +20,7 @@ import { SharedModule } from 'primeng/api';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { State } from '../../../../state';
+import { State } from '../../../../store/state';
 import { passwordValidator } from '../../validators/password.validator';
 import { AuthDto } from '../../models/user.interface';
 import { catchError, EMPTY, finalize, tap } from 'rxjs';

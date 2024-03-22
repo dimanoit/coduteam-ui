@@ -54,7 +54,7 @@ export class PositionApplicantComponent implements OnInit {
         label: 'Review',
         icon: PrimeIcons.EYE,
         command: () => {
-          this.changeStatus(PositionApplyStatus.Sent);
+          this.changeStatus(PositionApplyStatus.OnReview);
         },
       };
 

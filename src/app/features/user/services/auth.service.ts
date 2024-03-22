@@ -1,10 +1,10 @@
 import { Injectable, signal } from '@angular/core';
 import { AuthToken } from '../models/auth-token.interface';
 import { AuthDto } from '../models/user.interface';
-import { catchError, EMPTY, finalize, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TokenManagementService } from './token-management.service';
-import { State } from '../../../state';
+import { State } from '../../../store/state';
 
 @Injectable({
   providedIn: 'root',

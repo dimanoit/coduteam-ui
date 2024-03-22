@@ -6,7 +6,7 @@ import {
 } from '../models/user.interface';
 import { map, Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { State } from '../../../state';
+import { State } from '../../../store/state';
 
 @Injectable()
 export class UserService {

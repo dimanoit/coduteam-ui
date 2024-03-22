@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { patchState, signalState } from '@ngrx/signals';
-import { User } from './models/user.interface';
+import { User } from '../features/user/models/user.interface';
 
 export interface UserStateModel {
   isActivation: boolean;

@@ -16,10 +16,10 @@ import {
 } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
-import { State } from './app/state';
-import { PositionState } from './app/features/positions/position.state';
-import { UserState } from './app/features/user/user.state';
-import { ProjectStore } from './app/features/projects/state/project.state';
+import { State } from './app/store/state';
+import { PositionStore } from './app/store/position.store';
+import { UserState } from './app/store/user.state';
+import { ProjectStore } from './app/store/project.store';
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -28,7 +28,7 @@ bootstrapApplication(AppComponent, {
     State,
     UserState,
     ProjectStore,
-    PositionState,
+    PositionStore,
     provideAnimations(),
     provideHttpClient(
       withFetch(),

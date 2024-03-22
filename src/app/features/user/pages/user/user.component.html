@@ -35,7 +35,7 @@
     </p-panel>
 
     <p-panel header="My Applications" [toggleable]="true" [collapsed]="true">
-      @for (position of state.position.myApplications(); track $index) {
+      @for (position of myApplications(); track $index) {
         <app-position-line [position]="position" />
       }
     </p-panel>

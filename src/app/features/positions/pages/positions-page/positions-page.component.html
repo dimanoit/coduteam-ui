@@ -2,7 +2,7 @@
   <app-position-filter />
 
   <div>
-    @for (position of state.position.positions(); track $index) {
+    @for (position of positions(); track $index) {
       <app-position-line [position]="position"></app-position-line>
     }
   </div>

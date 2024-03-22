@@ -5,7 +5,7 @@ import { SmallFooterComponent } from './core/components/small-footer/small-foote
 import { ThemeService } from './shared/services/theme.service';
 import { ToastModule } from 'primeng/toast';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { State } from './state';
+import { State } from './store/state';
 import { UserService } from './features/user/services/user.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 

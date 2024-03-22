@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnChanges,
   OnInit,
   signal,
-  SimpleChanges,
   WritableSignal,
 } from '@angular/core';
 import { ActivationComponent } from '../../components/activation/activation.component';
@@ -20,7 +18,7 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { State } from '../../../../state';
+import { State } from '../../../../store/state';
 import { AccountRegistrationDto, AuthDto } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
