@@ -1,10 +1,9 @@
 import { Injectable, signal } from '@angular/core';
 import { AuthToken } from '../models/auth-token.interface';
 import { AuthDto } from '../models/user.interface';
-import { catchError, EMPTY, finalize, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { TokenManagementService } from './token-management.service';
-import { State } from '../../../state';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,6 @@ export class AuthService {
 
   constructor(
     private http: HttpClient,
-    private state: State,
     private tokenManagementService: TokenManagementService,
   ) {}
 
@@ -39,7 +37,7 @@ export class AuthService {
       .pipe(map((token) => this.storeTokenOnAuth(token)));
   }
 
-  private storeTokenOnAuth(authToken: AuthToken) {
+  storeTokenOnAuth(authToken: AuthToken) {
     if (!authToken) {
       return;
     }

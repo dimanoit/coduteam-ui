@@ -16,13 +16,16 @@ import { ProjectParticipantComponent } from '../../components/project-participan
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { ActivatedRoute, Params } from '@angular/router';
-import { filter, map, switchMap } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
-import { State } from '../../../../state';
 import { ButtonModule } from 'primeng/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreatePositionDialogComponent } from '../../../positions/components/create-position-dialog/create-position-dialog.component';
 import { CreatePositionRequest } from '../../../positions/models/create-position-request.interface';
+import { ProjectStore } from '../../../../store/project.store';
+import { UserStore } from '../../../../store/user.store';
+import { PositionStore } from '../../../../store/position.store';
+import { GlobalStore } from '../../../../store/global.store';
 
 @Component({
   selector: 'app-project-page',
@@ -45,55 +48,45 @@ import { CreatePositionRequest } from '../../../positions/models/create-position
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectPageComponent implements OnInit {
-  projectService = inject(ProjectService);
-  positionService = inject(PositionService);
-  state = inject(State);
   destroyRef = inject(DestroyRef);
   route = inject(ActivatedRoute);
   isShownDialog: boolean = false;
+  isLoading = inject(GlobalStore).isLoading;
+
+  projectStore = inject(ProjectStore);
+  positionStore = inject(PositionStore);
+  userStore = inject(UserStore);
 
   isUserOwnerOfProject = computed(
     () =>
-      this.state.project.selectedProject()?.ownerId ===
-      this.state.user.currentUser()?.id,
+      this.projectStore.selectedProject()?.ownerId ===
+      this.userStore.currentUser()?.id,
   );
 
-  selectedProject = computed(() => this.state.project.selectedProject());
+  selectedProject = computed(() => this.projectStore.selectedProject());
 
   ngOnInit() {
     this.route.params
       .pipe(
         map((params: Params) => params['projectId']),
         filter((value) => value),
-        switchMap((projectId: number) =>
-          this.loadProjectAndPositions(projectId),
-        ),
+        tap((projectId: number) => this.loadProjectAndPositions(projectId)),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
   }
 
   private loadProjectAndPositions(projectId: number) {
-    this.state.project.loadSelectedProject(projectId);
-
-    return this.positionService
-      .loadPositions({ projectId, withApplicationStatus: true })
-      .pipe(takeUntilDestroyed(this.destroyRef));
+    this.projectStore.loadSelectedProject(projectId);
+    this.positionStore.loadPositions({
+      projectId,
+      withApplicationStatus: true,
+    });
   }
 
   createPosition(position: CreatePositionRequest) {
-    position.projectId = this.state.project.selectedProject()?.id!;
+    position.projectId = this.projectStore.selectedProject()?.id!;
     this.isShownDialog = false;
-    this.positionService
-      .createPosition(position)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
-  }
-
-  removePosition(positionId: number) {
-    this.positionService
-      .removePosition(positionId)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.positionStore.createPosition(position);
   }
 }

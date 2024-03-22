@@ -1,8 +1,6 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  computed,
-  DestroyRef,
   inject,
   OnInit,
 } from '@angular/core';
@@ -14,15 +12,14 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { PanelModule } from 'primeng/panel';
 import { ProjectService } from '../../../projects/services/project.service';
-import { forkJoin, map, Observable } from 'rxjs';
 import { PositionService } from '../../../positions/services/position.service';
 import { ProjectLineComponent } from '../../../projects/components/project-line/project-line.component';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplyService } from '../../../positions/services/position-apply.service';
-import { State } from '../../../../state';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
-import { UserState } from '../../user.state';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserStore } from '../../../../store/user.store';
+import { ProjectStore } from '../../../../store/project.store';
+import { PositionStore } from '../../../../store/position.store';
 
 @Component({
   selector: 'app-user',
@@ -42,7 +39,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ProjectService,
     UserService,
     PositionService,
-    UserState,
+    UserStore,
   ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
@@ -50,28 +47,18 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnInit {
-  userService = inject(UserService);
-  state = inject(State);
-  destroyRef = inject(DestroyRef);
-  positionApplyService = inject(PositionApplyService);
-  currentUser = computed(() => this.state.user.currentUser());
-  projects = computed(() => this.state.project.projects());
+  projectStore = inject(ProjectStore);
+  positionStore = inject(PositionStore);
+  userStore = inject(UserStore);
+
+  projects = this.projectStore.projects;
+  myApplications = this.positionStore.myApplications;
+  user = this.userStore.currentUser;
 
   ngOnInit(): void {
-    this.state.project.updateSearchRequest({ onlyRelatedToCurrentUser: true });
-    this.state.project.loadProjects(this.state.project.searchRequest);
-    const requests$ = this.getPageRequests();
-    forkJoin(requests$).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
-  }
-
-  private getPageRequests(): Observable<void>[] {
-    const userRequest$ = this.userService
-      .loadCurrentUser()
-      .pipe(takeUntilDestroyed(this.destroyRef));
-
-    const positionRequest$ = this.positionApplyService
-      .loadMyApplications()
-      .pipe(takeUntilDestroyed(this.destroyRef));
-    return [userRequest$, positionRequest$];
+    this.projectStore.updateSearchRequest({ onlyRelatedToCurrentUser: true });
+    this.projectStore.loadProjects(this.projectStore.searchRequest);
+    this.positionStore.loadMyApplications();
+    this.userStore.loadCurrentUser();
   }
 }

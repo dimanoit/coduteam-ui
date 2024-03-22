@@ -1,5 +1,5 @@
 import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
-import { Project } from '../models/project.interface';
+import { Project } from '../features/projects/models/project.interface';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import {
   debounceTime,
@@ -9,10 +9,10 @@ import {
   switchMap,
   tap,
 } from 'rxjs';
-import { ProjectService } from '../services/project.service';
+import { ProjectService } from '../features/projects/services/project.service';
 import { inject } from '@angular/core';
-import { ProjectSearchRequest } from '../models/project-search-request.interface';
-import { CreateProjectRequest } from '../models/create-project.interface';
+import { ProjectSearchRequest } from '../features/projects/models/project-search-request.interface';
+import { CreateProjectRequest } from '../features/projects/models/create-project.interface';
 
 type ProjectState = {
   projects: Project[];

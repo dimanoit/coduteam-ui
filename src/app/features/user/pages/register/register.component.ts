@@ -2,10 +2,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  OnChanges,
   OnInit,
   signal,
-  SimpleChanges,
   WritableSignal,
 } from '@angular/core';
 import { ActivationComponent } from '../../components/activation/activation.component';
@@ -20,16 +18,13 @@ import {
 } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { PasswordModule } from 'primeng/password';
-import { State } from '../../../../state';
 import { AccountRegistrationDto, AuthDto } from '../../models/user.interface';
-import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../validators/password.validator';
-import { catchError, concatMap, EMPTY } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
+import { UserStore } from '../../../../store/user.store';
 
 @Component({
   selector: 'app-register',
@@ -44,7 +39,6 @@ import { MessagesModule } from 'primeng/messages';
     PasswordModule,
     MessagesModule,
   ],
-  providers: [UserService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -53,11 +47,12 @@ export class RegisterComponent implements OnInit {
   authForm!: FormGroup;
   registerErrorMessages: WritableSignal<Message[]> = signal([]);
 
-  protected state = inject(State);
-  private userService = inject(UserService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-  private authService = inject(AuthService);
+  private userStore = inject(UserStore);
+
+  isLoading = this.userStore.isLoading;
+  isActivation = this.userStore.isActivation;
 
   ngOnInit(): void {
     this.authForm = this.formBuilder.group({
@@ -67,12 +62,13 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.minLength(8), passwordValidator],
       ],
     });
+
+    const credentials = this.userStore.credentials;
+    this.userStore.login(credentials);
   }
 
   activateUser(data: AccountRegistrationDto) {
-    this.userService
-      .finishRegistration(data)
-      .subscribe(() => this.router.navigate(['/projects']));
+    this.userStore.finishRegistration(data);
   }
 
   protected redirectToLogin() {
@@ -89,17 +85,7 @@ export class RegisterComponent implements OnInit {
       password: this.authForm.value.password,
     };
 
-    this.userService
-      .register(authDto)
-      .pipe(
-        concatMap(() => this.authService.login(authDto)),
-        catchError((error: HttpErrorResponse) => {
-          this.setRegisterErrors(error);
-          console.log(error);
-          return EMPTY;
-        }),
-      )
-      .subscribe();
+    this.userStore.register(authDto);
   }
 
   private setRegisterErrors(error: HttpErrorResponse) {

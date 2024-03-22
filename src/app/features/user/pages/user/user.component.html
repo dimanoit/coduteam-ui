@@ -2,7 +2,7 @@
   <div class="col-3">
     <div class="surface-card border-1 border-round surface-border flex p-3">
       <p-avatar
-        [image]="currentUser()?.profileImage"
+        [image]="user()?.profileImage"
         styleClass="mr-2"
         size="xlarge"
         shape="circle"
@@ -10,11 +10,11 @@
 
       <div>
         <div class="font-semibold font-italic">
-          <span>{{ currentUser()?.firstName }} </span>
-          <span>{{ currentUser()?.lastName }}</span>
+          <span>{{ user()?.firstName }} </span>
+          <span>{{ user()?.lastName }}</span>
         </div>
         <div class="text-sm">
-          {{ currentUser()?.title }}
+          {{ user()?.title }}
         </div>
       </div>
     </div>
@@ -35,7 +35,7 @@
     </p-panel>
 
     <p-panel header="My Applications" [toggleable]="true" [collapsed]="true">
-      @for (position of state.position.myApplications(); track $index) {
+      @for (position of myApplications(); track $index) {
         <app-position-line [position]="position" />
       }
     </p-panel>

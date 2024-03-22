@@ -5,13 +5,13 @@ import {
   DestroyRef,
   inject,
   OnInit,
+  Signal,
 } from '@angular/core';
 import { PositionLineComponent } from '../../components/position-line/position-line.component';
-import { filter, map, switchMap } from 'rxjs';
+import { filter, map, tap } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PositionService } from '../../services/position.service';
-import { State } from '../../../../state';
 import { CardModule } from 'primeng/card';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplicantComponent } from '../../components/position-applicant/position-applicant.component';
@@ -23,9 +23,11 @@ import { DividerModule } from 'primeng/divider';
 import { ButtonModule } from 'primeng/button';
 import { truncateString } from '../../../../shared/utils/utilities';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
-import { MenuItem } from 'primeng/api';
 import { TagModule } from 'primeng/tag';
-import { PositionSearchRequest } from '../../models/position-search-request.interface';
+import { PositionDto } from '../../models/position-dto.interface';
+import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
+import { PositionStore } from '../../../../store/position.store';
+import { UserStore } from '../../../../store/user.store';
 
 @Component({
   selector: 'app-position',
@@ -49,64 +51,59 @@ import { PositionSearchRequest } from '../../models/position-search-request.inte
 export class PositionPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
-  private positionService = inject(PositionService);
-  private positionApplyService = inject(PositionApplyService);
   private sanitizer = inject(DomSanitizer);
-  public state = inject(State);
-  items: MenuItem[] | undefined;
-  home: MenuItem | undefined;
+  public positionStore = inject(PositionStore);
+  public userStore = inject(UserStore);
 
-  selectedPosition = computed(() => this.state.position.selectedPosition());
+  selectedPosition: Signal<PositionDto | null> =
+    this.positionStore.selectedPosition;
   projectDescription = computed(() =>
     truncateString(this.selectedPosition()?.project?.description ?? '', 200),
   );
   safeDescription = computed(() =>
     this.sanitizer.bypassSecurityTrustHtml(
-      this.state.position.selectedPosition()?.description ?? '',
+      this.selectedPosition()?.description ?? '',
     ),
   );
-  similarPositionsParams = computed(() => {
-    const loadPositionsParams: PositionSearchRequest = {
-      positionCategory: this.selectedPosition()?.positionCategory,
-      projectCategory: this.selectedPosition()?.project?.category,
-      take: 5,
-    };
 
-    return loadPositionsParams;
-  });
+  items = computed(() => [
+    { icon: 'pi pi-home', routerLink: '/' },
+    { label: 'Positions', routerLink: '/positions' },
+    {
+      label: this.selectedPosition()?.positionCategory,
+      routerLink: '/positions',
+    },
+    {
+      label: this.selectedPosition()?.project?.title,
+      routerLink: `/projects/${this.selectedPosition()?.project?.id}`,
+    },
+  ]);
 
   ngOnInit(): void {
-    this.home = { icon: 'pi pi-home', routerLink: '/' };
     this.route.params
       .pipe(
         map((params: Params) => params['positionId']),
         filter((value) => value),
-        switchMap((positionId: number) =>
-          this.positionService
-            .loadSelectedPosition(positionId)
-            .pipe(takeUntilDestroyed(this.destroyRef)),
-        ),
-        switchMap(() =>
-          this.positionService.loadPositions(this.similarPositionsParams()),
+        tap((positionId: number) =>
+          this.positionStore.updateSelectedPositionId(positionId),
         ),
         takeUntilDestroyed(this.destroyRef),
       )
-      .subscribe(() => {
-        this.items = [
-          { label: 'Positions', routerLink: '/positions' },
-          {
-            label: this.selectedPosition()?.positionCategory,
-            routerLink: '/positions',
-          },
-          {
-            label: this.selectedPosition()?.project?.title,
-            routerLink: `/projects/${this.selectedPosition()?.project?.id}`,
-          },
-        ];
-      });
+      .subscribe();
+
+    const selectedPositionId = this.positionStore.selectedPositionId;
+    this.positionStore.loadSelectedPosition(selectedPositionId);
   }
 
-  changeApplicantStatus(request: ChangePositionApplyStatusRequest) {
-    this.positionApplyService.changePositionApplyStatus(request).subscribe();
+  applyOnPosition(): void {
+    const request: ApplyOnPositionRequest = {
+      positionId: this.selectedPosition()!.id,
+    };
+
+    this.positionStore.applyOnPosition(request);
+  }
+
+  changeApplicantStatus(request: ChangePositionApplyStatusRequest): void {
+    this.positionStore.changeApplicationStatus(request);
   }
 }
