@@ -56,7 +56,7 @@
         <p-button
           [disabled]="!authForm.valid"
           class="sign-in-button p-fluid"
-          [loading]="state.user.isLoading()"
+          [loading]="isLoading()"
           (onClick)="onSubmit()"
         >
           Register

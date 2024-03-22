@@ -12,7 +12,6 @@ import { filter, map, tap } from 'rxjs';
 import { ActivatedRoute, Params } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { PositionService } from '../../services/position.service';
-import { State } from '../../../../store/state';
 import { CardModule } from 'primeng/card';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplicantComponent } from '../../components/position-applicant/position-applicant.component';
@@ -27,6 +26,8 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TagModule } from 'primeng/tag';
 import { PositionDto } from '../../models/position-dto.interface';
 import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
+import { PositionStore } from '../../../../store/position.store';
+import { UserStore } from '../../../../store/user.store';
 
 @Component({
   selector: 'app-position',
@@ -51,10 +52,11 @@ export class PositionPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private sanitizer = inject(DomSanitizer);
-  public state = inject(State);
+  public positionStore = inject(PositionStore);
+  public userStore = inject(UserStore);
 
   selectedPosition: Signal<PositionDto | null> =
-    this.state.position.selectedPosition;
+    this.positionStore.selectedPosition;
   projectDescription = computed(() =>
     truncateString(this.selectedPosition()?.project?.description ?? '', 200),
   );
@@ -83,14 +85,14 @@ export class PositionPageComponent implements OnInit {
         map((params: Params) => params['positionId']),
         filter((value) => value),
         tap((positionId: number) =>
-          this.state.position.updateSelectedPositionId(positionId),
+          this.positionStore.updateSelectedPositionId(positionId),
         ),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
 
-    const selectedPositionId = this.state.position.selectedPositionId;
-    this.state.position.loadSelectedPosition(selectedPositionId);
+    const selectedPositionId = this.positionStore.selectedPositionId;
+    this.positionStore.loadSelectedPosition(selectedPositionId);
   }
 
   applyOnPosition(): void {
@@ -98,10 +100,10 @@ export class PositionPageComponent implements OnInit {
       positionId: this.selectedPosition()!.id,
     };
 
-    this.state.position.applyOnPosition(request);
+    this.positionStore.applyOnPosition(request);
   }
 
   changeApplicantStatus(request: ChangePositionApplyStatusRequest): void {
-    this.state.position.changeApplicationStatus(request);
+    this.positionStore.changeApplicationStatus(request);
   }
 }

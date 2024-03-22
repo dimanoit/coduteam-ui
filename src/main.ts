@@ -16,16 +16,16 @@ import {
 } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
 import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
-import { State } from './app/store/state';
 import { PositionStore } from './app/store/position.store';
 import { UserStore } from './app/store/user.store';
 import { ProjectStore } from './app/store/project.store';
+import { GlobalStore } from './app/store/state';
 
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(routes),
     MessageService,
-    State,
+    GlobalStore,
     UserStore,
     ProjectStore,
     PositionStore,

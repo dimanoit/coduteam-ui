@@ -1,13 +1,13 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
 import { RouterOutlet } from '@angular/router';
 import { SmallFooterComponent } from './core/components/small-footer/small-footer.component';
 import { ThemeService } from './shared/services/theme.service';
 import { ToastModule } from 'primeng/toast';
 import { ProgressBarModule } from 'primeng/progressbar';
-import { State } from './store/state';
 import { UserService } from './features/user/services/user.service';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { UserStore } from './store/user.store';
+import { GlobalStore } from './store/state';
 
 @Component({
   selector: 'app-root',
@@ -25,12 +25,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AppComponent implements OnInit {
   private themeService = inject(ThemeService);
-  protected state = inject(State);
-  private destroyRef = inject(DestroyRef);
+  private userStore = inject(UserStore);
+  
   title = 'my-first-project';
+  isLoading = inject(GlobalStore).isLoading;
+  currentUser = this.userStore.currentUser;
 
   ngOnInit(): void {
     this.themeService.loadTheme();
-    this.state.user.loadCurrentUser();
+    this.userStore.loadCurrentUser();
   }
 }

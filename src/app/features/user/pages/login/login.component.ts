@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  inject,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -18,14 +19,12 @@ import {
 } from '@angular/forms';
 import { SharedModule } from 'primeng/api';
 import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { State } from '../../../../store/state';
 import { passwordValidator } from '../../validators/password.validator';
 import { AuthDto } from '../../models/user.interface';
-import { catchError, EMPTY, finalize, tap } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
+import { UserStore } from '../../../../store/user.store';
 
 @Component({
   selector: 'app-login',
@@ -47,13 +46,14 @@ import { MessagesModule } from 'primeng/messages';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
+  private userStore = inject(UserStore);
+
   loginForm: FormGroup;
-  isLoading = this.state.user.isLoading;
+  isLoading = this.userStore.isLoading;
   loginErrorMessages: WritableSignal<string[]> = signal([]);
 
   constructor(
     private formBuilder: FormBuilder,
-    protected state: State,
     private router: Router,
   ) {
     this.loginForm = this.formBuilder.group({
@@ -75,7 +75,7 @@ export class LoginComponent {
       password: this.loginForm.value.password,
     };
 
-    this.state.user.login(authDto);
+    this.userStore.login(authDto);
   }
 
   navigateToRegistration() {

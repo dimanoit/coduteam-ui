@@ -8,10 +8,10 @@ import { PositionFilterComponent } from '../../components/position-filter/positi
 import { PositionLineComponent } from '../../components/position-line/position-line.component';
 import { NgForOf } from '@angular/common';
 import { PositionService } from '../../services/position.service';
-import { State } from '../../../../store/state';
 import { PositionApplyService } from '../../services/position-apply.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { PositionPageComponent } from '../position-page/position-page.component';
+import { PositionStore } from '../../../../store/position.store';
 
 @Component({
   selector: 'app-positions',
@@ -29,11 +29,11 @@ import { PositionPageComponent } from '../position-page/position-page.component'
   standalone: true,
 })
 export class PositionsPageComponent implements OnInit {
-  state = inject(State);
-  positions = this.state.position.positions;
+  positionStore = inject(PositionStore);
+  positions = this.positionStore.positions;
 
   ngOnInit(): void {
-    const searchRequest = this.state.position.searchRequest;
-    this.state.position.loadPositions(searchRequest);
+    const searchRequest = this.positionStore.searchRequest;
+    this.positionStore.loadPositions(searchRequest);
   }
 }
