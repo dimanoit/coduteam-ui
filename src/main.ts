@@ -19,7 +19,7 @@ import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
 import { PositionStore } from './app/store/position.store';
 import { UserStore } from './app/store/user.store';
 import { ProjectStore } from './app/store/project.store';
-import { GlobalStore } from './app/store/state';
+import { GlobalStore } from './app/store/global.store';
 
 bootstrapApplication(AppComponent, {
   providers: [

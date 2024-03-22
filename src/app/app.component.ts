@@ -7,7 +7,7 @@ import { ToastModule } from 'primeng/toast';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { UserService } from './features/user/services/user.service';
 import { UserStore } from './store/user.store';
-import { GlobalStore } from './store/state';
+import { GlobalStore } from './store/global.store';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +26,7 @@ import { GlobalStore } from './store/state';
 export class AppComponent implements OnInit {
   private themeService = inject(ThemeService);
   private userStore = inject(UserStore);
-  
+
   title = 'my-first-project';
   isLoading = inject(GlobalStore).isLoading;
   currentUser = this.userStore.currentUser;

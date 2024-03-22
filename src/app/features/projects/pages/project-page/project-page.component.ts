@@ -25,7 +25,7 @@ import { CreatePositionRequest } from '../../../positions/models/create-position
 import { ProjectStore } from '../../../../store/project.store';
 import { UserStore } from '../../../../store/user.store';
 import { PositionStore } from '../../../../store/position.store';
-import { GlobalStore } from '../../../../store/state';
+import { GlobalStore } from '../../../../store/global.store';
 
 @Component({
   selector: 'app-project-page',

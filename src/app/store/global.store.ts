@@ -1,11 +1,4 @@
-import { inject, Injectable } from '@angular/core';
-import {
-  patchState,
-  signalState,
-  signalStore,
-  withMethods,
-  withState,
-} from '@ngrx/signals';
+import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 
 export type GlobalState = {
   isLoading: boolean;

@@ -9,7 +9,7 @@ import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MessageService } from 'primeng/api';
-import { GlobalStore } from '../../store/state';
+import { GlobalStore } from '../../store/global.store';
 
 export function loggingInterceptor(
   req: HttpRequest<unknown>,
