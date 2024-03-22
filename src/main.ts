@@ -18,7 +18,7 @@ import { MessageService } from 'primeng/api';
 import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
 import { State } from './app/store/state';
 import { PositionStore } from './app/store/position.store';
-import { UserState } from './app/store/user.state';
+import { UserStore } from './app/store/user.store';
 import { ProjectStore } from './app/store/project.store';
 
 bootstrapApplication(AppComponent, {
@@ -26,7 +26,7 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     MessageService,
     State,
-    UserState,
+    UserStore,
     ProjectStore,
     PositionStore,
     provideAnimations(),

@@ -1,10 +1,10 @@
 <div class="grid pt-3">
   <div class="col">
-    <img class="block w-full" src="../assets/auth.png" alt="Auth picture" />
+    <img class="block w-full" src="../assets/auth.png" alt="Auth" />
   </div>
 
   <div class="col">
-    @if (state.user.isActivation()) {
+    @if (isActivation()) {
       <app-activation
         (onUserActivation)="activateUser($event)"
       ></app-activation>

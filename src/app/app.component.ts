@@ -25,16 +25,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AppComponent implements OnInit {
   private themeService = inject(ThemeService);
-  private userService = inject(UserService);
   protected state = inject(State);
   private destroyRef = inject(DestroyRef);
   title = 'my-first-project';
 
   ngOnInit(): void {
     this.themeService.loadTheme();
-    this.userService
-      .loadCurrentUser()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.state.user.loadCurrentUser();
   }
 }

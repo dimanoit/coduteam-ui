@@ -20,7 +20,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplyService } from '../../../positions/services/position-apply.service';
 import { State } from '../../../../store/state';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
-import { UserState } from '../../../../store/user.state';
+import { UserStore } from '../../../../store/user.store';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -41,7 +41,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ProjectService,
     UserService,
     PositionService,
-    UserState,
+    UserStore,
   ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
@@ -49,22 +49,16 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnInit {
-  userService = inject(UserService);
   state = inject(State);
-  destroyRef = inject(DestroyRef);
 
-  currentUser = computed(() => this.state.user.currentUser());
   projects = this.state.project.projects;
   myApplications = this.state.position.myApplications;
+  user = this.state.user.currentUser;
 
   ngOnInit(): void {
     this.state.project.updateSearchRequest({ onlyRelatedToCurrentUser: true });
     this.state.project.loadProjects(this.state.project.searchRequest);
     this.state.position.loadMyApplications();
-
-    this.userService
-      .loadCurrentUser()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe();
+    this.state.user.loadCurrentUser();
   }
 }

@@ -23,7 +23,6 @@ import { AccountRegistrationDto, AuthDto } from '../../models/user.interface';
 import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../validators/password.validator';
-import { catchError, concatMap, EMPTY } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Message } from 'primeng/api';
@@ -52,10 +51,9 @@ export class RegisterComponent implements OnInit {
   registerErrorMessages: WritableSignal<Message[]> = signal([]);
 
   protected state = inject(State);
-  private userService = inject(UserService);
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-  private authService = inject(AuthService);
+  isActivation = this.state.user.isActivation;
 
   ngOnInit(): void {
     this.authForm = this.formBuilder.group({
@@ -65,12 +63,13 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.minLength(8), passwordValidator],
       ],
     });
+
+    const credentials = this.state.user.credentials;
+    this.state.user.login(credentials);
   }
 
   activateUser(data: AccountRegistrationDto) {
-    this.userService
-      .finishRegistration(data)
-      .subscribe(() => this.router.navigate(['/projects']));
+    this.state.user.finishRegistration(data);
   }
 
   protected redirectToLogin() {
@@ -87,17 +86,7 @@ export class RegisterComponent implements OnInit {
       password: this.authForm.value.password,
     };
 
-    this.userService
-      .register(authDto)
-      .pipe(
-        concatMap(() => this.authService.login(authDto)),
-        catchError((error: HttpErrorResponse) => {
-          this.setRegisterErrors(error);
-          console.log(error);
-          return EMPTY;
-        }),
-      )
-      .subscribe();
+    this.state.user.register(authDto);
   }
 
   private setRegisterErrors(error: HttpErrorResponse) {

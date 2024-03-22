@@ -53,7 +53,6 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService,
     protected state: State,
     private router: Router,
   ) {
@@ -76,19 +75,7 @@ export class LoginComponent {
       password: this.loginForm.value.password,
     };
 
-    this.authService
-      .login(authDto)
-      .pipe(
-        tap(() => {
-          this.router.navigate(['/projects']);
-        }),
-        finalize(() => this.loginForm.reset()),
-        catchError((error: HttpErrorResponse) => {
-          this.setLoginErrors(error);
-          return EMPTY;
-        }),
-      )
-      .subscribe();
+    this.state.user.login(authDto);
   }
 
   navigateToRegistration() {
