@@ -26,8 +26,7 @@ import { BreadcrumbModule } from 'primeng/breadcrumb';
 import { TagModule } from 'primeng/tag';
 import { PositionDto } from '../../models/position-dto.interface';
 import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
-import { PositionStore } from '../../../../store/position.store';
-import { UserStore } from '../../../../store/user.store';
+import { Store } from '../../../../store/store';
 
 @Component({
   selector: 'app-position',
@@ -52,11 +51,9 @@ export class PositionPageComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private destroyRef = inject(DestroyRef);
   private sanitizer = inject(DomSanitizer);
-  public positionStore = inject(PositionStore);
-  public userStore = inject(UserStore);
+  public store = inject(Store);
 
-  selectedPosition: Signal<PositionDto | null> =
-    this.positionStore.selectedPosition;
+  selectedPosition: Signal<PositionDto | null> = this.store.selectedPosition;
   projectDescription = computed(() =>
     truncateString(this.selectedPosition()?.project?.description ?? '', 200),
   );
@@ -85,14 +82,14 @@ export class PositionPageComponent implements OnInit {
         map((params: Params) => params['positionId']),
         filter((value) => value),
         tap((positionId: number) =>
-          this.positionStore.updateSelectedPositionId(positionId),
+          this.store.updateSelectedPositionId(positionId),
         ),
         takeUntilDestroyed(this.destroyRef),
       )
       .subscribe();
 
-    const selectedPositionId = this.positionStore.selectedPositionId;
-    this.positionStore.loadSelectedPosition(selectedPositionId);
+    const selectedPositionId = this.store.selectedPositionId;
+    this.store.loadSelectedPosition(selectedPositionId);
   }
 
   applyOnPosition(): void {
@@ -100,10 +97,10 @@ export class PositionPageComponent implements OnInit {
       positionId: this.selectedPosition()!.id,
     };
 
-    this.positionStore.applyOnPosition(request);
+    this.store.applyOnPosition(request);
   }
 
   changeApplicantStatus(request: ChangePositionApplyStatusRequest): void {
-    this.positionStore.changeApplicationStatus(request);
+    this.store.changeApplicationStatus(request);
   }
 }

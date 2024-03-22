@@ -9,7 +9,7 @@ import { catchError, finalize, Observable, tap, throwError } from 'rxjs';
 import { inject } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { MessageService } from 'primeng/api';
-import { GlobalStore } from '../../store/global.store';
+import { Store } from '../../store/store';
 
 export function loggingInterceptor(
   req: HttpRequest<unknown>,
@@ -28,7 +28,7 @@ export function loadingInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ): Observable<HttpEvent<unknown>> {
-  const globalStore = inject(GlobalStore);
+  const globalStore = inject(Store);
 
   globalStore.startLoading();
   return next(req).pipe(finalize(() => globalStore.endLoading()));

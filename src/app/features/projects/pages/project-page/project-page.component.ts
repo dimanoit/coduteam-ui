@@ -22,10 +22,7 @@ import { ButtonModule } from 'primeng/button';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CreatePositionDialogComponent } from '../../../positions/components/create-position-dialog/create-position-dialog.component';
 import { CreatePositionRequest } from '../../../positions/models/create-position-request.interface';
-import { ProjectStore } from '../../../../store/project.store';
-import { UserStore } from '../../../../store/user.store';
-import { PositionStore } from '../../../../store/position.store';
-import { GlobalStore } from '../../../../store/global.store';
+import { Store } from '../../../../store/store';
 
 @Component({
   selector: 'app-project-page',
@@ -51,19 +48,16 @@ export class ProjectPageComponent implements OnInit {
   destroyRef = inject(DestroyRef);
   route = inject(ActivatedRoute);
   isShownDialog: boolean = false;
-  isLoading = inject(GlobalStore).isLoading;
+  isLoading = inject(Store).isLoading;
 
-  projectStore = inject(ProjectStore);
-  positionStore = inject(PositionStore);
-  userStore = inject(UserStore);
+  store = inject(Store);
 
   isUserOwnerOfProject = computed(
     () =>
-      this.projectStore.selectedProject()?.ownerId ===
-      this.userStore.currentUser()?.id,
+      this.store.selectedProject()?.ownerId === this.store.currentUser()?.id,
   );
 
-  selectedProject = computed(() => this.projectStore.selectedProject());
+  selectedProject = computed(() => this.store.selectedProject());
 
   ngOnInit() {
     this.route.params
@@ -77,16 +71,16 @@ export class ProjectPageComponent implements OnInit {
   }
 
   private loadProjectAndPositions(projectId: number) {
-    this.projectStore.loadSelectedProject(projectId);
-    this.positionStore.loadPositions({
+    this.store.loadSelectedProject(projectId);
+    this.store.loadPositions({
       projectId,
       withApplicationStatus: true,
     });
   }
 
   createPosition(position: CreatePositionRequest) {
-    position.projectId = this.projectStore.selectedProject()?.id!;
+    position.projectId = this.store.selectedProject()?.id!;
     this.isShownDialog = false;
-    this.positionStore.createPosition(position);
+    this.store.createPosition(position);
   }
 }

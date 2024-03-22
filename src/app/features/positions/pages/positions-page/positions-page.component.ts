@@ -11,7 +11,7 @@ import { PositionService } from '../../services/position.service';
 import { PositionApplyService } from '../../services/position-apply.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { PositionPageComponent } from '../position-page/position-page.component';
-import { PositionStore } from '../../../../store/position.store';
+import { Store } from '../../../../store/store';
 
 @Component({
   selector: 'app-positions',
@@ -29,11 +29,11 @@ import { PositionStore } from '../../../../store/position.store';
   standalone: true,
 })
 export class PositionsPageComponent implements OnInit {
-  positionStore = inject(PositionStore);
-  positions = this.positionStore.positions;
+  store = inject(Store);
+  positions = this.store.positions;
 
   ngOnInit(): void {
-    const searchRequest = this.positionStore.searchRequest;
-    this.positionStore.loadPositions(searchRequest);
+    const searchRequest = this.store.searchRequest;
+    this.store.loadPositions(searchRequest);
   }
 }

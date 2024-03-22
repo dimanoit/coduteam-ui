@@ -46,14 +46,12 @@
 
     <div class="col-4 flex flex-column gap-1">
       <p-card header="Check similar offers">
-        @for (position of positionStore.positions(); track $index) {
+        @for (position of store.positions(); track $index) {
           <app-position-line [position]="position"></app-position-line>
         }
       </p-card>
 
-      @if (
-        userStore.currentUser()?.id == selectedPosition()?.project?.ownerId
-      ) {
+      @if (store.currentUser()?.id == selectedPosition()?.project?.ownerId) {
         <p-card header="Applicants">
           <p-scrollPanel [style]="{ width: '100%', height: '50vh' }">
             @for (applicant of selectedPosition()!.applicants; track $index) {

@@ -24,7 +24,7 @@ import { passwordValidator } from '../../validators/password.validator';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Message } from 'primeng/api';
 import { MessagesModule } from 'primeng/messages';
-import { UserStore } from '../../../../store/user.store';
+import { Store } from '../../../../store/store';
 
 @Component({
   selector: 'app-register',
@@ -49,10 +49,10 @@ export class RegisterComponent implements OnInit {
 
   private router = inject(Router);
   private formBuilder = inject(FormBuilder);
-  private userStore = inject(UserStore);
+  private store = inject(Store);
 
-  isLoading = this.userStore.isLoading;
-  isActivation = this.userStore.isActivation;
+  isLoading = this.store.isLoading;
+  isActivation = this.store.isActivation;
 
   ngOnInit(): void {
     this.authForm = this.formBuilder.group({
@@ -63,12 +63,12 @@ export class RegisterComponent implements OnInit {
       ],
     });
 
-    const credentials = this.userStore.credentials;
-    this.userStore.login(credentials);
+    const credentials = this.store.credentials;
+    this.store.login(credentials);
   }
 
   activateUser(data: AccountRegistrationDto) {
-    this.userStore.finishRegistration(data);
+    this.store.finishRegistration(data);
   }
 
   protected redirectToLogin() {
@@ -85,7 +85,7 @@ export class RegisterComponent implements OnInit {
       password: this.authForm.value.password,
     };
 
-    this.userStore.register(authDto);
+    this.store.register(authDto);
   }
 
   private setRegisterErrors(error: HttpErrorResponse) {

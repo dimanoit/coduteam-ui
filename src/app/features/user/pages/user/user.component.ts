@@ -17,9 +17,7 @@ import { ProjectLineComponent } from '../../../projects/components/project-line/
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplyService } from '../../../positions/services/position-apply.service';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
-import { UserStore } from '../../../../store/user.store';
-import { ProjectStore } from '../../../../store/project.store';
-import { PositionStore } from '../../../../store/position.store';
+import { Store } from '../../../../store/store';
 
 @Component({
   selector: 'app-user',
@@ -39,7 +37,6 @@ import { PositionStore } from '../../../../store/position.store';
     ProjectService,
     UserService,
     PositionService,
-    UserStore,
   ],
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
@@ -47,18 +44,16 @@ import { PositionStore } from '../../../../store/position.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UserComponent implements OnInit {
-  projectStore = inject(ProjectStore);
-  positionStore = inject(PositionStore);
-  userStore = inject(UserStore);
+  store = inject(Store);
 
-  projects = this.projectStore.projects;
-  myApplications = this.positionStore.myApplications;
-  user = this.userStore.currentUser;
+  projects = this.store.projects;
+  myApplications = this.store.myApplications;
+  user = this.store.currentUser;
 
   ngOnInit(): void {
-    this.projectStore.updateSearchRequest({ onlyRelatedToCurrentUser: true });
-    this.projectStore.loadProjects(this.projectStore.searchRequest);
-    this.positionStore.loadMyApplications();
-    this.userStore.loadCurrentUser();
+    this.store.updateSearchRequest({ onlyRelatedToCurrentUser: true });
+    this.store.loadProjects(this.store.searchRequest);
+    this.store.loadMyApplications();
+    this.store.loadCurrentUser();
   }
 }

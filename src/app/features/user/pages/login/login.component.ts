@@ -24,7 +24,7 @@ import { passwordValidator } from '../../validators/password.validator';
 import { AuthDto } from '../../models/user.interface';
 import { HttpErrorResponse } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
-import { UserStore } from '../../../../store/user.store';
+import { Store } from '../../../../store/store';
 
 @Component({
   selector: 'app-login',
@@ -46,10 +46,10 @@ import { UserStore } from '../../../../store/user.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  private userStore = inject(UserStore);
+  private store = inject(Store);
 
   loginForm: FormGroup;
-  isLoading = this.userStore.isLoading;
+  isLoading = this.store.isLoading;
   loginErrorMessages: WritableSignal<string[]> = signal([]);
 
   constructor(
@@ -75,7 +75,7 @@ export class LoginComponent {
       password: this.loginForm.value.password,
     };
 
-    this.userStore.login(authDto);
+    this.store.login(authDto);
   }
 
   navigateToRegistration() {

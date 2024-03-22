@@ -6,8 +6,7 @@ import { ThemeService } from './shared/services/theme.service';
 import { ToastModule } from 'primeng/toast';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { UserService } from './features/user/services/user.service';
-import { UserStore } from './store/user.store';
-import { GlobalStore } from './store/global.store';
+import { Store } from './store/store';
 
 @Component({
   selector: 'app-root',
@@ -25,14 +24,14 @@ import { GlobalStore } from './store/global.store';
 })
 export class AppComponent implements OnInit {
   private themeService = inject(ThemeService);
-  private userStore = inject(UserStore);
 
   title = 'my-first-project';
-  isLoading = inject(GlobalStore).isLoading;
-  currentUser = this.userStore.currentUser;
+  store = inject(Store);
+
+  currentUser = this.store.currentUser;
 
   ngOnInit(): void {
     this.themeService.loadTheme();
-    this.userStore.loadCurrentUser();
+    this.store.loadCurrentUser();
   }
 }
