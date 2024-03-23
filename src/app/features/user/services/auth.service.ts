@@ -1,48 +1,24 @@
-import { Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { AuthToken } from '../models/auth-token.interface';
 import { AuthDto } from '../models/user.interface';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { TokenManagementService } from './token-management.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  isUserLoggedIn = signal(!!this.tokenManagementService.getAuthToken());
+  private http = inject(HttpClient);
 
-  constructor(
-    private http: HttpClient,
-    private tokenManagementService: TokenManagementService,
-  ) {}
-
-  logout() {
-    this.isUserLoggedIn.set(false);
-    this.tokenManagementService.removeTokens();
+  login(authDto: AuthDto): Observable<AuthToken> {
+    return this.http.post<AuthToken>('/auth/login', authDto);
   }
 
-  login(authDto: AuthDto): Observable<void> {
-    return this.http
-      .post<AuthToken>('/auth/login', authDto)
-      .pipe(map((authToken) => this.storeTokenOnAuth(authToken)));
-  }
-
-  refreshToken(): Observable<void> {
+  refreshToken(refreshToken: string): Observable<AuthToken> {
     const body = {
-      refreshToken: localStorage.getItem('refreshToken'),
+      refreshToken: refreshToken,
     };
 
-    return this.http
-      .post<AuthToken>('/auth/refresh', body)
-      .pipe(map((token) => this.storeTokenOnAuth(token)));
-  }
-
-  storeTokenOnAuth(authToken: AuthToken) {
-    if (!authToken) {
-      return;
-    }
-
-    this.isUserLoggedIn.set(true);
-    this.tokenManagementService.addTokens(authToken);
+    return this.http.post<AuthToken>('/auth/refresh', body);
   }
 }

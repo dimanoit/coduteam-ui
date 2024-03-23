@@ -2,6 +2,7 @@ import { patchState, signalStore, withMethods, withState } from '@ngrx/signals';
 import { withProjectFeature } from './project.feature';
 import { withPositionFeature } from './position.feature';
 import { withUserFeature } from './user.feature';
+import { withAuthFeature } from './auth.feature';
 
 export type GlobalState = {
   isLoading: boolean;
@@ -16,6 +17,7 @@ export const Store = signalStore(
   withState(initialState),
   withProjectFeature(),
   withPositionFeature(),
+  withAuthFeature(),
   withUserFeature(),
   withMethods((store) => ({
     startLoading(): void {
@@ -23,6 +25,11 @@ export const Store = signalStore(
     },
     endLoading(): void {
       patchState(store, () => ({ isLoading: false }));
+    },
+    logout(): void {
+      localStorage.clear();
+      patchState(store, () => ({ token: null }));
+      patchState(store, () => ({ currentUser: null }));
     },
   })),
 );

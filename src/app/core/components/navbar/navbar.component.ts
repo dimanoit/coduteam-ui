@@ -1,6 +1,7 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
   Input,
   OnInit,
@@ -15,6 +16,7 @@ import { NgClass, NgIf } from '@angular/common';
 import { ThemeService } from '../../../shared/services/theme.service';
 import { AuthService } from '../../../features/user/services/auth.service';
 import { AvatarModule } from 'primeng/avatar';
+import { Store } from '../../../store/store';
 
 @Component({
   selector: 'app-navbar',
@@ -34,14 +36,14 @@ import { AvatarModule } from 'primeng/avatar';
   ],
 })
 export class NavbarComponent implements OnInit {
-  private userService = inject(AuthService);
   private router = inject(Router);
   private themeService = inject(ThemeService);
+  private store = inject(Store);
 
   @Input() profileImg?: string;
 
   items: MenuItem[] | undefined;
-  isLoggedIn = this.userService.isUserLoggedIn;
+  isLoggedIn = this.store.isLoggedIn;
   isLightTheme = this.themeService.isLightTeam;
 
   ngOnInit(): void {
@@ -56,8 +58,8 @@ export class NavbarComponent implements OnInit {
     this.themeService.switchTheme();
   }
 
-  async logout(): Promise<void> {
-    this.userService.logout();
-    await this.router.navigateByUrl('');
+  logout() {
+    this.store.logout();
+    this.router.navigateByUrl('');
   }
 }

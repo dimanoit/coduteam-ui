@@ -62,9 +62,6 @@ export class RegisterComponent implements OnInit {
         [Validators.required, Validators.minLength(8), passwordValidator],
       ],
     });
-
-    const credentials = this.store.credentials;
-    this.store.login(credentials);
   }
 
   activateUser(data: AccountRegistrationDto) {

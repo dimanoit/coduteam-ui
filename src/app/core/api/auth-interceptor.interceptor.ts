@@ -1,29 +1,22 @@
-import {
-  HttpErrorResponse,
-  HttpHandlerFn,
-  HttpRequest,
-} from '@angular/common/http';
+import { HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { AuthService } from '../../features/user/services/auth.service';
-import { catchError, switchMap, throwError } from 'rxjs';
-import { TokenManagementService } from '../../features/user/services/token-management.service';
+import { catchError, throwError } from 'rxjs';
+import { Store } from '../../store/store';
 
 export function authInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn,
 ) {
-  const authService = inject(AuthService);
-  const tokenManagementService = inject(TokenManagementService);
+  const store = inject(Store);
 
-  req = cloneWithToken(req, tokenManagementService.getAuthToken());
+  if (store.token() !== null) {
+    req = cloneWithToken(req, store.token()!);
+  }
 
   return next(req).pipe(
     catchError((error) => {
-      if (
-        tokenManagementService.isTokenExpired() ||
-        (error instanceof HttpErrorResponse && error.status === 401)
-      ) {
-        return handle401Error(req, next, authService, tokenManagementService);
+      if (store.isTokenExpired()) {
+        return handle401Error(req, next);
       }
 
       return throwError(() => error);
@@ -31,26 +24,16 @@ export function authInterceptor(
   );
 }
 
-function handle401Error(
-  request: HttpRequest<any>,
-  next: HttpHandlerFn,
-  authService: AuthService,
-  tokenManagementService: TokenManagementService,
-) {
-  if (!tokenManagementService.getRefreshToken()) {
+function handle401Error(request: HttpRequest<any>, next: HttpHandlerFn) {
+  const store = inject(Store);
+  if (store.refreshToken() === null) {
     return next(request);
   }
 
-  return authService.refreshToken().pipe(
-    switchMap(() => {
-      const requestWithToken = cloneWithToken(
-        request,
-        tokenManagementService.getAuthToken(),
-      );
+  store.refreshTokenRx(store.refreshToken()!);
 
-      return next(requestWithToken);
-    }),
-  );
+  const requestWithToken = cloneWithToken(request, store.token()!);
+  return next(requestWithToken);
 }
 
 function cloneWithToken(request: HttpRequest<any>, authToken: string) {

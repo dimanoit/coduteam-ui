@@ -1,7 +1,9 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  effect,
   inject,
+  Signal,
   signal,
   WritableSignal,
 } from '@angular/core';
@@ -49,7 +51,7 @@ export class LoginComponent {
   private store = inject(Store);
 
   loginForm: FormGroup;
-  isLoading = this.store.isLoading;
+  isLoading: Signal<boolean> = this.store.isLoading;
   loginErrorMessages: WritableSignal<string[]> = signal([]);
 
   constructor(
@@ -62,6 +64,12 @@ export class LoginComponent {
         '',
         [Validators.required, Validators.minLength(8), passwordValidator],
       ],
+    });
+
+    effect(() => {
+      if (this.store.currentUser() !== null) {
+        this.router.navigate(['/projects']);
+      }
     });
   }
 

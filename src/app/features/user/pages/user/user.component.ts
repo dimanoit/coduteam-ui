@@ -54,6 +54,5 @@ export class UserComponent implements OnInit {
     this.store.updateSearchRequest({ onlyRelatedToCurrentUser: true });
     this.store.loadProjects(this.store.searchRequest);
     this.store.loadMyApplications();
-    this.store.loadCurrentUser();
   }
 }

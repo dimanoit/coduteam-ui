@@ -1,6 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, effect, inject, OnInit } from '@angular/core';
 import { NavbarComponent } from './core/components/navbar/navbar.component';
-import { RouterOutlet } from '@angular/router';
+import { ActivatedRoute, Router, RouterOutlet } from '@angular/router';
 import { SmallFooterComponent } from './core/components/small-footer/small-footer.component';
 import { ThemeService } from './shared/services/theme.service';
 import { ToastModule } from 'primeng/toast';
@@ -24,7 +24,6 @@ import { Store } from './store/store';
 })
 export class AppComponent implements OnInit {
   private themeService = inject(ThemeService);
-
   title = 'my-first-project';
   store = inject(Store);
 
@@ -32,6 +31,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.themeService.loadTheme();
-    this.store.loadCurrentUser();
+
+    const token = this.store.token;
+    this.store.loadCurrentUser(token);
   }
 }
