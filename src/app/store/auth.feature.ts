@@ -9,7 +9,14 @@ import { AuthToken } from '../features/user/models/auth-token.interface';
 import { computed, inject } from '@angular/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { AuthDto } from '../features/user/models/user.interface';
-import { distinctUntilChanged, filter, pipe, switchMap, tap } from 'rxjs';
+import {
+  distinctUntilChanged,
+  filter,
+  Observable,
+  pipe,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { AuthService } from '../features/user/services/auth.service';
 
 export enum TokenKeys {
@@ -51,16 +58,11 @@ export function withAuthFeature() {
         patchState(store, () => tokenState);
       };
 
-      const refreshTokenRx = rxMethod<string>(
-        pipe(
-          distinctUntilChanged(),
-          switchMap((token) =>
-            authService
-              .refreshToken(token)
-              .pipe(tap((value) => updateToken(value))),
-          ),
-        ),
-      );
+      const refreshTokenRx = (token: string): Observable<AuthToken> => {
+        return authService
+          .refreshToken(token)
+          .pipe(tap((value) => updateToken(value)));
+      };
 
       const login = rxMethod<AuthDto | null>(
         pipe(

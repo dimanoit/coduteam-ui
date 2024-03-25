@@ -1,24 +1,30 @@
-<div class="flex mt-2 w-full align-items-center justify-content-center">
-  <app-projects-filter (onFilterChange)="searchProject($event)" />
+<div class="flex flex-column align-items-center">
+  <div class="flex mt-2 w-full align-items-center justify-content-center">
+    <app-projects-filter (onFilterChange)="searchProject($event)" />
 
-  <p-button
-    class="ml-2"
-    (click)="isShownCreateProjectDialog.set(true)"
-    label="Create project"
-  />
-  <app-create-project-dialog
-    [isShown]="isShownCreateProjectDialog()"
-    (closedDialog)="isShownCreateProjectDialog.set(false)"
-    (createProject)="createProject($event)"
-  ></app-create-project-dialog>
-</div>
-
-@if (projects()) {
-  <div class="flex flex-column align-items-center row-gap-3 mt-5">
-    @for (project of projects(); track $index) {
-      <app-project-line [project]="project"></app-project-line>
-    }
+    <p-button
+      class="ml-2"
+      (click)="isShownCreateProjectDialog.set(true)"
+      label="Create project"
+    />
+    <app-create-project-dialog
+      [isShown]="isShownCreateProjectDialog()"
+      (closedDialog)="isShownCreateProjectDialog.set(false)"
+      (createProject)="createProject($event)"
+    ></app-create-project-dialog>
   </div>
-} @else {
-  <app-projects-not-found />
-}
+
+  @if (store.projects()) {
+    <div
+      class="overflow-y-auto p-2 h-40rem flex flex-column gap-2"
+      appInfiniteScroll
+      (scrolled)="loadMoreItems()"
+    >
+      @for (project of projects(); track $index) {
+        <app-project-line [project]="project"></app-project-line>
+      }
+    </div>
+  } @else {
+    <app-projects-not-found />
+  }
+</div>

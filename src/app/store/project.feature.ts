@@ -1,4 +1,5 @@
 import {
+  getState,
   patchState,
   signalStoreFeature,
   withMethods,
@@ -25,32 +26,48 @@ type ProjectState = {
   searchRequest: ProjectSearchRequest;
 };
 
+export const defaultProjectSearchRequest: ProjectSearchRequest = {
+  skip: 0,
+  take: 6,
+};
+
 const initialState: ProjectState = {
   projects: [],
   selectedProject: null,
-  searchRequest: { skip: 0, take: 10 },
+  searchRequest: defaultProjectSearchRequest,
 };
 
 export function withProjectFeature() {
   return signalStoreFeature(
-    withState(initialState),
+    withState<ProjectState>(initialState),
     withMethods((store, projectService = inject(ProjectService)) => ({
       updateSearchRequest(request: ProjectSearchRequest): void {
-        patchState(store, (state) => ({ searchRequest: request }));
+        const state = getState(store);
+        if (
+          request.isPagination &&
+          request.take === state.searchRequest.take &&
+          request.skip === state.searchRequest.skip
+        ) {
+          return;
+        }
+
+        patchState(store, () => ({ searchRequest: request }));
       },
       loadProjects: rxMethod<ProjectSearchRequest>(
         pipe(
           debounceTime(300),
           distinctUntilChanged(),
-          switchMap((request: ProjectSearchRequest) => {
-            return projectService
-              .loadProjects(request)
-              .pipe(
-                tap((projects) =>
-                  patchState(store, () => ({ projects: projects })),
-                ),
-              );
-          }),
+          switchMap((request: ProjectSearchRequest) =>
+            projectService.loadProjects(request).pipe(
+              tap((response) => {
+                patchState(store, () => ({
+                  projects: request.isPagination
+                    ? [...store.projects(), ...response]
+                    : response,
+                }));
+              }),
+            ),
+          ),
         ),
       ),
 

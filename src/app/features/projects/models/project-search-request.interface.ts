@@ -8,4 +8,5 @@ export interface ProjectSearchRequest {
   take?: number;
   skip?: number;
   onlyRelatedToCurrentUser?: boolean;
+  isPagination?: boolean;
 }

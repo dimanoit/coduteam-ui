@@ -1,4 +1,11 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  OnInit,
+  Signal,
+  signal,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectsFilterComponent } from '../../components/projects-filter/projects-filter.component';
 import { ToggleButtonModule } from 'primeng/togglebutton';
@@ -12,6 +19,9 @@ import { ButtonModule } from 'primeng/button';
 import { CreateProjectRequest } from '../../models/create-project.interface';
 import { ProjectsNotFoundComponent } from '../../components/projects-not-found/projects-not-found.component';
 import { Store } from '../../../../store/store';
+import { ScrollerModule } from 'primeng/scroller';
+import { Project } from '../../models/project.interface';
+import { InfiniteScrollDirective } from '../../../../shared/directives/infinite-scroll-directive';
 
 @Component({
   selector: 'app-projects',
@@ -28,25 +38,36 @@ import { Store } from '../../../../store/store';
     CreateProjectDialogComponent,
     ButtonModule,
     ProjectsNotFoundComponent,
+    ScrollerModule,
+    InfiniteScrollDirective,
   ],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ProjectsPageComponent implements OnInit {
-  protected globalStore = inject(Store);
+  protected store = inject(Store);
 
   isShownCreateProjectDialog = signal(false);
-  projects = computed(() => this.globalStore.projects());
+  projects: Signal<Project[]> = this.store.projects;
+  isLoading: Signal<boolean> = this.store.isLoading;
 
   ngOnInit(): void {
-    this.globalStore.updateSearchRequest({ skip: 0, take: 10 });
-    this.globalStore.loadProjects(this.globalStore.searchRequest);
+    this.store.loadProjects(this.store.searchRequest);
   }
 
   searchProject(request: ProjectSearchRequest): void {
-    this.globalStore.updateSearchRequest(request);
+    this.store.updateSearchRequest(request);
   }
 
   createProject($event: CreateProjectRequest): void {
-    this.globalStore.createProject($event);
+    this.store.createProject($event);
+  }
+
+  loadMoreItems() {
+    this.store.updateSearchRequest({
+      skip: this.projects().length,
+      take: 5,
+      isPagination: true,
+    });
   }
 }

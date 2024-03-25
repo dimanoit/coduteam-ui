@@ -3,7 +3,7 @@ import { ProjectPageComponent } from './features/projects/pages/project-page/pro
 import { Routes } from '@angular/router';
 import { LoginComponent } from './features/user/pages/login/login.component';
 import { RegisterComponent } from './features/user/pages/register/register.component';
-import { authGuard } from './features/user/guards/auth.guard';
+import { authGuard } from './core/guards/auth.guard';
 import { PositionPageComponent } from './features/positions/pages/position-page/position-page.component';
 
 export const routes: Routes = [

@@ -11,9 +11,7 @@ export class ProjectService {
   private readonly resourcePath = '/projects';
   private http = inject(HttpClient);
 
-  loadProjects(
-    params: ProjectSearchRequest = { skip: 0, take: 5 },
-  ): Observable<Project[]> {
+  loadProjects(params: ProjectSearchRequest): Observable<Project[]> {
     const httpParams = toHttpParams(params);
 
     return this.http.get<Project[]>(this.resourcePath, {
