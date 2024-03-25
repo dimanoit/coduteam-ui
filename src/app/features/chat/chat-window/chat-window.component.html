@@ -1,12 +1,36 @@
-<div class="chat-window">
-    <div class="messages-container">
-            <div class="message" *ngFor="let message of messages">
-                <span class="username">{{message.username}}:</span>
-                <span class="text">{{message.text}}</span>
-            </div>
+<div class="flex flex-row flex-wrap">
+  <div
+    class="flex align-items-center justify-content-center surface-100 font-bold m-2 border-round"
+    style="min-width: 200px; min-height: 600px"
+  >
+    <!-- Content for the first column -->
+  </div>
+  <div
+    class="flex flex-column surface-100 font-bold m-2 border-round"
+    style="min-width: 800px; min-height: 100px; position: relative"
+  >
+    <p-scrollPanel
+      [style]="{ width: '800px', height: '540px' }"
+      styleClass="custombar1"
+    >
+      <div class="message m-2" *ngFor="let message of messages">
+        <span class="username">{{ message.username }}:</span>
+        <span class="text">{{ message.text }}</span>
+      </div>
+    </p-scrollPanel>
+
+    <div
+      class="flex align-items-center border-round"
+      style="position: absolute; bottom: 0; width: 100%"
+    >
+      <textarea
+        rows="5"
+        cols="30"
+        pInputTextarea
+        [(ngModel)]="newMessage"
+        (keydown.enter)="onEnterPress($event)"
+        style="width: 100%; height: 4rem"
+      ></textarea>
     </div>
-    <div class="input-container">
-        <input type="text" placeholder="Type a message...">
-        <button (click)="sendMessage()">Send</button>
-    </div>
+  </div>
 </div>
