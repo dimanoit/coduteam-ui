@@ -52,7 +52,7 @@ export class ProjectsPageComponent implements OnInit {
   isLoading: Signal<boolean> = this.store.isLoading;
 
   ngOnInit(): void {
-    this.store.loadProjects(this.store.searchRequest);
+    this.store.loadProjects(this.store.searchProjectsRequest);
   }
 
   searchProject(request: ProjectSearchRequest): void {

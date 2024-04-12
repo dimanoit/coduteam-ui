@@ -17,17 +17,22 @@ import { PositionSearchRequest } from '../features/positions/models/position-sea
 
 type PositionState = {
   positions: PositionDto[];
-  searchRequest: PositionSearchRequest;
+  searchPositionsRequest: PositionSearchRequest;
   selectedPosition: PositionDto | null;
   myApplications: PositionDto[];
   selectedPositionId: number | null;
+};
+
+const defaultSearchRequest: PositionSearchRequest = {
+  skip: 0,
+  take: 10,
 };
 
 const initialState: PositionState = {
   positions: [],
   selectedPosition: null,
   myApplications: [],
-  searchRequest: { skip: 0, take: 10 },
+  searchPositionsRequest: defaultSearchRequest,
   selectedPositionId: null,
 };
 

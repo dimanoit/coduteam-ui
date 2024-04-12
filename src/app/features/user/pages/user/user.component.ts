@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit(): void {
     this.store.updateSearchRequest({ onlyRelatedToCurrentUser: true });
-    this.store.loadProjects(this.store.searchRequest);
+    this.store.loadProjects(this.store.searchProjectsRequest);
     this.store.loadMyApplications();
   }
 }

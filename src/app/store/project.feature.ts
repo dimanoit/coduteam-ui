@@ -23,18 +23,18 @@ import { CreateProjectRequest } from '../features/projects/models/create-project
 type ProjectState = {
   projects: Project[];
   selectedProject: Project | null;
-  searchRequest: ProjectSearchRequest;
+  searchProjectsRequest: ProjectSearchRequest;
 };
 
 export const defaultProjectSearchRequest: ProjectSearchRequest = {
   skip: 0,
-  take: 6,
+  take: 10,
 };
 
 const initialState: ProjectState = {
   projects: [],
   selectedProject: null,
-  searchRequest: defaultProjectSearchRequest,
+  searchProjectsRequest: defaultProjectSearchRequest,
 };
 
 export function withProjectFeature() {
@@ -45,13 +45,13 @@ export function withProjectFeature() {
         const state = getState(store);
         if (
           request.isPagination &&
-          request.take === state.searchRequest.take &&
-          request.skip === state.searchRequest.skip
+          request.take === state.searchProjectsRequest.take &&
+          request.skip === state.searchProjectsRequest.skip
         ) {
           return;
         }
 
-        patchState(store, () => ({ searchRequest: request }));
+        patchState(store, () => ({ searchProjectsRequest: request }));
       },
       loadProjects: rxMethod<ProjectSearchRequest>(
         pipe(
@@ -77,7 +77,7 @@ export function withProjectFeature() {
             return projectService.createProject(request).pipe(
               tap(() =>
                 patchState(store, () => ({
-                  searchRequest: { take: 10, skip: 0 },
+                  searchProjectsRequest: defaultProjectSearchRequest,
                 })),
               ),
             );

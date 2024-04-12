@@ -33,7 +33,7 @@ export class PositionsPageComponent implements OnInit {
   positions = this.store.positions;
 
   ngOnInit(): void {
-    const searchRequest = this.store.searchRequest;
+    const searchRequest = this.store.searchPositionsRequest;
     this.store.loadPositions(searchRequest);
   }
 }
