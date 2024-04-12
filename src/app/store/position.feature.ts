@@ -46,7 +46,7 @@ export function withPositionFeature() {
         positionService = inject(PositionService),
       ) => ({
         updateSelectedPositionId(positionId: number) {
-          patchState(store, () => ({ selectedPositionId: positionId }));
+          patchState(store, { selectedPositionId: positionId });
         },
 
         applyOnPosition: rxMethod<ApplyOnPositionRequest>(
@@ -74,7 +74,7 @@ export function withPositionFeature() {
                 .loadSelectedPosition(request ?? 0)
                 .pipe(
                   tap((response) =>
-                    patchState(store, () => ({ selectedPosition: response })),
+                    patchState(store, { selectedPosition: response }),
                   ),
                 ),
             ),
@@ -88,9 +88,7 @@ export function withPositionFeature() {
               positionService
                 .loadPositions(request)
                 .pipe(
-                  tap((response) =>
-                    patchState(store, () => ({ positions: response })),
-                  ),
+                  tap((response) => patchState(store, { positions: response })),
                 ),
             ),
           ),
@@ -117,7 +115,7 @@ export function withPositionFeature() {
                 .loadMyApplications()
                 .pipe(
                   tap((applications) =>
-                    patchState(store, () => ({ myApplications: applications })),
+                    patchState(store, { myApplications: applications }),
                   ),
                 ),
             ),
