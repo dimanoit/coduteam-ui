@@ -1,10 +1,8 @@
-import { computed, effect, inject } from '@angular/core';
+import { computed, inject } from '@angular/core';
 import {
-  getState,
   patchState,
   signalStoreFeature,
   withComputed,
-  withHooks,
   withMethods,
   withState,
 } from '@ngrx/signals';
@@ -15,19 +13,24 @@ import {
 } from '../features/user/models/user.interface';
 import { UserService } from '../features/user/services/user.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
-import { distinctUntilChanged, filter, pipe, switchMap, tap } from 'rxjs';
-import { TokenState } from './auth.feature';
-import { StateSignal } from '@ngrx/signals/src/state-signal';
+import {
+  distinctUntilChanged,
+  filter,
+  finalize,
+  pipe,
+  switchMap,
+  tap,
+} from 'rxjs';
 
 export type UserState = {
   isActivation: boolean;
-  isLoading: boolean;
+  isLogging: boolean;
   currentUser: User | null;
 };
 
 const initialState: UserState = {
   isActivation: false,
-  isLoading: false,
+  isLogging: false,
   currentUser: null,
 };
 
@@ -41,7 +44,7 @@ export function withUserFeature() {
       register: rxMethod<AuthDto>(
         pipe(
           distinctUntilChanged(),
-          tap(() => patchState(store, () => ({ isActivation: true }))),
+          tap(() => patchState(store, { isActivation: true })),
           switchMap((request) => userService.register(request)),
         ),
       ),
@@ -49,16 +52,16 @@ export function withUserFeature() {
       loadCurrentUser: rxMethod<string | null>(
         pipe(
           distinctUntilChanged(),
+          tap(() => patchState(store, { isLogging: true })),
           filter((token) => token !== null),
           switchMap(() =>
             userService
               .loadCurrentUser()
               .pipe(
-                tap((response) =>
-                  patchState(store, () => ({ currentUser: response })),
-                ),
+                tap((response) => patchState(store, { currentUser: response })),
               ),
           ),
+          finalize(() => patchState(store, { isLogging: false })),
         ),
       ),
 
@@ -66,13 +69,9 @@ export function withUserFeature() {
         pipe(
           distinctUntilChanged(),
           switchMap((request) =>
-            userService.finishRegistration(request).pipe(
-              tap(() =>
-                patchState(store, () => ({
-                  isActivation: false,
-                })),
-              ),
-            ),
+            userService
+              .finishRegistration(request)
+              .pipe(tap(() => patchState(store, { isActivation: false }))),
           ),
         ),
       ),

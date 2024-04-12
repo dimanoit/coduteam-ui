@@ -1,0 +1,27 @@
+<div class="surface-card border-round border-1 surface-border">
+  <div class="flex p-2">
+    <div>
+      <span
+        (click)="navigateToPositionPage()"
+        class="text-xl underline cursor-pointer"
+        >{{ position.title }}</span
+      >
+      <span> at </span>
+      <span class="underline font-italic mr-2 cursor-pointer">{{
+        position.project.title
+      }}</span>
+
+      @if (position.project.country) {
+        <span class="text-sm text-color-secondary">
+          <span class="pi pi-map-marker"></span>
+          <span>{{ position.project.country }}</span>
+        </span>
+      }
+    </div>
+
+    <div class="ml-auto flex column-gap-2">
+      <p-tag [value]="position.positionCategory" />
+      <p-tag severity="info" [value]="position.project.category" />
+    </div>
+  </div>
+</div>

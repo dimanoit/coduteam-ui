@@ -4,21 +4,19 @@ import {
   inject,
   Input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { PositionDto } from '../../models/position-dto.interface';
-import { ButtonModule } from 'primeng/button';
-import { TagModule } from 'primeng/tag';
 import { Router } from '@angular/router';
+import { TagModule } from 'primeng/tag';
 
 @Component({
-  selector: 'app-position-line',
+  selector: 'app-position-card',
   standalone: true,
-  imports: [CommonModule, ButtonModule, TagModule],
-  templateUrl: './position-line.component.html',
-  styleUrls: ['./position-line.component.scss'],
+  imports: [TagModule],
+  templateUrl: './position-card.component.html',
+  styleUrl: './position-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PositionLineComponent {
+export class PositionCardComponent {
   @Input() position!: PositionDto;
   private router = inject(Router);
 

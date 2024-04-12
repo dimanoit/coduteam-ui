@@ -12,10 +12,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
-import {
-  openInNewTab,
-  truncateString,
-} from '../../../../shared/utils/utilities';
+import { truncateString } from '../../../../shared/utils/utilities';
 
 @Component({
   selector: 'app-project-line',
@@ -51,7 +48,7 @@ export class ProjectLineComponent {
     this.onRemoveProject.emit(this.project.id);
   }
 
-  navigateToProject(): void {
-    openInNewTab(`/projects/${this.project?.id}`);
+  async navigateToProject() {
+    await this.router.navigateByUrl(`/projects/${this.project?.id}`);
   }
 }

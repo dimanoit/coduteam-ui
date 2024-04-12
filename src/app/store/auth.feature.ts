@@ -18,6 +18,8 @@ import {
   tap,
 } from 'rxjs';
 import { AuthService } from '../features/user/services/auth.service';
+import { tapResponse } from '@ngrx/operators';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export enum TokenKeys {
   token = 'token',
@@ -29,12 +31,14 @@ export type TokenState = {
   token: string | null;
   refreshToken: string | null;
   expirationDate: Date | null;
+  authFailedErrors: string[];
 };
 
 const emptyState: TokenState = {
   token: null,
   refreshToken: null,
   expirationDate: null,
+  authFailedErrors: [],
 };
 
 const initialState: TokenState = {
@@ -43,6 +47,7 @@ const initialState: TokenState = {
   expirationDate: new Date(
     localStorage.getItem(TokenKeys.expirationDate) ?? '',
   ),
+  authFailedErrors: [],
 };
 
 export function withAuthFeature() {
@@ -69,9 +74,18 @@ export function withAuthFeature() {
           distinctUntilChanged(),
           filter((request) => request !== null),
           switchMap((request) =>
-            authService
-              .login(request!)
-              .pipe(tap((token) => updateToken(token))),
+            authService.login(request!).pipe(
+              tapResponse(
+                (token) => updateToken(token),
+                (error: HttpErrorResponse) => {
+                  if (error.status === 401) {
+                    patchState(store, {
+                      authFailedErrors: ['Login or password incorrect'],
+                    });
+                  }
+                },
+              ),
+            ),
           ),
         ),
       );
@@ -108,5 +122,6 @@ function toTokenState(authToken: AuthToken): TokenState {
     expirationDate: getExpirationDate(authToken.expiresIn),
     refreshToken: authToken.refreshToken,
     token: authToken.accessToken,
+    authFailedErrors: [],
   };
 }

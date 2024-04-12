@@ -30,6 +30,7 @@ export const Store = signalStore(
       localStorage.clear();
       patchState(store, () => ({ token: null }));
       patchState(store, () => ({ currentUser: null }));
+      // TODO reset all state
     },
   })),
 );

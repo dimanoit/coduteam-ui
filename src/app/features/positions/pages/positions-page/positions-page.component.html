@@ -1,9 +1,9 @@
 <div class="flex flex-column align-items-center">
   <app-position-filter />
 
-  <div>
+  <div class="">
     @for (position of positions(); track $index) {
-      <app-position-line [position]="position"></app-position-line>
+      <app-position-card [position]="position"></app-position-card>
     }
   </div>
 </div>

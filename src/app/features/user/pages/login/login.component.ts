@@ -4,8 +4,6 @@ import {
   effect,
   inject,
   Signal,
-  signal,
-  WritableSignal,
 } from '@angular/core';
 import { ActivationComponent } from '../../components/activation/activation.component';
 import { ButtonModule } from 'primeng/button';
@@ -24,7 +22,6 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { passwordValidator } from '../../validators/password.validator';
 import { AuthDto } from '../../models/user.interface';
-import { HttpErrorResponse } from '@angular/common/http';
 import { MessagesModule } from 'primeng/messages';
 import { Store } from '../../../../store/store';
 
@@ -52,7 +49,7 @@ export class LoginComponent {
 
   loginForm: FormGroup;
   isLoading: Signal<boolean> = this.store.isLoading;
-  loginErrorMessages: WritableSignal<string[]> = signal([]);
+  loginErrorMessages = this.store.authFailedErrors;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,9 +64,8 @@ export class LoginComponent {
     });
 
     effect(() => {
-      if (this.store.currentUser() !== null) {
-        this.router.navigate(['/projects']);
-      }
+      if (this.store.currentUser() !== null)
+        this.router.navigateByUrl('/projects');
     });
   }
 
@@ -88,11 +84,5 @@ export class LoginComponent {
 
   navigateToRegistration() {
     this.router.navigate(['/register']);
-  }
-
-  private setLoginErrors(error: HttpErrorResponse) {
-    if (error.status === 401) {
-      this.loginErrorMessages.set(['Login or password incorrect']);
-    }
   }
 }

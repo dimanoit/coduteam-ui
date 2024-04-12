@@ -12,6 +12,7 @@ import { PositionApplyService } from '../../services/position-apply.service';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { PositionPageComponent } from '../position-page/position-page.component';
 import { Store } from '../../../../store/store';
+import { PositionCardComponent } from '../../components/position-card/position-card.component';
 
 @Component({
   selector: 'app-positions',
@@ -23,6 +24,7 @@ import { Store } from '../../../../store/store';
     PositionLineComponent,
     NgForOf,
     ProgressBarModule,
+    PositionCardComponent,
   ],
   providers: [PositionService, PositionApplyService],
   changeDetection: ChangeDetectionStrategy.OnPush,

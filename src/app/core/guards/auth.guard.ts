@@ -4,7 +4,9 @@ import { Store } from '../../store/store';
 
 export const authGuard: CanActivateFn = () => {
   const router = inject(Router);
-  const isLoggedIn = inject(Store).isLoggedIn();
+  const store = inject(Store);
+
+  const isLoggedIn: boolean = store.isLoggedIn() || store.token() !== null;
 
   if (!isLoggedIn) {
     router.navigate(['/login']);
