@@ -2,6 +2,7 @@ import { HttpHandlerFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { Store } from '../../store/store';
+import { getState } from '@ngrx/signals';
 
 export function authInterceptor(
   req: HttpRequest<unknown>,

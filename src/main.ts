@@ -15,7 +15,7 @@ import {
   withInterceptors,
 } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
-import { authInterceptor } from './app/core/api/auth-interceptor.interceptor';
+import { authInterceptor } from './app/core/api/auth.interceptor';
 import { Store } from './app/store/store';
 
 bootstrapApplication(AppComponent, {

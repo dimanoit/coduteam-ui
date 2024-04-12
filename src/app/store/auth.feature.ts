@@ -24,7 +24,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export enum TokenKeys {
   token = 'token',
   refreshToken = 'refreshToken',
-  expirationDate = 'expirationDate',
+  expirationTime = 'expirationTime',
 }
 
 export type TokenState = {
@@ -34,18 +34,11 @@ export type TokenState = {
   authFailedErrors: string[];
 };
 
-const emptyState: TokenState = {
-  token: null,
-  refreshToken: null,
-  expirationDate: null,
-  authFailedErrors: [],
-};
-
 const initialState: TokenState = {
   token: localStorage.getItem(TokenKeys.token),
   refreshToken: localStorage.getItem(TokenKeys.refreshToken),
   expirationDate: new Date(
-    localStorage.getItem(TokenKeys.expirationDate) ?? '',
+    localStorage.getItem(TokenKeys.expirationTime) ?? '',
   ),
   authFailedErrors: [],
 };

@@ -1,21 +1,31 @@
-<div [formGroup]="searchForm">
-  <app-project-category-dropdown formControlName="projectCategory" />
-
-  <span class="p-input-icon-left">
-    <i class="pi pi-search"></i>
-    <input
-      formControlName="term"
-      placeholder="Search by term"
-      type="text"
-      pInputText
+<div class="flex flex-column gap-2" [formGroup]="searchForm">
+  <div class="p-col">
+    <app-project-category-dropdown
+      class="p-fluid"
+      formControlName="projectCategory"
     />
-  </span>
+  </div>
 
-  <p-dropdown
-    formControlName="positionCategory"
-    [options]="specialities"
-    placeholder="Speciality"
-    [scrollHeight]="'600px'"
-    [editable]="true"
-  ></p-dropdown>
+  <div class="p-col">
+    <div class="p-fluid p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        formControlName="term"
+        placeholder="Search by term"
+        type="text"
+        pInputText
+      />
+    </div>
+  </div>
+
+  <div class="p-col">
+    <p-dropdown
+      class="p-fluid"
+      formControlName="positionCategory"
+      [options]="specialities"
+      placeholder="Speciality"
+      [scrollHeight]="'600px'"
+      [editable]="true"
+    ></p-dropdown>
+  </div>
 </div>

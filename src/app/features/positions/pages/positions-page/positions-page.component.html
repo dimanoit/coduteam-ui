@@ -1,7 +1,9 @@
-<div class="flex flex-column align-items-center">
-  <app-position-filter />
-
-  <div class="">
+<div class="grid">
+  <div class="col-2">
+    <app-position-filter />
+  </div>
+  
+  <div class="col-10">
     @for (position of positions(); track $index) {
       <app-position-card [position]="position"></app-position-card>
     }
