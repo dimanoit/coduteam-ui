@@ -2,10 +2,12 @@
   <div class="col-2">
     <app-position-filter />
   </div>
-  
+
   <div class="col-10">
-    @for (position of positions(); track $index) {
-      <app-position-card [position]="position"></app-position-card>
-    }
+    <div class="flex-column flex row-gap-2">
+      @for (position of positions(); track $index) {
+        <app-position-card [position]="position"></app-position-card>
+      }
+    </div>
   </div>
 </div>
