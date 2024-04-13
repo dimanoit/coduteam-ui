@@ -1,15 +1,17 @@
 <div class="surface-card border-round border-1 surface-border">
   <div class="flex p-5">
-    <div>
-      <span
+    <div class="flex column-gap-2 align-items-baseline">
+      <div
         (click)="navigateToPositionPage()"
         class="text-xl underline cursor-pointer"
-        >{{ position.title }}</span
       >
-      <span> at </span>
-      <span class="underline font-italic mr-2 cursor-pointer">{{
-        position.project.title
-      }}</span>
+        {{ position.title }}
+      </div>
+      <div>at</div>
+      <div class="underline font-italic mr-2 cursor-pointer">
+        {{ position.project.title }}
+      </div>
+      <img class="block" [height]="20" [src]="position.project.projectImgUrl" />
 
       @if (position.project.country) {
         <span class="text-sm text-color-secondary">
