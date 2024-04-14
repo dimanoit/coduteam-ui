@@ -23,6 +23,7 @@ import { ScrollerModule } from 'primeng/scroller';
 import { Project } from '../../models/project.interface';
 import { InfiniteScrollDirective } from '../../../../shared/directives/infinite-scroll-directive';
 import { defaultProjectSearchRequest } from '../../../../store/project.feature';
+import { ProjectLineSkeletonComponent } from '../../components/project-line-skeleton/project-line-skeleton.component';
 
 @Component({
   selector: 'app-projects',
@@ -41,6 +42,7 @@ import { defaultProjectSearchRequest } from '../../../../store/project.feature';
     ProjectsNotFoundComponent,
     ScrollerModule,
     InfiniteScrollDirective,
+    ProjectLineSkeletonComponent,
   ],
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,6 +52,7 @@ export class ProjectsPageComponent implements OnInit {
 
   isShownCreateProjectDialog = signal(false);
   projects: Signal<Project[]> = this.store.projects;
+  isLoading: Signal<boolean> = this.store.isLoading;
 
   ngOnInit(): void {
     this.store.updateSearchRequest(defaultProjectSearchRequest);

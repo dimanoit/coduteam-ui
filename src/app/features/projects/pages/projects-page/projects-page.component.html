@@ -14,7 +14,7 @@
     ></app-create-project-dialog>
   </div>
 
-  @if (store.projects()) {
+  @if (projects().length > 0) {
     <div
       class="overflow-y-auto p-2 h-40rem flex flex-column gap-2"
       appInfiniteScroll
@@ -22,6 +22,12 @@
     >
       @for (project of projects(); track $index) {
         <app-project-line [project]="project"></app-project-line>
+      }
+    </div>
+  } @else if (isLoading()) {
+    <div class="flex flex-column gap-2 mt-1">
+      @for (item of [1, 2, 3, 4, 5]; track $index) {
+        <app-project-line-skeleton />
       }
     </div>
   } @else {

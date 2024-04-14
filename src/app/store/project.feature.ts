@@ -51,20 +51,25 @@ export function withProjectFeature() {
           return;
         }
 
-        patchState(store, () => ({ searchProjectsRequest: request }));
+        patchState(store, { searchProjectsRequest: request });
       },
       loadProjects: rxMethod<ProjectSearchRequest>(
         pipe(
-          debounceTime(300),
           distinctUntilChanged(),
+          debounceTime(300),
+          tap((request) => {
+            if (!request.isPagination) {
+              patchState(store, { projects: [] });
+            }
+          }),
           switchMap((request: ProjectSearchRequest) =>
             projectService.loadProjects(request).pipe(
               tap((response) => {
-                patchState(store, () => ({
+                patchState(store, {
                   projects: request.isPagination
                     ? [...store.projects(), ...response]
                     : response,
-                }));
+                });
               }),
             ),
           ),
@@ -76,9 +81,9 @@ export function withProjectFeature() {
           mergeMap((request: CreateProjectRequest) => {
             return projectService.createProject(request).pipe(
               tap(() =>
-                patchState(store, () => ({
+                patchState(store, {
                   searchProjectsRequest: defaultProjectSearchRequest,
-                })),
+                }),
               ),
             );
           }),
@@ -93,7 +98,7 @@ export function withProjectFeature() {
               .loadSelectedProject(id)
               .pipe(
                 tap((project) =>
-                  patchState(store, () => ({ selectedProject: project })),
+                  patchState(store, { selectedProject: project }),
                 ),
               );
           }),

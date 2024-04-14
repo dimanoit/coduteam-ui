@@ -1,0 +1,23 @@
+<div
+  [style.width]="componentSize"
+  class="surface-card border-round border-1 surface-border flex justify-content-evenly"
+>
+  <p-skeleton class="w-2" height="5rem" />
+
+  <div class="w-2 flex flex-column justify-content-evenly">
+    <p-skeleton width="5rem" height="1rem" />
+    <p-skeleton width="5rem" height="1rem" />
+  </div>
+
+  <p-skeleton class="w-5" height="5rem" />
+
+  <div class="flex flex-column justify-content-evenly">
+    <p-skeleton width="5rem" height="1rem" />
+
+    <div class="flex">
+      @for (item of [1, 2, 3]; track $index) {
+        <p-skeleton shape="circle" size="2rem" />
+      }
+    </div>
+  </div>
+</div>
