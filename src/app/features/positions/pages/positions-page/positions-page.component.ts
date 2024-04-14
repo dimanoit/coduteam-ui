@@ -13,6 +13,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import { PositionPageComponent } from '../position-page/position-page.component';
 import { Store } from '../../../../store/store';
 import { PositionCardComponent } from '../../components/position-card/position-card.component';
+import { PositionSearchRequest } from '../../models/position-search-request.interface';
 
 @Component({
   selector: 'app-positions',
@@ -37,5 +38,9 @@ export class PositionsPageComponent implements OnInit {
   ngOnInit(): void {
     const searchRequest = this.store.searchPositionsRequest;
     this.store.loadPositions(searchRequest);
+  }
+
+  setSearchParams($event: PositionSearchRequest) {
+    this.store.updateSearchPositionRequest($event);
   }
 }

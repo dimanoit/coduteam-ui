@@ -13,6 +13,7 @@ import { AvatarGroupModule } from 'primeng/avatargroup';
 import { ButtonModule } from 'primeng/button';
 import { Router } from '@angular/router';
 import { truncateString } from '../../../../shared/utils/utilities';
+import { ItemSize } from '../../../../shared/enums/item-size.enum';
 
 @Component({
   selector: 'app-project-line',
@@ -25,6 +26,7 @@ import { truncateString } from '../../../../shared/utils/utilities';
 export class ProjectLineComponent {
   @Input() project?: Project;
   @Input() isRemovable: boolean = false;
+  @Input() size: ItemSize = ItemSize.M;
 
   @Output() onRemoveProject = new EventEmitter<number>();
 
@@ -38,6 +40,10 @@ export class ProjectLineComponent {
 
   get title(): string | undefined {
     return truncateString(this.project?.title, this.maxTitleSize);
+  }
+
+  get componentSize(): string {
+    return ItemSize.S === this.size ? '60rem' : '65rem';
   }
 
   removeProject() {

@@ -18,6 +18,7 @@ import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { PositionApplyService } from '../../../positions/services/position-apply.service';
 import { PositionLineComponent } from '../../../positions/components/position-line/position-line.component';
 import { Store } from '../../../../store/store';
+import { ItemSize } from '../../../../shared/enums/item-size.enum';
 
 @Component({
   selector: 'app-user',
@@ -49,6 +50,7 @@ export class UserComponent implements OnInit {
   projects = this.store.projects;
   myApplications = this.store.myApplications;
   user = this.store.currentUser;
+  itemSize = ItemSize;
 
   ngOnInit(): void {
     this.store.updateSearchRequest({ onlyRelatedToCurrentUser: true });

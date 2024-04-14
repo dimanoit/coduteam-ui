@@ -22,6 +22,7 @@ import { Store } from '../../../../store/store';
 import { ScrollerModule } from 'primeng/scroller';
 import { Project } from '../../models/project.interface';
 import { InfiniteScrollDirective } from '../../../../shared/directives/infinite-scroll-directive';
+import { defaultProjectSearchRequest } from '../../../../store/project.feature';
 
 @Component({
   selector: 'app-projects',
@@ -49,9 +50,9 @@ export class ProjectsPageComponent implements OnInit {
 
   isShownCreateProjectDialog = signal(false);
   projects: Signal<Project[]> = this.store.projects;
-  isLoading: Signal<boolean> = this.store.isLoading;
 
   ngOnInit(): void {
+    this.store.updateSearchRequest(defaultProjectSearchRequest);
     this.store.loadProjects(this.store.searchProjectsRequest);
   }
 

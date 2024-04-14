@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   inject,
   OnInit,
+  Output,
 } from '@angular/core';
 import { ProjectCategoryDropdownComponent } from '../../../projects/components/project-category-dropdown/project-category-dropdown.component';
 import { InputTextModule } from 'primeng/inputtext';
@@ -14,8 +16,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { PositionCategory } from '../../models/position-category.enum';
-import { debounceTime, filter, switchMap } from 'rxjs';
-import { PositionService } from '../../services/position.service';
+import { debounceTime, filter, tap } from 'rxjs';
 import { PositionSearchRequest } from '../../models/position-search-request.interface';
 import { SelectItem } from 'primeng/api';
 import { ProjectCategory } from '../../../projects/models/project.interface';
@@ -35,8 +36,8 @@ import { ProjectCategory } from '../../../projects/models/project.interface';
 })
 export class PositionFilterComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
-  private positionService = inject(PositionService);
 
+  @Output() searchRequestChange = new EventEmitter<PositionSearchRequest>();
   searchForm!: FormGroup;
 
   ngOnInit(): void {
@@ -51,14 +52,14 @@ export class PositionFilterComponent implements OnInit {
       .pipe(
         debounceTime(300),
         filter(() => this.searchForm.valid),
-        switchMap(() => this.search()),
+        tap(() => this.search()),
       )
       .subscribe();
   }
 
   search() {
     const request = this.searchForm.value as PositionSearchRequest;
-    return this.positionService.loadPositions(request);
+    this.searchRequestChange.emit(request);
   }
 
   specialities: SelectItem[] = Object.keys(PositionCategory).map(

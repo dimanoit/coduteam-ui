@@ -49,6 +49,10 @@ export function withPositionFeature() {
           patchState(store, { selectedPositionId: positionId });
         },
 
+        updateSearchPositionRequest(request: PositionSearchRequest): void {
+          patchState(store, { searchPositionsRequest: request });
+        },
+
         applyOnPosition: rxMethod<ApplyOnPositionRequest>(
           pipe(
             distinctUntilChanged(),

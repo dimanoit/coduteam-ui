@@ -26,6 +26,7 @@
         <div class="flex flex-column gap-3">
           @for (project of projects(); track $index) {
             <app-project-line
+              [size]="itemSize.S"
               [project]="project"
               [isRemovable]="true"
             ></app-project-line>

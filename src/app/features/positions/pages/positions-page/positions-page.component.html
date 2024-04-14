@@ -1,6 +1,6 @@
 <div class="grid">
   <div class="col-2">
-    <app-position-filter />
+    <app-position-filter (searchRequestChange)="setSearchParams($event)" />
   </div>
 
   <div class="col-10">
