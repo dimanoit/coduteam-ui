@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { PositionDto } from '../models/position-dto.interface';
 import { PositionSearchRequest } from '../models/position-search-request.interface';
 import { toHttpParams } from '../../../core/utils/http-params.util';
 import { CreatePositionRequest } from '../models/create-position-request.interface';
+import { SimilarPositionRequest } from '../models/similar-position-request.interface';
 
 @Injectable({ providedIn: 'root' })
 export class PositionService {
@@ -17,6 +18,16 @@ export class PositionService {
 
   loadSelectedPosition(id: number): Observable<PositionDto> {
     return this.http.get<PositionDto>(`${this.resourcePath}/${id}`);
+  }
+
+  loadSimilarPositions(
+    params: SimilarPositionRequest,
+  ): Observable<PositionDto[]> {
+    const httpParams = toHttpParams(params);
+
+    return this.http.get<PositionDto[]>(this.resourcePath + '/similar', {
+      params: httpParams,
+    });
   }
 
   loadPositions(params?: PositionSearchRequest): Observable<PositionDto[]> {

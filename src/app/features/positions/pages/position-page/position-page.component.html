@@ -1,5 +1,5 @@
 @if (selectedPosition()) {
-  <p-breadcrumb class="max-w-full" [model]="items()"></p-breadcrumb>
+  <p-breadcrumb class="max-w-full" [model]="breadcrumbs()"></p-breadcrumb>
 
   <div class="grid">
     <p-card class="col-8">
@@ -28,9 +28,13 @@
 
       <p-divider />
 
-      <div class="text-sm font-italic mb-1">15 March 2024</div>
+      <div class="text-sm font-italic mb-1">
+        {{ selectedPosition()?.creationDate | date: "longDate" }}
+      </div>
       <div class="flex align-items-center">
-        <div class="text-3xl font-bold">{{ selectedPosition()?.title }}</div>
+        <div class="text-3xl my-2 font-bold">
+          {{ selectedPosition()?.title }}
+        </div>
         <p-tag
           class="ml-2 cursor-pointer"
           [value]="selectedPosition()?.positionCategory"
@@ -46,7 +50,7 @@
 
     <div class="col-4 flex flex-column gap-1">
       <p-card header="Check similar offers">
-        @for (position of store.positions(); track $index) {
+        @for (position of similarPositions(); track $index) {
           <app-position-line [position]="position"></app-position-line>
         }
       </p-card>

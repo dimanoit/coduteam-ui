@@ -2,6 +2,13 @@
 @import "primeflex/primeflex";
 @import "primeicons/primeicons";
 
+
+body {
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+}
+
 .h-40rem {
   height: 40rem !important;
 }

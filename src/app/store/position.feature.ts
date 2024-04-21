@@ -9,17 +9,26 @@ import {
 import { PositionService } from '../features/positions/services/position.service';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { ApplyOnPositionRequest } from '../features/positions/models/apply-on-position-request.interface';
-import { distinctUntilChanged, mergeMap, pipe, switchMap, tap } from 'rxjs';
+import {
+  distinctUntilChanged,
+  filter,
+  mergeMap,
+  pipe,
+  switchMap,
+  tap,
+} from 'rxjs';
 import { PositionApplyService } from '../features/positions/services/position-apply.service';
 import { ChangePositionApplyStatusRequest } from '../features/positions/models/change-position-apply-status-request.interface';
 import { CreatePositionRequest } from '../features/positions/models/create-position-request.interface';
 import { PositionSearchRequest } from '../features/positions/models/position-search-request.interface';
+import { SimilarPositionRequest } from '../features/positions/models/similar-position-request.interface';
 
 type PositionState = {
   positions: PositionDto[];
   searchPositionsRequest: PositionSearchRequest;
   selectedPosition: PositionDto | null;
   myApplications: PositionDto[];
+  similarPositions: PositionDto[];
   selectedPositionId: number | null;
 };
 
@@ -31,6 +40,7 @@ const defaultSearchRequest: PositionSearchRequest = {
 const initialState: PositionState = {
   positions: [],
   selectedPosition: null,
+  similarPositions: [],
   myApplications: [],
   searchPositionsRequest: defaultSearchRequest,
   selectedPositionId: null,
@@ -73,14 +83,24 @@ export function withPositionFeature() {
 
         loadSelectedPosition: rxMethod<number | null>(
           pipe(
-            switchMap((request) =>
-              positionService
-                .loadSelectedPosition(request ?? 0)
-                .pipe(
-                  tap((response) =>
-                    patchState(store, { selectedPosition: response }),
-                  ),
-                ),
+            switchMap((positionId) =>
+              positionService.loadSelectedPosition(positionId ?? 0).pipe(
+                switchMap((response) => {
+                  patchState(store, { selectedPosition: response });
+                  const request: SimilarPositionRequest = {
+                    projectCategory: response.project.category,
+                    positionCategory: response.positionCategory,
+                  };
+
+                  return positionService
+                    .loadSimilarPositions(request)
+                    .pipe(
+                      tap((response: PositionDto[]) =>
+                        patchState(store, { similarPositions: response }),
+                      ),
+                    );
+                }),
+              ),
             ),
           ),
         ),

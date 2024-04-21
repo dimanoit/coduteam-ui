@@ -17,7 +17,7 @@ import { ButtonModule } from 'primeng/button';
 import { CheckboxModule } from 'primeng/checkbox';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProjectSearchRequest } from '../../models/project-search-request.interface';
-import { debounceTime, filter, map } from 'rxjs';
+import { debounceTime, filter, map, tap } from 'rxjs';
 import { ProjectCategory } from '../../models/project.interface';
 
 @Component({
@@ -50,7 +50,7 @@ export class ProjectsFilterComponent implements OnInit {
       .pipe(
         debounceTime(600),
         filter(() => this.searchForm.valid),
-        map(() => this.search()),
+        tap(() => this.search()),
       )
       .subscribe();
   }

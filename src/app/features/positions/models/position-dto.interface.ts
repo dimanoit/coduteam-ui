@@ -12,4 +12,5 @@ export interface PositionDto {
   applicants: PositionApplicant[];
   positionCategory: PositionCategory;
   project: ProjectDto;
+  creationDate: Date;
 }

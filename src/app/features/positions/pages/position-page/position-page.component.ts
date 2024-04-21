@@ -27,6 +27,7 @@ import { TagModule } from 'primeng/tag';
 import { PositionDto } from '../../models/position-dto.interface';
 import { ApplyOnPositionRequest } from '../../models/apply-on-position-request.interface';
 import { Store } from '../../../../store/store';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-position',
@@ -45,6 +46,7 @@ import { Store } from '../../../../store/store';
     ButtonModule,
     BreadcrumbModule,
     TagModule,
+    DatePipe,
   ],
 })
 export class PositionPageComponent implements OnInit {
@@ -54,16 +56,24 @@ export class PositionPageComponent implements OnInit {
   public store = inject(Store);
 
   selectedPosition: Signal<PositionDto | null> = this.store.selectedPosition;
+  similarPositions: Signal<PositionDto[]> = this.store.similarPositions;
+
   projectDescription = computed(() =>
     truncateString(this.selectedPosition()?.project?.description ?? '', 200),
   );
-  safeDescription = computed(() =>
-    this.sanitizer.bypassSecurityTrustHtml(
-      this.selectedPosition()?.description ?? '',
-    ),
-  );
+  safeDescription = computed(() => {
+    // TODO introduce util function
+    let description = this.selectedPosition()?.description ?? '';
 
-  items = computed(() => [
+    // Delete all text colors because it can brake site theme
+    description = description.replace(
+      /(color\s*:\s*[^;]*;)|(background-color\s*:\s*[^;]*;)/gi,
+      '',
+    );
+    return this.sanitizer.bypassSecurityTrustHtml(description);
+  });
+
+  breadcrumbs = computed(() => [
     { icon: 'pi pi-home', routerLink: '/' },
     { label: 'Positions', routerLink: '/positions' },
     {

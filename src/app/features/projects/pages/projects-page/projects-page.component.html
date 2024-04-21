@@ -16,7 +16,7 @@
 
   @if (projects().length > 0) {
     <div
-      class="overflow-y-auto p-2 h-40rem flex flex-column gap-2"
+      class="projects-panel overflow-y-auto p-2 flex flex-column gap-2 lg:gap-3"
       appInfiniteScroll
       (scrolled)="loadMoreItems()"
     >
